@@ -1,0 +1,120 @@
+﻿@page "/test"
+@rendermode InteractiveAuto
+@using BlazorBootstrap
+@*@using Microsoft.AspNetCore.Hosting*@
+@* @inject IWebHostEnvironment Environment *@
+@* @inject ILogger<Test> Logger *@
+
+<PageTitle>Test</PageTitle>
+<h3>Test</h3>
+
+
+<h4 class="text-bg-primary">-- 1 --</h4>
+<div class="row mb-5">
+    <p role="status">Current count: @currentCount</p>
+    <button class="btn btn-primary" @onclick="IncrementCount">Increment</button>
+</div>
+@if (isLoading)
+{
+    <p class="m-2">Incrementing...</p>
+}
+@code {
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1;
+
+    int currentCount = 0;
+    bool isLoading = false;
+
+    async Task IncrementCount()
+    {
+        isLoading = true;
+        await Task.Delay(1000);
+        currentCount += IncrementAmount;
+        isLoading = false;
+    }
+}
+
+
+<h4 class="text-bg-primary">-- 2 --</h4>
+<div class="row mb-5">
+    <InputNumber @bind-Value="@Number" />
+    <InputDate @bind-Value="date" />
+</div>
+@code {
+    int num;
+    int Number
+    {
+        get => num;
+        set
+        {
+            num = value * 2;
+        }
+    }
+    DateOnly date = DateOnly.FromDateTime(DateTime.Today);
+}
+
+
+<h4 class="text-bg-primary">-- 3 --</h4>
+<div>
+    <label for="fruit">Select a status:</label>
+    <InputSelect class="form-select-sm" @bind-Value="@statusSelect">
+        <MVPv4.Client.Components.Pages.trash.Status />
+    </InputSelect>
+    <p>You selected: @statusSelect</p>
+
+    <pre>@message</pre>
+    <InputText @bind-Value="text" @bind-Value:after="ChangeText" />
+
+    <p><InputCheckbox class="form-check-input" @bind-Value=check /></p>
+</div>
+@code {
+    string? statusSelect;
+
+    string? text;
+    string? message;
+
+    void ChangeText()
+    {
+        message += text;
+    }
+
+    bool check = false;
+}
+
+
+<h4 class="text-bg-primary">-- 4 --</h4>
+<div class="row mb-5">
+    <InputFile OnChange="LoadFiles" class="form-control" />
+    <InputTextArea class="text-muted" @bind-Value="content" DisplayName="Some text" />
+</div>
+@code {
+    List<IBrowserFile> loadedFiles = [];
+
+    async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        loadedFiles.Clear();
+        message += "Changed ";
+
+        foreach (var file in e.GetMultipleFiles())
+        {
+            // var trustedFileName = Path.GetRandomFileName();
+            // var path = Path.Combine(Environment.ContentRootPath,
+            //     Environment.EnvironmentName, "unsafe_uploads",
+            //     trustedFileName);
+
+            // await using FileStream fs = new(path, FileMode.Create);
+            // await file.OpenReadStream(1024 * 1024).CopyToAsync(fs);
+
+            // loadedFiles.Add(file);
+
+            // Logger.LogInformation(
+            //         "Unsafe Filename: {UnsafeFilename} File saved: {Filename}",
+            //         file.Name, trustedFileName);
+
+            // await using FileStream fileStream = new();
+            content = file.Name + file.Size;
+            check = !check;
+        }
+    }
+    string? content = "some content";
+}

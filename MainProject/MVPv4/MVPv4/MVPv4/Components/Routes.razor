@@ -1,0 +1,15 @@
+﻿<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[]
+    {
+        typeof(Client._Imports).Assembly
+    }">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        @*     <PageTitle>NotFounf404</PageTitle> *@
+        @*     <LayoutView Layout="@typeof(Layout.MainLayout)"> *@
+        @*         <p role="alert">Absolutly nothing...</p> *@
+        @*     </LayoutView> *@
+    </NotFound>
+</Router>
