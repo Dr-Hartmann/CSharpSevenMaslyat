@@ -1,6 +1,6 @@
 # CSharpSevenMaslyat
 Курсовой проект по C# шестой семестр
 
-Задачи
-_Стеки: vpf ,xaml 
-__интерактивность (диалоговые окна, панель инструментов)
+Frontend tasks:
+Research stacks: vpf ,xaml 
+__Interactivity (Dialoge windows, panel tools)
