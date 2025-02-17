@@ -6,4 +6,4 @@ Research stacks: vpf ,xaml
 
 Interactivity (Dialoge windows, panel tools)
 
-
+Devs: Vlad(GONE.Vladd) & Gleb(Sindy)
