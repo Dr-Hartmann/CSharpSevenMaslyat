@@ -4,6 +4,6 @@
 # Frontend tasks:
 Research stacks: vpf ,xaml 
 
-Interactivity (Dialoge windows, panel tools)
+Interactivity (Dialogue windows, panel tools)
 
 Devs: Vlad(GONE.Vladd) & Gleb(Sindy)
