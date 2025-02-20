@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\grish\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitProjects\\CSharpSevenMaslyat\\SevenMaslyatProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{468DF86D-82BB-4E63-90A1-FC02AB20C4D0}|SevenMaslyatProject\\SevenMaslyatProject.csproj|c:\\users\\grish\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\gitprojects\\csharpsevenmaslyat\\sevenmaslyatproject\\sevenmaslyatproject\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{468DF86D-82BB-4E63-90A1-FC02AB20C4D0}|SevenMaslyatProject\\SevenMaslyatProject.csproj|solutionrelative:sevenmaslyatproject\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{468DF86D-82BB-4E63-90A1-FC02AB20C4D0}|SevenMaslyatProject\\SevenMaslyatProject.csproj|c:\\users\\grish\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\gitprojects\\csharpsevenmaslyat\\sevenmaslyatproject\\sevenmaslyatproject\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{468DF86D-82BB-4E63-90A1-FC02AB20C4D0}|SevenMaslyatProject\\SevenMaslyatProject.csproj|solutionrelative:sevenmaslyatproject\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\grish\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitProjects\\CSharpSevenMaslyat\\SevenMaslyatProject\\SevenMaslyatProject\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "SevenMaslyatProject\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\grish\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitProjects\\CSharpSevenMaslyat\\SevenMaslyatProject\\SevenMaslyatProject\\MainWindow.xaml",
+              "RelativeToolTip": "SevenMaslyatProject\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-20T15:18:45.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\grish\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitProjects\\CSharpSevenMaslyat\\SevenMaslyatProject\\SevenMaslyatProject\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "SevenMaslyatProject\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\grish\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitProjects\\CSharpSevenMaslyat\\SevenMaslyatProject\\SevenMaslyatProject\\MainWindow.xaml.cs",
+              "RelativeToolTip": "SevenMaslyatProject\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAtwBkAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T15:18:42.931Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
