@@ -18,6 +18,7 @@
 | Белоус,<br>Тихомиров                                 | Остапенко,<br>Харламов                                               | Маслов,<br>Новиков                                                                                                                                      |
 | [_Blazor_](https://metanit.com/sharp/blazor/1.1.php) | [_RestAPI_](https://tproger.ru/translations/restful-service-asp-net) | [_PostgreSQL_](https://metanit.com/sharp/efcore/7.3.php)                                                                                                |
 |                                                      | _DTO?_                                                               | [_Entity Framework Core_](https://metanit.com/sharp/efcore/1.1.php)<br>Есть три подхода к организации, изучить и принять наиболее простое в реализации. |
+
 Микуцких - контроль процессов, организация Git, постановка задач.
 Основная среда разработки: Blazor ___(не WPF!!!)___.
 
