@@ -1,0 +1,48 @@
+# Игнорировать файлы сборки и бинарные файлы
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.cache
+
+# Игнорировать файлы пользовательских настроек
+*.user
+*.suo
+
+# Игнорировать файлы пакетов NuGet
+packages/
+*.nupkg
+
+# Игнорировать файлы резервных копий
+*.bak
+*.tmp
+
+# Игнорировать логи и результаты тестов
+[Ll]og/
+[Tt]est[Rr]esult*/
+
+# Игнорировать файлы проекта Visual Studio
+*.csproj.user
+*.vcxproj.filters
+*.vcxproj.user
+
+# Игнорировать файлы Rider
+.idea/
+*.sln.iml
+
+# Игнорировать файлы Azure
+.azure/
+
+# Игнорировать файлы Docker
+.dockerignore
+Dockerfile
+docker-compose.*
+
+# Игнорировать файлы окружения
+.env
+.env.local
+
+# Игнорировать файлы резервных копий
+*.swp
+*.swo
