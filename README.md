@@ -5,8 +5,9 @@
 - [Новиков](https://github.com/Forguebeelov) Игорь - БД.
 ---
 ## Stacks
-[_PostgreSQL_], [_Entity Framework Core_]
-Способ взаимодействия с БД: **Code first**  
+-PostgreSQL, 
+-Entity Framework Core
+-Способ взаимодействия с БД: **Code first**  
 ---
 _В базе данных хранятся:_
 - _данные зарегистрированных пользователей,_
