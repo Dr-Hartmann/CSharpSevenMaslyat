@@ -17,26 +17,18 @@ namespace Program
         }
 
         public DbSet<Book> Book {get; set; }
+        public DbSet<Page> Page { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Явное указание связи (необязательно, но рекомендуется для контроля)
+            modelBuilder.Entity<Book>()
+                .HasMany(b => b.Pages)
+                .WithOne(p => p.Book)
+                .HasForeignKey(p => p.BookId); // BookId – внешний ключ в таблице Pages
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
-    //public class BookContext : DbContext
-    //{
-    //    public DbSet<Book> Books { get; set; }
-    //    public DbSet<Page> Pages { get; set; }
-
-    //    public BookContext(DbContextOptions<BookContext> options) : base(options)
-    //    {
-    //    }
-
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        // Явное указание связи (необязательно, но рекомендуется для контроля)
-    //        modelBuilder.Entity<Book>()
-    //            .HasMany(b => b.Pages)
-    //            .WithOne(p => p.Book)
-    //            .HasForeignKey(p => p.BookId); // BookId – внешний ключ в таблице Pages
-
-    //        base.OnModelCreating(modelBuilder);
-    //    }
-    //}
+        
 }
