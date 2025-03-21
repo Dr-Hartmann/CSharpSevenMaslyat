@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rb4m3OjuLls=",
+  "dgSpecHash": "Vq0ZuubzMMY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
+  "projectFilePath": "C:\\Users\\grish\\OneDrive\\Документы\\GitProjects\\CSharpSevenMaslyat\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\grish\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.13\\microsoft.aspnetcore.authorization.8.0.13.nupkg.sha512",
     "C:\\Users\\grish\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.13\\microsoft.aspnetcore.components.8.0.13.nupkg.sha512",

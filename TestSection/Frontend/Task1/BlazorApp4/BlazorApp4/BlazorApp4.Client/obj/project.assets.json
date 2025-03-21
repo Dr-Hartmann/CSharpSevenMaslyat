@@ -1671,11 +1671,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
+      "projectUniqueName": "C:\\Users\\grish\\OneDrive\\Документы\\GitProjects\\CSharpSevenMaslyat\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
       "projectName": "BlazorApp4.Client",
-      "projectPath": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
+      "projectPath": "C:\\Users\\grish\\OneDrive\\Документы\\GitProjects\\CSharpSevenMaslyat\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\BlazorApp4.Client.csproj",
       "packagesPath": "C:\\Users\\grish\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\obj\\",
+      "outputPath": "C:\\Users\\grish\\OneDrive\\Документы\\GitProjects\\CSharpSevenMaslyat\\TestSection\\Frontend\\Task1\\BlazorApp4\\BlazorApp4\\BlazorApp4.Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
