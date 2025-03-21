@@ -5,14 +5,15 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\glebo.DESKTOP-E8BKBIM\.nuget\packages\</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\grish\.nuget\packages\;C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.11.0</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.13.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <SourceRoot Include="C:\Users\glebo.DESKTOP-E8BKBIM\.nuget\packages\" />
+    <SourceRoot Include="C:\Users\grish\.nuget\packages\" />
+    <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Server Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Server)' == '' ">C:\Users\glebo.DESKTOP-E8BKBIM\.nuget\packages\microsoft.aspnetcore.components.webassembly.server\8.0.13</PkgMicrosoft_AspNetCore_Components_WebAssembly_Server>
+    <PkgMicrosoft_AspNetCore_Components_WebAssembly_Server Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Server)' == '' ">C:\Users\grish\.nuget\packages\microsoft.aspnetcore.components.webassembly.server\8.0.13</PkgMicrosoft_AspNetCore_Components_WebAssembly_Server>
   </PropertyGroup>
 </Project>

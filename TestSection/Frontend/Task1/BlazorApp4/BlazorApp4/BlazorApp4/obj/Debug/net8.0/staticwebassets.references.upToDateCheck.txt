@@ -30,3 +30,4 @@ D:\Git\java\1\CSharpSevenMaslyat\TestSection\Frontend\Task1\BlazorApp4\BlazorApp
 D:\Git\java\1\CSharpSevenMaslyat\TestSection\Frontend\Task1\BlazorApp4\BlazorApp4\BlazorApp4.Client\obj\Debug\net8.0\staticwebassets.build.json
 D:\Git\java\1\CSharpSevenMaslyat\TestSection\Frontend\Task1\BlazorApp4\BlazorApp4\BlazorApp4.Client\obj\Debug\net8.0\staticwebassets.build.json
 D:\Git\java\1\CSharpSevenMaslyat\TestSection\Frontend\Task1\BlazorApp4\BlazorApp4\BlazorApp4.Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\grish\OneDrive\Desktop\Sindy\CSharpSevenMaslyatDev\TestSection\Frontend\Task1\BlazorApp4\BlazorApp4\BlazorApp4.Client\obj\Debug\net8.0\staticwebassets.build.json

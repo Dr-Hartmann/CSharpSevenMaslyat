@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3+xvjfiDLz+OdKFt+sGK4xhruzFuaDrMAfI4XBEdpt0=",
+  "Hash": "rEklHqKCzbKiPnV1qGTV4WdVrrB8Cqv4n1o6GDsutHc=",
   "Source": "BlazorApp1",
   "BasePath": "_content/BlazorApp1",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BlazorApp1\\wwwroot",
       "Source": "BlazorApp1",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
       "SourceId": "BlazorApp1",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "BlazorApp1#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -35,13 +35,13 @@
       "Integrity": "PNq8u6TYJS1S5kSsvGe1sKpmmyit7Z5Up72QsLm3cco=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css"
+      "OriginalItemSpec": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
       "SourceId": "BlazorApp1",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "BlazorApp1#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -56,13 +56,13 @@
       "Integrity": "PNq8u6TYJS1S5kSsvGe1sKpmmyit7Z5Up72QsLm3cco=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -101,10 +101,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -122,10 +122,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.eot",
       "AssetKind": "All",
@@ -143,10 +143,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.otf",
       "AssetKind": "All",
@@ -164,10 +164,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.svg",
       "AssetKind": "All",
@@ -185,10 +185,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.ttf",
       "AssetKind": "All",
@@ -206,10 +206,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.woff",
       "AssetKind": "All",
@@ -227,10 +227,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/FONT-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -248,10 +248,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/ICON-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -269,10 +269,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/open-iconic/README#[.{fingerprint}]?.md",
       "AssetKind": "All",
@@ -290,10 +290,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "css/site#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -311,10 +311,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
       "SourceId": "BlazorApp1",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\",
       "BasePath": "_content/BlazorApp1",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -335,7 +335,7 @@
   "Endpoints": [
     {
       "Route": "BlazorApp1.bundle.scp.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -356,7 +356,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:16:46 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -372,7 +372,7 @@
     },
     {
       "Route": "BlazorApp1.cc451tgc3r.bundle.scp.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp1.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -393,7 +393,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:16:46 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -417,7 +417,7 @@
     },
     {
       "Route": "BlazorApp1.cc451tgc3r.styles.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -438,7 +438,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:16:46 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -462,7 +462,7 @@
     },
     {
       "Route": "BlazorApp1.styles.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp1.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -483,7 +483,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:16:46 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -499,7 +499,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -520,7 +520,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -544,7 +544,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -565,7 +565,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -581,7 +581,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -602,7 +602,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -626,7 +626,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -647,7 +647,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -663,7 +663,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.cmapd0fi15.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -684,7 +684,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -708,7 +708,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -729,7 +729,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -745,7 +745,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.0uw8dim9nl.eot",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -766,7 +766,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -790,7 +790,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.eot",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -811,7 +811,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -827,7 +827,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.h4d0pazwgy.woff",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -848,7 +848,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -872,7 +872,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ll5grcv8wv.ttf",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -893,7 +893,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -917,7 +917,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.otf",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -938,7 +938,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -954,7 +954,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.sjnzgf7e1h.svg",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -975,7 +975,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -999,7 +999,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.svg",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1020,7 +1020,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1036,7 +1036,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ttf",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1057,7 +1057,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1073,7 +1073,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.wk8x8xm0ah.otf",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1094,7 +1094,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1118,7 +1118,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.woff",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1139,7 +1139,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1155,7 +1155,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1176,7 +1176,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1192,7 +1192,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE.48tmkg660f",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1213,7 +1213,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1237,7 +1237,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1258,7 +1258,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1274,7 +1274,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE.4dwjve0o0b",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1295,7 +1295,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1319,7 +1319,7 @@
     },
     {
       "Route": "css/open-iconic/README.5bzwdl5l6x.md",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1340,7 +1340,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1364,7 +1364,7 @@
     },
     {
       "Route": "css/open-iconic/README.md",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1385,7 +1385,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1401,7 +1401,7 @@
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1422,7 +1422,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 16:51:33 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1438,7 +1438,7 @@
     },
     {
       "Route": "css/site.wpczm3aruw.css",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1459,7 +1459,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 16:51:33 GMT"
+          "Value": "Fri, 21 Mar 2025 21:01:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1483,7 +1483,7 @@
     },
     {
       "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1504,7 +1504,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1528,7 +1528,7 @@
     },
     {
       "Route": "favicon.png",
-      "AssetFile": "D:\\Git\\Repos\\GONEVladd20\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1549,7 +1549,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 13 Mar 2025 15:04:56 GMT"
+          "Value": "Fri, 21 Mar 2025 21:58:23 GMT"
         },
         {
           "Name": "Cache-Control",

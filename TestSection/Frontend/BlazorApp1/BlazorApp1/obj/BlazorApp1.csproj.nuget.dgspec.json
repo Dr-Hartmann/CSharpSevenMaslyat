@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git\\java\\1\\CSharpSevenMaslyat\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
+    "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
   },
   "projects": {
-    "D:\\Git\\java\\1\\CSharpSevenMaslyat\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
+    "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git\\java\\1\\CSharpSevenMaslyat\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "projectUniqueName": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
         "projectName": "BlazorApp1",
-        "projectPath": "D:\\Git\\java\\1\\CSharpSevenMaslyat\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\Git\\java\\1\\CSharpSevenMaslyat\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\",
+        "projectPath": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "packagesPath": "C:\\Users\\grish\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\grish\\OneDrive\\Desktop\\Sindy\\CSharpSevenMaslyatDev\\TestSection\\Frontend\\BlazorApp1\\BlazorApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\grish\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
