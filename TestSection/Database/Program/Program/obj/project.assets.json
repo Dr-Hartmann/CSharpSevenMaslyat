@@ -2908,11 +2908,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitHub\\CSharpSevenMaslyat\\MainProject\\Program\\Program\\Program.csproj",
+      "projectUniqueName": "D:\\GitHub\\CSharpSevenMaslyat\\TestSection\\Database\\Program\\Program\\Program.csproj",
       "projectName": "Program",
-      "projectPath": "D:\\GitHub\\CSharpSevenMaslyat\\MainProject\\Program\\Program\\Program.csproj",
+      "projectPath": "D:\\GitHub\\CSharpSevenMaslyat\\TestSection\\Database\\Program\\Program\\Program.csproj",
       "packagesPath": "C:\\Users\\saifo\\.nuget\\packages\\",
-      "outputPath": "D:\\GitHub\\CSharpSevenMaslyat\\MainProject\\Program\\Program\\obj\\",
+      "outputPath": "D:\\GitHub\\CSharpSevenMaslyat\\TestSection\\Database\\Program\\Program\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Program.Entities;
 
 namespace Program
 {
@@ -6,12 +7,13 @@ namespace Program
     {
         public Context()
         {
-
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"host=localhost;port=5532;database=db;username=root;pass=5532");
+            optionsBuilder.UseNpgsql(@"host=localhost;port=5532;database=7maslyat;username=postgres;password=553210zxc");
         }
 
         public DbSet<Book> Book {get; set; }
