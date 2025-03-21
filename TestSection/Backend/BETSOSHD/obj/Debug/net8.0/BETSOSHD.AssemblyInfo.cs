@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BETSOSHD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a28fd0ab3125e4f5316099b8462be282adcbcabb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8feda023f2ae100728a254dd15e0278c4f8d6d10")]
 [assembly: System.Reflection.AssemblyProductAttribute("BETSOSHD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BETSOSHD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
