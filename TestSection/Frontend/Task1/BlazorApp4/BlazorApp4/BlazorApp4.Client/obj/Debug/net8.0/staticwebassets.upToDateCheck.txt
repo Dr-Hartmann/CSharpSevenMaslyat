@@ -1,0 +1,2 @@
+wwwroot\appsettings.Development.json
+wwwroot\appsettings.json
