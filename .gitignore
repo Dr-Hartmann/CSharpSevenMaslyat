@@ -1,8 +1,8 @@
 *.log
 *tmp
-cache/
-.obsidian/
-.vs/
+cache
+.obsidian
+.vs
 
 MainProject/
 TestSection/Frontend
