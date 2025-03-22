@@ -4,11 +4,11 @@ cache
 .obsidian
 .vs
 
-MainProject/
+MainProject
 TestSection/Frontend
-TestSection/Backend/
-TestSection/Database/
-База/
+TestSection/Backend
+TestSection/Database
+База
 .gitignore
 LICENSE
 README.md
