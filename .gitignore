@@ -5,7 +5,7 @@ cache/
 .vs/
 
 MainProject/
-TestSection\Frontend\
+TestSection/Frontend
 TestSection/Backend/
 TestSection/Database/
 База/
