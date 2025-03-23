@@ -1,3 +1,5 @@
+#!/bin/bash
+cat <<EOF >.gitignore
 # игнорирование всех файлов расширений:
 *.log 
 *.tmp
@@ -10,3 +12,4 @@
 .vs/
 .vscode/
 Debug/
+EOF
