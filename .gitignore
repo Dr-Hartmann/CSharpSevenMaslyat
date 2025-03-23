@@ -10,3 +10,11 @@
 .vs/
 .vscode/
 Debug/
+
+# игнорирование корневых файлов и каталогов:
+/MainProject/
+/TestSection/Frontend/
+/TestSection/Backend/
+DataBase/
+/LICENSE
+/README.md
