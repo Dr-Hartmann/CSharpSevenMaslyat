@@ -1,13 +1,20 @@
-*.log
-*tmp
-cache
-.obsidian
-.vs
+# игнорирование всех файлов расширений:
+*.log 
+*.tmp
+*.cache
+*.csproj
+*.gitignore
 
-MainProject
-TestSection/Frontend
-TestSection/Backend
-# TestSection/Database
-База
-LICENSE
-README.md
+# игнорирование всех каталогов:
+.obsidian/
+.vs/
+.vscode/
+
+# игнорирование корневых файлов и каталогов:
+/MainProject/
+/TestSection/Frontend
+/TestSection/Backend/
+/TestSection/Database/
+/База/
+/LICENSE
+/README.md
