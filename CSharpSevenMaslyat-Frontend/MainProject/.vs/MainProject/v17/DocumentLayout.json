@@ -1,0 +1,256 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\layout\\upperpanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\layout\\upperpanel.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\wwwroot\\save.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\wwwroot\\save.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\wwwroot\\menu.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\wwwroot\\menu.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\wwwroot\\separator.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\wwwroot\\separator.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\wwwroot\\bootstrap\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\wwwroot\\bootstrap\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\layout\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\layout\\mainlayout.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|c:\\users\\glebo.desktop-e8bkbim\\desktop\\\u0447\u0433\u0443\\sharpproj\\csharpsevenmaslyat-frontend\\mainproject\\mainproject\\components\\pages\\editor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{49CB85E1-0709-4A8D-81E9-030F5C399D16}|MainProject\\MainProject.csproj|solutionrelative:mainproject\\components\\pages\\editor.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Counter.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Pages\\Counter.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Pages\\Counter.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Pages\\Counter.razor",
+              "RelativeToolTip": "MainProject\\Components\\Pages\\Counter.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:02:55.262Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Save.png",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Save.png",
+              "RelativeDocumentMoniker": "MainProject\\wwwroot\\Save.png",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Save.png",
+              "RelativeToolTip": "MainProject\\wwwroot\\Save.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-04-16T17:44:04.556Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Separator.png",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Separator.png",
+              "RelativeDocumentMoniker": "MainProject\\wwwroot\\Separator.png",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Separator.png",
+              "RelativeToolTip": "MainProject\\wwwroot\\Separator.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-04-16T17:43:27.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Menu.png",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Menu.png",
+              "RelativeDocumentMoniker": "MainProject\\wwwroot\\Menu.png",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Menu.png",
+              "RelativeToolTip": "MainProject\\wwwroot\\Menu.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-04-16T16:49:40.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "bootstrap.min.css",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\bootstrap\\bootstrap.min.css",
+              "RelativeDocumentMoniker": "MainProject\\wwwroot\\bootstrap\\bootstrap.min.css",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\bootstrap\\bootstrap.min.css",
+              "RelativeToolTip": "MainProject\\wwwroot\\bootstrap\\bootstrap.min.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-16T15:57:46.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\app.css",
+              "RelativeDocumentMoniker": "MainProject\\wwwroot\\app.css",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\app.css",
+              "RelativeToolTip": "MainProject\\wwwroot\\app.css",
+              "ViewState": "AgIAADoAAAAAAAAAAAAcwDcAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-16T15:38:57.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\_Imports.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\_Imports.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\_Imports.razor",
+              "RelativeToolTip": "MainProject\\Components\\_Imports.razor",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:51:39.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UpperPanel.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\UpperPanel.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Layout\\UpperPanel.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\UpperPanel.razor",
+              "RelativeToolTip": "MainProject\\Components\\Layout\\UpperPanel.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:38:10.978Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MainLayout.razor.css",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\MainLayout.razor.css",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Layout\\MainLayout.razor.css",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\MainLayout.razor.css",
+              "RelativeToolTip": "MainProject\\Components\\Layout\\MainLayout.razor.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-16T15:05:36.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\App.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\App.razor",
+              "RelativeToolTip": "MainProject\\Components\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:03:31.304Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Routes.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Routes.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Routes.razor",
+              "RelativeToolTip": "MainProject\\Components\\Routes.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:03:27.768Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "MainProject\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T15:02:59.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Editor.razor",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Pages\\Editor.razor",
+              "RelativeDocumentMoniker": "MainProject\\Components\\Pages\\Editor.razor",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Components\\Pages\\Editor.razor",
+              "RelativeToolTip": "MainProject\\Components\\Pages\\Editor.razor",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAUAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T14:49:31.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Program.cs",
+              "RelativeDocumentMoniker": "MainProject\\Program.cs",
+              "ToolTip": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\\u0427\u0413\u0423\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\Program.cs",
+              "RelativeToolTip": "MainProject\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T14:49:14.378Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

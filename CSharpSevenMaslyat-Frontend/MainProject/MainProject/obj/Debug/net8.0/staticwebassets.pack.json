@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\MainProject.bundle.scp.css",
+      "PackagePath": "staticwebassets\\MainProject.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Menu.png",
+      "PackagePath": "staticwebassets\\Menu.png"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Redo.png",
+      "PackagePath": "staticwebassets\\Redo.png"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Save.png",
+      "PackagePath": "staticwebassets\\Save.png"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Separator.png",
+      "PackagePath": "staticwebassets\\Separator.png"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\Undo.png",
+      "PackagePath": "staticwebassets\\Undo.png"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MainProject.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MainProject.props",
+      "PackagePath": "build\\MainProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MainProject.props",
+      "PackagePath": "buildMultiTargeting\\MainProject.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MainProject.props",
+      "PackagePath": "buildTransitive\\MainProject.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
