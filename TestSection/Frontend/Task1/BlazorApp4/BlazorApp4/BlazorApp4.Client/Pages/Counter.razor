@@ -1,0 +1,52 @@
+﻿@page "/counter"
+@rendermode InteractiveWebAssembly
+@inject NavigationManager Navigation
+
+<h3>Counter</h3>
+
+<div>
+    <p>Current ID: @currentId</p>
+    <button @onclick="Back">Back</button>
+    <button @onclick="Next">Next</button>
+</div>
+@code {
+    private int currentId = 0;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Navigation.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        if (queryParams["id"] != null && int.TryParse(queryParams["id"], out var parsedId))
+        {
+            currentId = parsedId;
+        }
+    }
+
+    private void UpdateUrl()
+    {
+        var uri = new Uri(Navigation.Uri);
+        var baseUri = uri.GetLeftPart(UriPartial.Path);
+        var newUri = $"{baseUri}?id={currentId}";
+        Navigation.NavigateTo(newUri);
+    }
+
+    private void Next()
+    {
+        if(currentId < 9)
+        {
+            currentId++;
+            UpdateUrl();
+        }
+    }
+
+    private void Back()
+    {
+        if (currentId > 0)
+        {
+            currentId--;
+            UpdateUrl();
+        }
+    }
+        //Delegate for Next and Back (Action, Func, Predicate - delegate for address transfering)
+    //Обновление страницы идёт или нет??
+}
