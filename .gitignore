@@ -12,7 +12,6 @@
 Debug/
 
 # игнорирование корневых файлов и каталогов:
-/MainProject/
 /TestSection/Backend/
 /TestSection/Database/
 /DataBase/

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\MainProject.csproj",
+      "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\MainProject.csproj",
       "projectName": "MainProject",
-      "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\MainProject.csproj",
+      "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\MainProject.csproj",
       "packagesPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\obj\\",
+      "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\CSharpSevenMaslyat-Frontend\\MainProject\\MainProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\glebo.DESKTOP-E8BKBIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
