@@ -1,15 +1,21 @@
-﻿@inherits LayoutComponentBase
+﻿@using DropList
+@inherits LayoutComponentBase
 
-<header class="upper-panel">
-	<button class="button-menu"></button>
+@* <header class="upper-panel">
+	<button class="button-menu" onclick="@dropList.click()">
+	</button>
 	<img class="separator-icon" src="Separator.png" alt="Separator">
 	<button class="button-save"></button>
 	<button class="button-undo"></button>
 	<button class="button-redo"></button>
 
-	
-</header>
+	@if (dropList.ShowDiv)
+	{
+		<div class="c"></div>
+	}
+
+</header> *@
 @Body
 @code {
-
+	
 }
