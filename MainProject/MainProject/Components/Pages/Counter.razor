@@ -1,19 +1,32 @@
-﻿@page "/counter"
+﻿@using System.Threading.Tasks
+@using Microsoft.JSInterop
+@using MainProject.Components
+@page "/"
 @rendermode InteractiveServer
 
-<PageTitle>Counter</PageTitle>
+<header class="upper-panel">
+	<button class="button-menu" @onclick="click"></button>
+	<img class="separator-icon" src="Separator.png" alt="Separator">
+	<button class="button-save"></button>
+	<button class="button-undo"></button>
+	<button class="button-redo"></button>
 
-<h1>Counter</h1>
-
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
+	@if (ShowDiv)
+	{
+		<div class="c"></div>
+	}
+</header>
 @code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
+	public bool ShowDiv { get; set; } = false;
+	public void click()
+	{
+		if (ShowDiv == false)
+		{
+			ShowDiv = true;
+		}
+		else
+		{
+			ShowDiv = false;
+		}
+	}
 }
