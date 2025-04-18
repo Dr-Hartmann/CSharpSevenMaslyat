@@ -4,28 +4,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AspNetCoreMVC.Data;
+using AspNetCoreMVC.DTO;
+using AspNetCoreMVC.Services;
 using AspNetCoreMVC.Models;
 
 namespace AspNetCoreMVC.Controllers;
 
 /// <summary>
-/// Контроллер для управления фильмами в базе данных.
-/// Реализует стандартные CRUD операции (Create, Read, Update, Delete).
+/// Контроллер для управления фильмами.
+/// Использует сервисный слой для работы с данными.
 /// </summary>
 public class MoviesController : Controller
 {
-    // Поле для хранения контекста базы данных
-    // readonly означает, что значение можно присвоить только в конструкторе
-    private readonly AspNetCoreMVCContext _context;
+    private readonly IMovieService _movieService;
 
-    // Конструктор контроллера
-    // context - контекст базы данных, который автоматически внедряется через DI (Dependency Injection)
-    public MoviesController(AspNetCoreMVCContext context)
+    /// <summary>
+    /// Конструктор контроллера
+    /// </summary>
+    /// <param name="movieService">Сервис для работы с фильмами</param>
+    public MoviesController(IMovieService movieService)
     {
-        // Сохраняем переданный контекст в поле класса
-        _context = context;
+        _movieService = movieService;
     }
 
     /// <summary>
@@ -37,66 +36,28 @@ public class MoviesController : Controller
     [HttpGet] // Атрибут, указывающий, что метод обрабатывает HTTP GET запросы
     public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
-        // Проверка наличия таблицы Movies в базе данных
-        // Если таблица не существует, возвращаем ошибку
-        if (_context.Movies == null)
-        {
-            return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
-        }
-
-        // Создаем LINQ-запрос для получения всех жанров из базы данных
-        // IQueryable<string> - тип, представляющий запрос к базе данных
-        // from m in _context.Movies - выбираем из таблицы Movies
-        // orderby m.Genre - сортируем по полю Genre
-        // select m.Genre - выбираем только поле Genre
-        IQueryable<string> genreQuery = from m in _context.Movies
-                                        orderby m.Genre
-                                        select m.Genre;
+        // Получаем список жанров для выпадающего списка
+        var genres = await _movieService.GetGenresAsync();
         
-        // Создаем LINQ-запрос для получения всех фильмов
-        // var - автоматическое определение типа
-        // from m in _context.Movies - выбираем из таблицы Movies
-        // select m - выбираем все поля
-        var movies = from m in _context.Movies
-                     select m;
-
-        // Если указана строка поиска, применяем фильтрацию
-        // string.IsNullOrEmpty - проверяет, пустая ли строка или null
-        if (!string.IsNullOrEmpty(searchString))
-        {
-            // Добавляем условие фильтрации в запрос
-            // Where - метод LINQ для фильтрации
-            // s.Title!.ToUpper() - преобразуем название в верхний регистр
-            // Contains - проверяет, содержит ли строка подстроку
-            movies = movies.Where(s => s.Title!.ToUpper().Contains(searchString.ToUpper()));
-        }
-
-        // Если указан жанр, применяем фильтрацию по жанру
-        if (!string.IsNullOrEmpty(movieGenre))
-        {
-            // Добавляем условие фильтрации по жанру
-            movies = movies.Where(x => x.Genre == movieGenre);
-        }
+        // Получаем отфильтрованные фильмы
+        var movies = await _movieService.SearchMoviesAsync(movieGenre, searchString);
 
         // Создаем модель представления
-        // new MovieGenreViewModel - создаем новый экземпляр класса
         var movieGenreVM = new MovieGenreViewModel
         {
-            // Создаем выпадающий список жанров
-            // new SelectList - создает список для HTML select
-            // await - ждет завершения асинхронной операции
-            // genreQuery.Distinct() - убирает дубликаты
-            // ToListAsync() - выполняет запрос и преобразует в список
-            Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
-            
-            // Получаем список фильмов
-            // await - ждет завершения асинхронной операции
-            // movies.ToListAsync() - выполняет запрос и преобразует в список
-            Movies = await movies.ToListAsync()
+            Genres = new SelectList(genres),
+            Movies = movies.Select(m => new Movies
+            {
+                ID = m.Id,
+                Title = m.Title,
+                ReleaseDate = m.ReleaseDate,
+                Genre = m.Genre,
+                Price = m.Price
+            }).ToList(),
+            MovieGenre = movieGenre,
+            SearchString = searchString
         };
 
-        // Возвращаем представление с моделью
-        // View(movieGenreVM) - создает представление с переданной моделью
         return View(movieGenreVM);
     }
 
@@ -116,31 +77,27 @@ public class MoviesController : Controller
     /// <param name="id">ID фильма</param>
     public async Task<IActionResult> Details(int? id)
     {
-        // Проверяем, передан ли ID
-        // int? - nullable тип, может быть null
         if (id == null)
         {
-            // Если ID не передан, возвращаем 404
             return NotFound();
         }
 
-        // Ищем фильм в базе данных
-        // await - ждет завершения асинхронной операции
-        // _context.Movies - обращение к таблице Movies
-        // FirstOrDefaultAsync - находит первый элемент или null
-        // m => m.ID == id - лямбда-выражение для поиска по ID
-        var movies = await _context.Movies
-            .FirstOrDefaultAsync(m => m.ID == id);
-            
-        // Проверяем, найден ли фильм
-        if (movies == null)
+        var movieDto = await _movieService.GetMovieByIdAsync(id.Value);
+        if (movieDto == null)
         {
-            // Если фильм не найден, возвращаем 404
             return NotFound();
         }
 
-        // Возвращаем представление с найденным фильмом
-        return View(movies);
+        var movie = new Movies
+        {
+            ID = movieDto.Id,
+            Title = movieDto.Title,
+            ReleaseDate = movieDto.ReleaseDate,
+            Genre = movieDto.Genre,
+            Price = movieDto.Price
+        };
+
+        return View(movie);
     }
 
     /// <summary>
@@ -149,31 +106,32 @@ public class MoviesController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        // Возвращаем пустое представление для создания нового фильма
         return View();
     }
 
     /// <summary>
     /// Обработка данных формы создания нового фильма
     /// </summary>
-    /// <param name="movies">Данные нового фильма</param>
+    /// <param name="movie">Данные нового фильма</param>
     [HttpPost]
     [ValidateAntiForgeryToken] // Защита от CSRF атак
-    public async Task<IActionResult> Create([Bind("ID,Title,ReleaseDate,Genre,Price")] Movies movies)
+    public async Task<IActionResult> Create([Bind("ID,Title,ReleaseDate,Genre,Price")] Movies movie)
     {
-        // Проверяем валидность данных модели
-        // ModelState.IsValid - проверяет все правила валидации
         if (ModelState.IsValid)
         {
-            // Добавляем новый фильм в контекст
-            _context.Add(movies);
-            // Сохраняем изменения в базе данных
-            await _context.SaveChangesAsync();
-            // Перенаправляем на страницу со списком фильмов
+            var movieDto = new MovieDto
+            {
+                Id = movie.ID,
+                Title = movie.Title,
+                ReleaseDate = movie.ReleaseDate,
+                Genre = movie.Genre,
+                Price = movie.Price
+            };
+
+            await _movieService.CreateMovieAsync(movieDto);
             return RedirectToAction(nameof(Index));
         }
-        // Если данные невалидны, возвращаем форму с ошибками
-        return View(movies);
+        return View(movie);
     }
 
     /// <summary>
@@ -183,66 +141,65 @@ public class MoviesController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
-        // Проверяем наличие ID
         if (id == null)
         {
             return NotFound();
         }
 
-        // Ищем фильм по ID
-        // FindAsync - ищет сущность по первичному ключу
-        var movies = await _context.Movies.FindAsync(id);
-        if (movies == null)
+        var movieDto = await _movieService.GetMovieByIdAsync(id.Value);
+        if (movieDto == null)
         {
             return NotFound();
         }
-        // Возвращаем форму редактирования с данными фильма
-        return View(movies);
+
+        var movie = new Movies
+        {
+            ID = movieDto.Id,
+            Title = movieDto.Title,
+            ReleaseDate = movieDto.ReleaseDate,
+            Genre = movieDto.Genre,
+            Price = movieDto.Price
+        };
+
+        return View(movie);
     }
 
     /// <summary>
     /// Обработка данных формы редактирования фильма
     /// </summary>
     /// <param name="id">ID редактируемого фильма</param>
-    /// <param name="movies">Обновленные данные фильма</param>
+    /// <param name="movie">Обновленные данные фильма</param>
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,Genre,Price")] Movies movies)
+    public async Task<IActionResult> Edit(int id, [Bind("ID,Title,ReleaseDate,Genre,Price")] Movies movie)
     {
-        // Проверяем соответствие ID в URL и в данных
-        if (id != movies.ID)
+        if (id != movie.ID)
         {
             return NotFound();
         }
 
-        // Проверяем валидность данных
         if (ModelState.IsValid)
         {
             try
             {
-                // Обновляем данные фильма в контексте
-                _context.Update(movies);
-                // Сохраняем изменения в базе данных
-                await _context.SaveChangesAsync();
+                var movieDto = new MovieDto
+                {
+                    Id = movie.ID,
+                    Title = movie.Title,
+                    ReleaseDate = movie.ReleaseDate,
+                    Genre = movie.Genre,
+                    Price = movie.Price
+                };
+
+                await _movieService.UpdateMovieAsync(movieDto);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (KeyNotFoundException)
             {
-                // Обрабатываем ситуацию, когда фильм был изменен или удален другим пользователем
-                if (!MoviesExists(movies.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    // Если произошла другая ошибка, пробрасываем её дальше
-                    throw;
-                }
+                return NotFound();
             }
-            // Перенаправляем на страницу со списком фильмов
             return RedirectToAction(nameof(Index));
         }
-        // Если данные невалидны, возвращаем форму с ошибками
-        return View(movies);
+        return View(movie);
     }
 
     /// <summary>
@@ -252,22 +209,27 @@ public class MoviesController : Controller
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
-        // Проверяем наличие ID
         if (id == null)
         {
             return NotFound();
         }
 
-        // Ищем фильм по ID
-        var movies = await _context.Movies
-            .FirstOrDefaultAsync(m => m.ID == id);
-        if (movies == null)
+        var movieDto = await _movieService.GetMovieByIdAsync(id.Value);
+        if (movieDto == null)
         {
             return NotFound();
         }
 
-        // Возвращаем форму подтверждения удаления с данными фильма
-        return View(movies);
+        var movie = new Movies
+        {
+            ID = movieDto.Id,
+            Title = movieDto.Title,
+            ReleaseDate = movieDto.ReleaseDate,
+            Genre = movieDto.Genre,
+            Price = movieDto.Price
+        };
+
+        return View(movie);
     }
 
     /// <summary>
@@ -278,35 +240,7 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        // Проверяем наличие таблицы Movies
-        if (_context.Movies == null)
-        {
-            return Problem("Entity set 'AspNetCoreMVCContext.Movies'  is null.");
-        }
-
-        // Ищем фильм по ID
-        var movies = await _context.Movies.FindAsync(id);
-        if (movies != null)
-        {
-            // Удаляем фильм из контекста
-            _context.Movies.Remove(movies);
-            // Сохраняем изменения в базе данных
-            await _context.SaveChangesAsync();
-        }
-
-        // Перенаправляем на страницу со списком фильмов
+        await _movieService.DeleteMovieAsync(id);
         return RedirectToAction(nameof(Index));
-    }
-
-    /// <summary>
-    /// Проверяет существование фильма с указанным ID
-    /// </summary>
-    /// <param name="id">ID фильма для проверки</param>
-    /// <returns>true, если фильм существует, иначе false</returns>
-    private bool MoviesExists(int id)
-    {
-        // Проверяем наличие таблицы Movies
-        // Any - проверяет, есть ли хотя бы один элемент, удовлетворяющий условию
-        return (_context.Movies?.Any(e => e.ID == id)).GetValueOrDefault();
     }
 }
