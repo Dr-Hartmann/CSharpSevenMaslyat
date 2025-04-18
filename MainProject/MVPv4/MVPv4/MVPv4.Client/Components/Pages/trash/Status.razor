@@ -1,0 +1,10 @@
+﻿@using MVPv4.Client.Pages.Components
+@inject StatusComponent status
+
+<h3>Status</h3>
+
+@foreach (var item in status.GetStatuses)
+{
+    <option value="@item">@item</option>
+}
+<option value="">nothing</option>

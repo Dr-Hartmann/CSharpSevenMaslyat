@@ -1,0 +1,70 @@
+﻿@page "/documentv1s/create"
+@using MVPv4.Data
+@using MVPv4.Models
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<MVPv4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>DocumentV1</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="DocumentV1" OnValidSubmit="AddDocumentV1" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="DocumentV1.Name" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => DocumentV1.Name" class="text-danger" /> 
+            </div>        
+@*             <div class="mb-3">
+                <label for="file" class="form-label">File:</label> 
+                <InputText id="file" @bind-Value="DocumentV1.File" class="form-control" aria-required="true"/> 
+                <ValidationMessage For="() => DocumentV1.File" class="text-danger" /> 
+            </div>     *@    
+            <div class="mb-3">
+                <label for="year" class="form-label">Year:</label> 
+                <InputDate id="year" @bind-Value="DocumentV1.Year" class="form-control" /> 
+                <ValidationMessage For="() => DocumentV1.Year" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label> 
+                <InputText id="title" @bind-Value="DocumentV1.Title" class="form-control" /> 
+                <ValidationMessage For="() => DocumentV1.Title" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="topic" class="form-label">Topic:</label> 
+                <InputText id="topic" @bind-Value="DocumentV1.Topic" class="form-control" /> 
+                <ValidationMessage For="() => DocumentV1.Topic" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="annotation" class="form-label">Annotation:</label> 
+                <InputText id="annotation" @bind-Value="DocumentV1.Annotation" class="form-control" /> 
+                <ValidationMessage For="() => DocumentV1.Annotation" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/documentv1s">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private DocumentV1 DocumentV1 { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddDocumentV1()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.DocumentV1.Add(DocumentV1);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/documentv1s");
+    }
+}
