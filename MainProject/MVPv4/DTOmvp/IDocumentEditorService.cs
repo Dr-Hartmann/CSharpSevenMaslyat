@@ -7,6 +7,7 @@ public interface IDocumentEditorService
     //Task AddAsync(DocumentV1 product);
     //Task UpdateAsync(DocumentV1 product);
     //Task DeleteAsync(int? id);
-    Task<DTOdocumentV1> GetDocumentFromDatabase(int? id/*, CancellationToken token*/);
-    Task<IEnumerable<DTOdocumentV1>> GetAll();
+    Task<DTOdocumentV1> GetAsync(int? id, CancellationToken token);
+    Task<IEnumerable<DTOdocumentV1>> GetAllAsync(CancellationToken cancellationToken);
+    Task AddAsync(DTOdocumentV1 product);
 }

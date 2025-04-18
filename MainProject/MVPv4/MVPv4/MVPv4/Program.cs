@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using MVPv4.Client.Pages.Components;
 using MVPv4.Data;
 using MVPv4.Components;
 using MVPv4.Controllers;
@@ -7,7 +6,6 @@ using DTOmvp;
 using MVPv4.Services;
 using MVPv4.Models;
 using Microsoft.Extensions.DependencyInjection;
-using MVPv4.Client;
 
 namespace MVPv4;
 
@@ -18,7 +16,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddHttpClient("MyClient", client
-            => client.BaseAddress = new Uri("https://localhost:7146"
+            => client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("applicationUrl")
             ?? throw new InvalidOperationException("'applicationUrl' not found.")));
 
         var dbContext = (DbContextOptionsBuilder options) =>
@@ -29,25 +27,22 @@ public class Program
         };
 
         builder.Services.AddControllers();
-        //builder.Services.AddOpenApi();
-
-        //builder.Services.AddRazorPages();
-        //builder.Services.AddServerSideBlazor();
-        //builder.Services.AddEndpointsApiExplorer();
-
         builder.Services.AddDbContextFactory<MVPv4Context>(dbContext);
-        //builder.Services.AddScoped<DocumentEditorController>();
         builder.Services.AddScoped<IDocumentEditorService, DocumentEditorService>();
-        //builder.Services.AddScoped<TestController>();
-        builder.Services.AddSingleton<StatusComponent>();
-        //builder.Services.AddSwagger();
-        builder.Services.AddSingleton<PersonRepository>();
+        //builder.Services.AddSingleton<StatusComponent>();
+        builder.Services.AddQuickGridEntityFrameworkAdapter();
 
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
-        builder.Services.AddQuickGridEntityFrameworkAdapter();
+        //builder.Services.AddOpenApi();
+        //builder.Services.AddRazorPages();
+        //builder.Services.AddServerSideBlazor();
+        //builder.Services.AddEndpointsApiExplorer();
+        //builder.Services.AddScoped<DocumentEditorController>();
+        //builder.Services.AddScoped<TestController>();
+
         //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         var app = builder.Build();

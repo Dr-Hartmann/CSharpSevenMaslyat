@@ -1,4 +1,4 @@
-﻿@page "/documentv1s/edit"
+﻿@* @page "/documentv1s/edit"
 @using MVPv4.Data
 @using MVPv4.Models
 @using Microsoft.EntityFrameworkCore
@@ -28,11 +28,11 @@ else
                     <InputText id="name" @bind-Value="DocumentV1.Name" class="form-control" aria-required="true"/>
                     <ValidationMessage For="() => DocumentV1.Name" class="text-danger" />
                 </div>
-@*                 <div class="mb-3">
+                <div class="mb-3">
                     <label for="file" class="form-label">File:</label>
                     <InputText id="file" @bind-Value="DocumentV1.File" class="form-control" aria-required="true"/>
                     <ValidationMessage For="() => DocumentV1.File" class="text-danger" />
-                </div> *@
+                </div>
                 <div class="mb-3">
                     <label for="year" class="form-label">Year:</label>
                     <InputDate id="year" @bind-Value="DocumentV1.Year" class="form-control" />
@@ -113,3 +113,4 @@ else
         return context.DocumentV1.Any(e => e.Id == id);
     }
 }
+ *@

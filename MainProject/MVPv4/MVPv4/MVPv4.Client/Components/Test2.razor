@@ -1,8 +1,7 @@
 ﻿@page "/test2"
+@rendermode InteractiveServer
 @using DTOmvp
 @using Newtonsoft.Json
-@inject IHttpClientFactory HttpClientFactory
-@rendermode InteractiveServer
 
 <PageTitle>Содержимое базы данных</PageTitle>
 
@@ -18,7 +17,7 @@ else
     {
         <dl class="row">
             <div class="form-label">
-                <div>___________________________________________</div>
+                ___________________________________________
                 <dt class="col-sm-2">Год</dt>
                 <dd class="col-sm-10">@item.Year</dd>
                 <dt class="col-sm-2">Титульник</dt>
@@ -37,18 +36,23 @@ else
     <button class="btn btn-primary" @onclick="GetData">Получить данные</button>
 </div>
 
+@inject IHttpClientFactory HttpClientFactory
 @code {
     private List<DTOdocumentV1> list;
 
-    async Task GetData()
+    private async Task GetData()
     {
+        list = null;
+
+        var t = new CancellationTokenSource(2000);
+
         var httpClient = HttpClientFactory.CreateClient("MyClient");
 
-        var response = await httpClient.GetAsync("documenteditor/all");
+        var response = await httpClient.GetAsync("documenteditor/all", t.Token);
 
         if (response.Content.Headers.ContentType?.MediaType != "application/json")
         {
-            var errorContent = await response.Content.ReadAsStringAsync();
+            var errorContent = await response.Content.ReadAsStringAsync(t.Token);
             Console.WriteLine($"Ошибка: сервер вернул не JSON. Ответ: {errorContent}");
             Console.WriteLine($"{response.Content.Headers.ContentType?.MediaType}");
             Console.WriteLine($"{response.Content.Headers.ContentType}");
@@ -58,35 +62,12 @@ else
         }
         else
         {
-            list = (List<DTOdocumentV1>)await response.Content.ReadFromJsonAsync<IEnumerable<DTOdocumentV1>>();
+            list = (await response.Content.ReadFromJsonAsync<IEnumerable<DTOdocumentV1>>(t.Token)).ToList();
         }
-
-        // try
-        // {
-        //     documentv1 = await httpClient.GetFromJsonAsync<DTOdocumentV1>("/test5/");
-        // }
-        // catch (HttpRequestException ex)
-        // {
-        //     Console.WriteLine($"Ошибка HTTP: {ex.Message}");
-        // }
-        // catch (JsonException ex)
-        // {
-        //     Console.WriteLine($"Ошибка JSON: {ex.Message}");
-        // }
-        // catch (Exception ex)
-        // {
-        //     Console.WriteLine($"Неизвестная ошибка: {ex.Message}");
-        // }
     }
 
-
-    // List<Person> persons = [];
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     var httpClient = HttpClientFactory.CreateClient("MyClient");
-
-    //     var response = await httpClient.PostAsJsonAsync("input/person/post", new Person() { Name = "ass we can" });
+    // CORS
+    // Kestrel вместе
 
     //     if (!response.IsSuccessStatusCode)
     //     {
@@ -96,7 +77,4 @@ else
     //         return;
     //     }
 
-    //     var content = await response.Content.ReadFromJsonAsync<Person[]>() ?? Array.Empty<Person>();
-    //     persons = await httpClient.GetFromJsonAsync<List<Person>>("input/person/getallpersons");
-    // }
 }

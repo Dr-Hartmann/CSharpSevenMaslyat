@@ -1,4 +1,4 @@
-﻿@page "/documentv1s/details"
+﻿@* @page "/documentv1s/details"
 @using MVPv4.Data
 @using MVPv4.Models
 @using Microsoft.EntityFrameworkCore
@@ -57,4 +57,26 @@
             NavigationManager.NavigateTo("notfound");
         }
     }
+
+
+            // try
+        // {
+        //     documentv1 = await httpClient.GetFromJsonAsync<DTOdocumentV1>("/test5/");
+        // }
+        // catch (HttpRequestException ex)
+        // {
+        //     Console.WriteLine($"Ошибка HTTP: {ex.Message}");
+        // }
+        // catch (JsonException ex)
+        // {
+        //     Console.WriteLine($"Ошибка JSON: {ex.Message}");
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.WriteLine($"Неизвестная ошибка: {ex.Message}");
+        // }
 }
+
+
+
+ *@
