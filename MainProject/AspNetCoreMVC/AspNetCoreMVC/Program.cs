@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCoreMVC.Data;
 using AspNetCoreMVC.Models;
+using AspNetCoreMVC.Services;
 namespace AspNetCoreMVC;
 
 /// <summary>
@@ -24,6 +25,10 @@ public class Program
         // GetConnectionString - получает строку подключения из appsettings.json
         builder.Services.AddDbContext<AspNetCoreMVCContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("AspNetCoreMVCContext") ?? throw new InvalidOperationException("Connection string 'AspNetCoreMVCContext' not found.")));
+
+        // Регистрируем сервис для работы с фильмами
+        // AddScoped - создает новый экземпляр сервиса для каждого HTTP-запроса
+        builder.Services.AddScoped<IMovieService, MovieService>();
 
         // Регистрируем сервисы для MVC
         builder.Services.AddControllersWithViews();
