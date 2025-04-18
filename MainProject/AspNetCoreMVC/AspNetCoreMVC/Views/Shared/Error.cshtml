@@ -1,22 +1,32 @@
-﻿@model ErrorViewModel
+﻿@* Объявление модели ErrorViewModel, которая содержит информацию об ошибке *@
+@model ErrorViewModel
+
+@* Блок C# кода для установки заголовка страницы *@
 @{
     ViewData["Title"] = "Error";
 }
 
+@* Заголовок страницы *@
 <h1 class="text-danger">Error.</h1>
+@* Сообщение об ошибке *@
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
+@* Условное отображение ID запроса, если он доступен *@
 @if (Model.ShowRequestId)
 {
     <p>
+        @* Отображение ID запроса *@
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
 }
 
+@* Заголовок раздела с дополнительной информацией *@
 <h3>Development Mode</h3>
+@* Описание режима разработки *@
 <p>
     Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
 </p>
+@* Инструкции по переключению в режим разработки *@
 <p>
     <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
     It can result in displaying sensitive information from exceptions to end users.

@@ -1,27 +1,53 @@
-﻿<!DOCTYPE html>
+﻿@* Объявление модели для представления *@
+@model dynamic
+
+@* Блок C# кода для установки заголовка страницы *@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* Объявление HTML5 документа *@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    @* Мета-теги для кодировки и поддержки мобильных устройств *@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ass we can</title>
+    
+    @* Заголовок страницы из ViewData *@
+    <title>@ViewData["Title"] - AspNetCoreMVC</title>
+    
+    @* Подключение CSS файлов *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AspNetCoreMVC.styles.css" asp-append-version="true" />
 </head>
 <body>
+    @* Верхняя навигационная панель *@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Index">Movie app</a>
+                @* Логотип/название приложения *@
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AspNetCoreMVC</a>
+                
+                @* Кнопка для мобильного меню *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                
+                @* Навигационное меню *@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @* Ссылка на главную страницу *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @* Ссылка на страницу фильмов *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                        </li>
+                        @* Ссылка на страницу конфиденциальности *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -30,20 +56,29 @@
             </div>
         </nav>
     </header>
+
+    @* Основной контейнер для содержимого страницы *@
     <div class="container">
         <main role="main" class="pb-3">
+            @* Здесь будет отображаться содержимое конкретной страницы *@
             @RenderBody()
         </main>
     </div>
 
+    @* Нижний колонтитул (футер) *@
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Movie app - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @* Копирайт и ссылка на страницу конфиденциальности *@
+            &copy; 2024 - AspNetCoreMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    @* Подключение JavaScript файлов *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    @* Блок для дополнительных скриптов из конкретных представлений *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
