@@ -1,0 +1,27 @@
+﻿@inject NavigationManager NavigationManager
+@inherits LayoutComponentBase
+
+@if (currentUrl == "/" || currentUrl == "/?id=login" || currentUrl == "/?id=register")
+{
+<div class="upper-panel">
+    
+</div>
+}
+else {
+<div class="upper-panel">
+    <PanelElements />
+</div>
+}
+
+<main>
+    @Body
+</main>
+
+@code {
+    private string currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery; // "/page?param=1"
+    }
+}

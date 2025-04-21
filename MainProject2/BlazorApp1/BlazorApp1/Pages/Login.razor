@@ -1,0 +1,45 @@
+﻿@page "/"
+@using BlazorApp1.Login
+
+@inject NavigationManager Navigation
+<PageTitle>Login</PageTitle>
+@if (currentId == "register")
+{
+    <PageTitle>Register</PageTitle>
+    <login-menu>
+        <div class="login-back">
+            <div class="login-main"><button @onclick="Log">тык</button></div>
+        </div>
+    </login-menu>
+}
+else
+{
+    <PageTitle>Login</PageTitle>
+    <login-menu>
+        <div class="login-back">
+            <div class="login-main"><button @onclick="Reg">Тык</button></div>
+        </div>
+    </login-menu>
+}
+
+@code {
+    private string currentId { get; set; }
+    private void UpdateUrl()
+    {
+
+        var uri = new Uri(Navigation.Uri);
+        var baseUri = uri.GetLeftPart(UriPartial.Path);
+        var newUri = $"{baseUri}?id={currentId}";
+        Navigation.NavigateTo(newUri);
+    }
+    private void Reg()
+    {
+        currentId = "register";
+        UpdateUrl();
+    }
+    private void Log()
+    {
+        currentId = "login";
+        UpdateUrl();
+    }
+}
