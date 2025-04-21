@@ -1,18 +1,21 @@
 ﻿@page "/ds"
 @page "/Editor"
-
+@rendermode InteractiveServer
 <PageTitle>Editor</PageTitle>
+<UpperPanel />
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
-@page "/editor"
-@using Microsoft.JSInterop
+@if (ShowDiv)
+{
+    <div class="c"></div>
+}
 
+</header>
 <div id="editor-container" style="overflow-y:auto; height: 100vh; background: #eee;">
     @foreach (var page in Pages)
     {
         <div @ref="page.ElementRef" class="page" contenteditable="true" @oninput="CheckOverflow">
-             <div>@(page.Content)</div>
+            <div>@(page.Content)</div>
         </div>
     }
 </div>
@@ -39,5 +42,9 @@ Welcome to your new app.
             StateHasChanged(); // Ререндерим компонент
         }
     }
-  
+    public bool ShowDiv { get; set; } = false;
+    public void click()
+    {
+        ShowDiv = !ShowDiv;
+    }
 }

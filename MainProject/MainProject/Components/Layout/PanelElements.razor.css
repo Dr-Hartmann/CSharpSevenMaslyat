@@ -1,0 +1,10 @@
+﻿ .PopUp-menu {
+    background-color: white;
+    position: absolute;
+    top: 75px;
+    left: 2rem;
+    width: 250px;
+    height: 150px;
+    border-radius: 9px;
+    box-shadow: 4px 4px 10px rgba(0,0,0, 0.3);
+}
