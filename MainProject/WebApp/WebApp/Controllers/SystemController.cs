@@ -35,7 +35,11 @@ namespace MVPv4.Controllers
                     Method = desc.HttpMethod,
                     Route = "/" + desc.RelativePath,
                     desc.ActionDescriptor.DisplayName,
-                    Parameters = desc.ParameterDescriptions.Select(p => new { p.Name, p.Type.Name })
+                    Parameters = desc.ParameterDescriptions.Select(p => new 
+                    {
+                        ParameterName = p.Name,
+                        ParameterType = p.Type.Name
+                    })
                 })
                 .ToList();
 

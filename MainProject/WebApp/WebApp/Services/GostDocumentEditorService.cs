@@ -22,14 +22,14 @@ namespace WebApp.Services
             return Task.FromResult<IEnumerable<DTOdocumentV1>>(_mockDocs);
         }
 
-        public Task AddAsync(DTOdocumentV1 product)
+        public Task AddAsync(DTOdocumentV1 product, CancellationToken cancellationToken)
         {
             product.Id = _mockDocs.Max(d => d.Id) + 1;
             _mockDocs.Add(product);
             return Task.CompletedTask;
         }
 
-        public Task UpdateAsync(DTOdocumentV1 product)
+        public Task UpdateAsync(DTOdocumentV1 product, CancellationToken cancellationToken)
         {
             var index = _mockDocs.FindIndex(d => d.Id == product.Id);
             if (index == -1) throw new KeyNotFoundException();
@@ -38,7 +38,7 @@ namespace WebApp.Services
             return Task.CompletedTask;
         }
 
-        public Task DeleteAsync(int? id)
+        public Task DeleteAsync(int? id, CancellationToken cancellationToken)
         {
             var doc = _mockDocs.FirstOrDefault(d => d.Id == id);
             if (doc == null) throw new KeyNotFoundException();

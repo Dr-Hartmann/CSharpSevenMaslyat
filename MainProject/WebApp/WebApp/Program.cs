@@ -1,6 +1,9 @@
-using DTOmvp;
-using MVPv4.Data;
+﻿using DTOmvp;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MVPv4.Services;
+using System.Text;
 using WebApp.Services;
 
 namespace WebApp
@@ -12,52 +15,93 @@ namespace WebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
 
             builder.Services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
                 {
                     policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
                 });
             });
 
-            builder.Services.AddAuthentication("BasicAuthentication")
-                .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, WebApp.Services.BasicAuthenticationHandler>("BasicAuthentication", null);
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = "yourIssuer",
+                    ValidAudience = "yourAudience",
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Flat_earth_hitler_caput_super_secret_key_1234512345!"))
+                };
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
 
             if (builder.Environment.IsDevelopment())
             {
                 builder.Services.AddSingleton<IDocumentEditorService, MockDocumentEditorService>();
+                builder.Services.AddSingleton<AuditService>();
             }
             else
             {
                 builder.Services.AddScoped<IDocumentEditorService, DocumentEditorService>();
             }
 
-            builder.Services.AddSingleton<AuditService>();
-
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
-                app.UseSwaggerUI();
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+                    options.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-
             app.UseCors();
-            app.UseAuthentication();
 
-            // app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

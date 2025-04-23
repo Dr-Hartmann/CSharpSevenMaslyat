@@ -8,13 +8,13 @@ public class DocumentV1
     public int Id { get; set; }
 
     [Required(ErrorMessage = "Не указано имя документа")]
-    [StringLength(20, MinimumLength = 3, ErrorMessage = "Длина должна быть в диапазоне от 3 до 20")]
     [RegularExpression(@"^[A-Za-zА-Яа-яёЁ0-9_]+$", ErrorMessage = "Должны быть только буквы, цифры или '_'")]
     public string? Name { get; set; }
 
     //[Required(ErrorMessage = "Не указан шаблон документа!")]
     public byte[]? File { get; set; }
 
+    [Range(1900, 2050, ErrorMessage = "Год должен быть в диапазоне от 1900 до 2050")]
     //[RegularExpression(@"^\d{4}$", ErrorMessage = "Неверный формат года")]
     public DateOnly? Year { get; set; }
 

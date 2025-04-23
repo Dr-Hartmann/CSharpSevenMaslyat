@@ -1,5 +1,7 @@
 using DTOmvp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Services;
 
 namespace MVPv4.Controllers;
 
@@ -7,7 +9,12 @@ namespace MVPv4.Controllers;
 [Route("[controller]/[action]")]
 public class DocumentEditorController(IDocumentEditorService docEditorService, AuditService auditService) : Controller
 {
+    [Authorize]
+    [HttpGet("All")]
+    public IActionResult GetAll() => Ok("Success");
+
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<DTOdocumentV1>> Get(int? id, CancellationToken cancellationToken)
     {
         try
@@ -23,6 +30,7 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<DTOdocumentV1>>> All(CancellationToken cancellationToken)
     {
         try
@@ -39,8 +47,9 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
     }
 
     [HttpPost]
+    [Authorize]
     //[ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(DTOdocumentV1 doc)
+    public async Task<ActionResult> Create(DTOdocumentV1 doc, CancellationToken cancellationToken)
     {
         // Проверяем валидность полученных данных согласно аннотациям модели
         if (!ModelState.IsValid)
@@ -53,7 +62,7 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
             // Аудит создания документа
             await auditService.AuditAsync($"Создание документа: {doc.Name}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
             // Если данные валидны, добавляем документ через сервис
-            await docEditorService.AddAsync(doc);
+            await docEditorService.AddAsync(doc, cancellationToken);
             return Ok();
         }
         catch (KeyNotFoundException)
@@ -63,7 +72,8 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(DTOdocumentV1 doc)
+    [Authorize]
+    public async Task<IActionResult> Update(DTOdocumentV1 doc, CancellationToken cancellationToken)
     {
         // Проверяем валидность полученных данных согласно аннотациям модели
         if (!ModelState.IsValid)
@@ -76,7 +86,7 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
             // Аудит обновления документа
             await auditService.AuditAsync($"Обновление документа: {doc.Id}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
             // Если данные валидны, обновляем документ через сервис
-            await docEditorService.UpdateAsync(doc);
+            await docEditorService.UpdateAsync(doc, cancellationToken);
             return Ok();
         }
         catch (KeyNotFoundException)
@@ -86,13 +96,14 @@ public class DocumentEditorController(IDocumentEditorService docEditorService, A
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int? id)
+    [Authorize]
+    public async Task<IActionResult> Delete(int? id, CancellationToken cancellationToken)
     {
         try
         {
             // Аудит удаления документа
             await auditService.AuditAsync($"Удаление документа: {id}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
-            await docEditorService.DeleteAsync(id);
+            await docEditorService.DeleteAsync(id, cancellationToken);
             return Ok();
         }
         catch (KeyNotFoundException)
