@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
+    "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
+    "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "projectUniqueName": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
         "projectName": "BlazorApp1",
-        "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
-        "packagesPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject2\\BlazorApp1\\BlazorApp1\\obj\\",
+        "projectPath": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\glebo.DESKTOP-E8BKBIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

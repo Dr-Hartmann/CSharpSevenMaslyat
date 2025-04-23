@@ -3,13 +3,13 @@
 
 @if (currentUrl == "/" || currentUrl == "/?id=login" || currentUrl == "/?id=register")
 {
-    
+
 }
 else {
 
-<div class="upper-panel">
-    <PanelElements />
-</div>
+    <div class="upper-panel">
+        <PanelElements />
+    </div>
 }
 
 <main>
@@ -17,10 +17,10 @@ else {
 </main>
 
 @code {
-    private string currentUrl;
+    private string currentUrl { get; set; } = "";
 
     protected override void OnInitialized()
     {
-        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery; // "/page?param=1"
+        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery; 
     }
 }

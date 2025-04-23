@@ -18,3 +18,46 @@
 .button-login.active, .button-register.active{
     border-bottom: 2px solid #000000;
 }
+.label-format {
+    margin-left: 50px;
+    font-size: 2vh;
+}
+.input-format-login {
+    margin-left: 48px;
+    border-radius: 15px;
+    width: 59%;
+    border: 1.5px solid #6e6e6e;
+    padding-left: 10px;
+}
+.input-format-password {
+    margin-left: 33px;
+    border-radius: 15px;
+    width: 59%;
+    border: 1.5px solid #6e6e6e;
+    padding-left: 10px;
+}
+.button-enter {
+    background-color: #1C63FF;
+    font-size: 2.1vh;
+    height: 45px;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    border: none;
+}
+.button-enter:hover{
+    border: solid;
+    border-width: 1px;
+    border-color: black;
+}
+.button-guest {
+    font-size: 1.4vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: gray;
+    border: none;
+    text-decoration: underline;
+}

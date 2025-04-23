@@ -12,8 +12,17 @@
     <login-menu>
         <div class="login-back">
             <div class="login-main">
-                <button class="button-login" @onclick="Log">Вход</button>
-                <button class="button-register active" @onclick="Reg">Регистрация</button>
+                <p>
+                    <button class="button-login" @onclick="Log">Вход</button>
+                    <button class="button-register active" @onclick="Reg">Регистрация</button>
+                    <br>
+                </p>
+                <br>
+                <p><br><label class="label-format">Логин</label><input class="input-format-login" @bind="login"/><br></p>
+                <p><label class="label-format">Пароль</label><input class="input-format-password" /><br></p>
+                <br>
+                <br>
+                <p><button class="button-enter">Зарегистрироваться</button></p>
             </div>
         </div>
     </login-menu>
@@ -24,8 +33,18 @@ else if (currentId == "login")
     <login-menu>
         <div class="login-back">
             <div class="login-main">
-                <button class="button-login active" @onclick="Log">Вход</button>
-                <button class="button-register" @onclick="Reg">Регистрация</button>
+                <p>
+                    <button class="button-login active" @onclick="Log">Вход</button>
+                    <button class="button-register" @onclick="Reg">Регистрация</button>
+                    <br>
+                </p>
+                <br>
+                <p><br><label class="label-format">Логин</label><input class="input-format-login" /><br></p>
+                <p><label class="label-format">Пароль</label><input class="input-format-password" /><br></p>
+                <br>
+                <br>
+                <p><button class="button-enter">Войти</button></p>
+                <p><button class="button-guest active" @onclick="NavigateToEditor">Войти как гость</button></p>
             </div>
         </div>
     </login-menu>
@@ -33,7 +52,7 @@ else if (currentId == "login")
 
 @code {
     private string currentId { get; set; } = "login"; // Значение по умолчанию
-
+    private string login { get; set; } = "";
     protected override async Task OnInitializedAsync()
     {
         // Получаем параметры из URL
@@ -69,5 +88,13 @@ else if (currentId == "login")
     {
         currentId = "login";
         UpdateUrl();
+    }
+    private void NavigateToEditor()
+    {
+        NavigationManager.NavigateTo("/Editor");
+    }
+    private void Show()
+    {
+        Console.Write(login);
     }
 }

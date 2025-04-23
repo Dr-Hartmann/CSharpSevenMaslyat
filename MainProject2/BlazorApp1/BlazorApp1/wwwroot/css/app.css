@@ -169,3 +169,11 @@ login-menu {
     position: relative;
     display: inline-block;
 }
+
+.input-format-login {
+    margin-left: 48px;
+    border-radius: 15px;
+    width: 59%;
+    border: 1.5px solid #6e6e6e;
+    padding-left: 10px;
+}
