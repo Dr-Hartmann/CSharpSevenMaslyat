@@ -9,10 +9,6 @@ namespace MVPv4.Controllers;
 [Route("[controller]/[action]")]
 public class DocumentEditorController(IDocumentEditorService docEditorService, AuditService auditService) : Controller
 {
-    [Authorize]
-    [HttpGet("All")]
-    public IActionResult GetAll() => Ok("Success");
-
     [HttpGet("{id}")]
     [Authorize]
     public async Task<ActionResult<DTOdocumentV1>> Get(int? id, CancellationToken cancellationToken)

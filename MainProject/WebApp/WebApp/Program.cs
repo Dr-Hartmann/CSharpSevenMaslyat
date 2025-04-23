@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MVPv4.Services;
+using System.Net;
 using System.Text;
 using WebApp.Services;
 
@@ -61,13 +62,16 @@ namespace WebApp
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidIssuer = "yourIssuer",
-                    ValidAudience = "yourAudience",
+                    ValidIssuer = "1",
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Flat_earth_hitler_caput_super_secret_key_1234512345!"))
                 };
             });
+
+            // Добавляю поддержку HTTP
+            builder.WebHost.ConfigureKestrel(options =>
+            {
 
             builder.Services.AddAuthorization(options =>
             {
@@ -86,6 +90,9 @@ namespace WebApp
 
             var app = builder.Build();
 
+            // Добавляю поддержку статических файлов
+            app.UseStaticFiles();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -95,9 +102,6 @@ namespace WebApp
                     options.RoutePrefix = string.Empty;
                 });
             }
-
-            app.UseHttpsRedirection();
-
             app.UseCors();
 
             app.UseAuthentication();
