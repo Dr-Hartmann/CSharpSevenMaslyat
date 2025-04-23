@@ -5,13 +5,15 @@ namespace MVPv4.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class DocumentEditorController(IDocumentEditorService docEditorService) : Controller
+public class DocumentEditorController(IDocumentEditorService docEditorService, AuditService auditService) : Controller
 {
     [HttpGet("{id}")]
     public async Task<ActionResult<DTOdocumentV1>> Get(int? id, CancellationToken cancellationToken)
     {
         try
         {
+            // Аудит получения документа
+            await auditService.AuditAsync($"Получение документа с id={id}", User?.Identity?.Name ?? "anonymous", cancellationToken);
             return await docEditorService.GetAsync(id, cancellationToken);
         }
         catch (KeyNotFoundException)
@@ -25,6 +27,8 @@ public class DocumentEditorController(IDocumentEditorService docEditorService) :
     {
         try
         {
+            // Аудит получения всех документов
+            await auditService.AuditAsync("Получение всех документов", User?.Identity?.Name ?? "anonymous", cancellationToken);
             var doc = await docEditorService.GetAllAsync(cancellationToken);
             return Ok(doc);
         }
@@ -38,8 +42,17 @@ public class DocumentEditorController(IDocumentEditorService docEditorService) :
     //[ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(DTOdocumentV1 doc)
     {
+        // Проверяем валидность полученных данных согласно аннотациям модели
+        if (!ModelState.IsValid)
+        {
+            // Если данные невалидны, возвращаем ошибку 400 с описанием ошибок
+            return BadRequest(ModelState);
+        }
         try
         {
+            // Аудит создания документа
+            await auditService.AuditAsync($"Создание документа: {doc.Name}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
+            // Если данные валидны, добавляем документ через сервис
             await docEditorService.AddAsync(doc);
             return Ok();
         }
@@ -52,8 +65,17 @@ public class DocumentEditorController(IDocumentEditorService docEditorService) :
     [HttpPut]
     public async Task<IActionResult> Update(DTOdocumentV1 doc)
     {
+        // Проверяем валидность полученных данных согласно аннотациям модели
+        if (!ModelState.IsValid)
+        {
+            // Если данные невалидны, возвращаем ошибку 400 с описанием ошибок
+            return BadRequest(ModelState);
+        }
         try
         {
+            // Аудит обновления документа
+            await auditService.AuditAsync($"Обновление документа: {doc.Id}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
+            // Если данные валидны, обновляем документ через сервис
             await docEditorService.UpdateAsync(doc);
             return Ok();
         }
@@ -68,6 +90,8 @@ public class DocumentEditorController(IDocumentEditorService docEditorService) :
     {
         try
         {
+            // Аудит удаления документа
+            await auditService.AuditAsync($"Удаление документа: {id}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
             await docEditorService.DeleteAsync(id);
             return Ok();
         }
@@ -78,9 +102,9 @@ public class DocumentEditorController(IDocumentEditorService docEditorService) :
     }
 
     // TODO
-    /* �������� ����������
-     * ������� ����� ����������� �� ����� �����
-     * �������� ������ �������
-     * �������� ������ ������ � �������
+    /* Дописать контроллер
+     * Создать новые контроллеры по други путям
+     * Внедрить другие сервисы
+     * Внедрить токены отмены в сервисы
      */
 }
