@@ -1,0 +1,20 @@
+﻿.button-login {
+    border: none;
+    margin-left: 140px;
+    margin-top: 50px;
+    font-size: 4vh;
+}
+.button-register {
+    border: none;
+    margin-left: 100px;
+    font-size: 4vh;
+}
+.button-login:hover {
+    color: #535353;
+}
+.button-register:hover{
+    color: #535353;
+}
+.button-login.active, .button-register.active{
+    border-bottom: 2px solid #000000;
+}

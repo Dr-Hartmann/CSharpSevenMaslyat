@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\": {}
+    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject\\MainProject\\MainProject.csproj",
+      "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject\\MainProject\\MainProject.csproj",
       "projectName": "MainProject",
-      "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject\\MainProject\\MainProject.csproj",
+      "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject\\MainProject\\MainProject.csproj",
       "packagesPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject\\MainProject\\obj\\",
+      "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\new\\MainProject\\MainProject\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\glebo.DESKTOP-E8BKBIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -28,7 +33,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -46,7 +50,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -70,7 +75,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

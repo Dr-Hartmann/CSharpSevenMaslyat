@@ -2,41 +2,69 @@
 @using BlazorApp1.Login
 
 @inject NavigationManager Navigation
-<PageTitle>Login</PageTitle>
+@inject NavigationManager NavigationManager
+
+<PageTitle>Enterance</PageTitle>
+
 @if (currentId == "register")
 {
     <PageTitle>Register</PageTitle>
     <login-menu>
         <div class="login-back">
-            <div class="login-main"><button @onclick="Log">тык</button></div>
+            <div class="login-main">
+                <button class="button-login" @onclick="Log">Вход</button>
+                <button class="button-register active" @onclick="Reg">Регистрация</button>
+            </div>
         </div>
     </login-menu>
 }
-else
+else if (currentId == "login")
 {
     <PageTitle>Login</PageTitle>
     <login-menu>
         <div class="login-back">
-            <div class="login-main"><button @onclick="Reg">Тык</button></div>
+            <div class="login-main">
+                <button class="button-login active" @onclick="Log">Вход</button>
+                <button class="button-register" @onclick="Reg">Регистрация</button>
+            </div>
         </div>
     </login-menu>
 }
 
 @code {
-    private string currentId { get; set; }
+    private string currentId { get; set; } = "login"; // Значение по умолчанию
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Получаем параметры из URL
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var idValue))
+        {
+            currentId = idValue.FirstOrDefault() ?? "login"; // Используем значение из URL или значение по умолчанию
+        }
+        else
+        {
+            // Если параметра 'id' нет, устанавливаем значение по умолчанию и перенаправляем
+            NavigationManager.NavigateTo("?id=login", replace: true);
+        }
+
+        await base.OnInitializedAsync();
+    }
+
     private void UpdateUrl()
     {
-
         var uri = new Uri(Navigation.Uri);
         var baseUri = uri.GetLeftPart(UriPartial.Path);
         var newUri = $"{baseUri}?id={currentId}";
         Navigation.NavigateTo(newUri);
     }
+
     private void Reg()
     {
         currentId = "register";
         UpdateUrl();
     }
+
     private void Log()
     {
         currentId = "login";
