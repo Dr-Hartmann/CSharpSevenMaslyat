@@ -61,3 +61,8 @@
     border: none;
     text-decoration: underline;
 }
+.text-message {
+    color: #6D7CFF;
+    text-align: center;
+    font-weight: bold;
+}

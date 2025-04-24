@@ -1,12 +1,9 @@
 ﻿@inject NavigationManager NavigationManager
+@implements IDisposable
 @inherits LayoutComponentBase
 
-@if (currentUrl == "/" || currentUrl == "/?id=login" || currentUrl == "/?id=register")
+@if (IsPanelVisible)
 {
-
-}
-else {
-
     <div class="upper-panel">
         <PanelElements />
     </div>
@@ -17,10 +14,26 @@ else {
 </main>
 
 @code {
-    private string currentUrl { get; set; } = "";
+    private string currentUrl = "";
+    private bool IsPanelVisible =>
+        currentUrl != "/" &&
+        currentUrl != "/?id=login" &&
+        currentUrl != "/?id=register";
 
     protected override void OnInitialized()
     {
-        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery; 
+        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery;
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
+        StateHasChanged(); // Обновляет разметку
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }

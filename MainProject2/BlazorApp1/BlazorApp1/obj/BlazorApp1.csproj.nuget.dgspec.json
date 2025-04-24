@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
+    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
   },
   "projects": {
-    "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
+    "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "projectUniqueName": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
         "projectName": "BlazorApp1",
-        "projectPath": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "D:\\Git\\my\\CSharpSevenMaslyat\\MainProject2\\BlazorApp1\\BlazorApp1\\obj\\",
+        "projectPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject2\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
+        "packagesPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\glebo.DESKTOP-E8BKBIM\\Desktop\\ЧГУ\\SharpProj\\Main\\MainProject2\\BlazorApp1\\BlazorApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\glebo.DESKTOP-E8BKBIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -59,9 +59,17 @@
               "target": "Package",
               "version": "[9.0.4, )"
             },
+            "Microsoft.AspNetCore.Mvc.Abstractions": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.AspNetCore.WebUtilities": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.8.0, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
@@ -78,6 +86,10 @@
             "NuGet.Frameworks": {
               "target": "Package",
               "version": "[6.13.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.8.0, )"
             }
           },
           "imports": [

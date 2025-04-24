@@ -1,8 +1,9 @@
 ﻿@page "/"
 @using BlazorApp1.Login
-
+@inject HttpClient Http
 @inject NavigationManager Navigation
 @inject NavigationManager NavigationManager
+@using System.Net.Http.Json
 
 <PageTitle>Enterance</PageTitle>
 
@@ -19,10 +20,14 @@
                 </p>
                 <br>
                 <p><br><label class="label-format">Логин</label><input class="input-format-login" @bind="login"/><br></p>
-                <p><label class="label-format">Пароль</label><input class="input-format-password" /><br></p>
+                <p><label class="label-format">Пароль</label><input class="input-format-password" @bind="password"/><br></p>
                 <br>
                 <br>
-                <p><button class="button-enter">Зарегистрироваться</button></p>
+                <p><button class="button-enter" @onclick="RegisterUser">Зарегистрироваться</button></p>
+                @if (!string.IsNullOrWhiteSpace(message))
+                {
+                    <p class="text-message">@message</p>
+                }
             </div>
         </div>
     </login-menu>
@@ -39,8 +44,8 @@ else if (currentId == "login")
                     <br>
                 </p>
                 <br>
-                <p><br><label class="label-format">Логин</label><input class="input-format-login" /><br></p>
-                <p><label class="label-format">Пароль</label><input class="input-format-password" /><br></p>
+                <p><br><label class="label-format">Логин</label><input class="input-format-login" @bind="login"/><br></p>
+                <p><label class="label-format">Пароль</label><input class="input-format-password" @bind="password"/><br></p>
                 <br>
                 <br>
                 <p><button class="button-enter">Войти</button></p>
@@ -52,7 +57,48 @@ else if (currentId == "login")
 
 @code {
     private string currentId { get; set; } = "login"; // Значение по умолчанию
-    private string login { get; set; } = "";
+    private string login;
+    private string password;
+    private string message;
+    public class RegisterRequest
+    {
+        public string login { get; set; }
+        public string password { get; set; }
+    }
+    private async Task RegisterUser()
+    {
+        var request = new RegisterRequest
+            {
+                login = login,
+                password = password
+            };
+       
+        if (login == "error")
+        {
+            message = "Ошибка регистрации";
+        }
+        if (string.IsNullOrEmpty(login)||string.IsNullOrEmpty(password))
+        {
+            message = "Поля Логин и пароль не должны быть пустыми";
+        }
+        else
+        {
+            message = "Успешная регистрация";
+            await Task.Delay(1000);
+            NavigationManager.NavigateTo("/Editor");
+        }
+        // var response = await Http.PostAsJsonAsync("https://your-api.com/api/register", request);
+
+        // if (response.IsSuccessStatusCode)
+        // {
+        //     message = "Успешная регистрация!";
+        //     NavigationManager.NavigateTo("/Editor");
+        // }
+        // else
+        // {
+        //     message = "Ошибка при регистрации.";
+        // }
+    }
     protected override async Task OnInitializedAsync()
     {
         // Получаем параметры из URL
@@ -93,8 +139,11 @@ else if (currentId == "login")
     {
         NavigationManager.NavigateTo("/Editor");
     }
-    private void Show()
-    {
-        Console.Write(login);
-    }
+    // private void Show()
+    // {
+    //     Console.Write(login);
+    // }
+  
 }
+}
+    
