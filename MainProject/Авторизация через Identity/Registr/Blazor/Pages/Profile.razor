@@ -1,6 +1,8 @@
-﻿@page "/Profile"
+﻿
+@page "/Profile"
 
-@attribute [Authorize]
+@attribute [Authorize] 
+@* ChistoDebug *@
 
 @if(userProfile == null)
 {
@@ -28,11 +30,15 @@ else
 			<input class="form-control-plaintext" readonly @bind="userProfile.PhoneNumber"></input>
 		</div>
 	</div>
+	<button class="button-logout" @onclick="Logout">Выйти</button>
 }
 
 
 @inject HttpClient Http
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider provider
 @code {
+
 	public UserProfile? userProfile = null;
 	private string message = "";
 
@@ -49,5 +55,10 @@ else
 			message = "Не читается профиль";
 		}
 	}
-
+	private void Logout()
+	{
+		var authStateProvider = (AuthStateProvider)provider;
+		authStateProvider.Logout();
+		Navigation.NavigateTo("/");
+	}
 }

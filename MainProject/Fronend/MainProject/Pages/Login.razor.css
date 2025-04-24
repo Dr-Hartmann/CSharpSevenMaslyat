@@ -1,49 +1,41 @@
 ﻿.button-login {
     border: none;
-    margin-left: 184px;
-
+    margin-left: 140px;
+    margin-top: 50px;
     font-size: 4vh;
 }
-
 .button-register {
     border: none;
     margin-left: 100px;
     font-size: 4vh;
 }
-
 .button-login:hover {
     color: #535353;
 }
-
-.button-register:hover {
+.button-register:hover{
     color: #535353;
 }
-
-.button-login.active, .button-register.active {
+.button-login.active, .button-register.active{
     border-bottom: 2px solid #000000;
 }
-
 .label-format {
     margin-left: 50px;
     font-size: 2vh;
 }
-
 .input-format-login {
-    margin-left: 146px;
+    margin-left: 100px;
     border-radius: 15px;
     width: 59%;
     border: 1.5px solid #6e6e6e;
     padding-left: 10px;
 }
-
 .input-format-password {
-    margin-left: 146px;
+    margin-left: 33px;
     border-radius: 15px;
     width: 59%;
     border: 1.5px solid #6e6e6e;
     padding-left: 10px;
 }
-
 .button-enter {
     background-color: #1C63FF;
     font-size: 2.1vh;
@@ -55,13 +47,11 @@
     color: white;
     border: none;
 }
-
-    .button-enter:hover {
-        border: solid;
-        border-width: 1px;
-        border-color: black;
-    }
-
+.button-enter:hover{
+    border: solid;
+    border-width: 1px;
+    border-color: black;
+}
 .button-guest {
     font-size: 1.4vh;
     display: block;
@@ -71,23 +61,8 @@
     border: none;
     text-decoration: underline;
 }
-
 .text-message {
     color: #6D7CFF;
     text-align: center;
     font-weight: bold;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-    display: inline-block;
-    margin-top: 50px;
-}
-.alert.alert-danger {
-    position: absolute;
-    top: 0; /* Или любое другое значение, чтобы разместить в нужном месте */
-    left: 0;
-    width: 100%; /* Чтобы занимало всю ширину контейнера */
-    z-index: 1000; /* Чтобы окно было поверх всего */
 }

@@ -1,77 +1,72 @@
-@page "/Login"
-@using static Auth.LoginMain
+@page "/"
+
 
 <PageTitle>Login/Register</PageTitle>
 
 @if (currentId == "register")
 {
-    <PageTitle>Register</PageTitle>
-    <!-- Register markup -->
-    <login-menu>
-        <div class="login-back">
-            <div class="login-main">
-                @* Ошибки *@
-                @if (errors.Length > 0)
-                {
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach (var err in errors)
-                            {
-                                <li>@err</li>
-                            }
-                        </ul>
-                    </div>
-                }
+	<PageTitle>Register</PageTitle>
+	<!-- Register markup -->
+	@* Ошибки *@
+	@if (errors.Length > 0)
+	{
+		<div class="alert alert-danger">
+			<ul>
+				@foreach (var err in errors)
+				{
+					<li>@err</li>
+				}
+			</ul>
+		</div>
+	}
+	<login-menu>
+		<div class="login-back">
 
-                @* Навигация *@
-                <p>
-                    <a class="btn btn-primary" href="/Login?id=login">Вход</a>
-                    <a class="btn btn-primary" href="/Login?id=register">Регистрация</a>
-                </p>
+			<div class="login-main">
 
-                @* Поля *@
-                <input class="input-format-login" @bind="email" placeholder="Email" />
-                <input class="input-format-password" @bind="password" placeholder="Пароль" />
-                <input class="input-format-password" @bind="ConfirmPassword" placeholder="Подтвердите пароль" />
+				@* Навигация *@
+				<p>
+					<a class="button-login" href="?id=login">Вход</a>
+					<a class="button-register active" href="?id=register">Регистрация</a><br>
+				</p>
 
-                @* Кнопки *@
-                <div class="row">
-                    <button class="btn btn-primary" @onclick="RegUserAsync">Зарегистрироваться</button>
-                    <a class="btn btn-outline-primary" href="/">Закрыть</a>
-                </div>
-            </div>
-        </div>
-    </login-menu>
+				@* Поля *@
+				<p>	<input class="input-format-login" @bind="email" placeholder="Email" /></p>
+				<p><input class="input-format-password" @bind="password" placeholder="Пароль" /> </p>
+				<p><input class="input-format-password" @bind="ConfirmPassword" placeholder="Подтвердите пароль" /> </p>
+
+
+				@* Кнопки *@
+
+				<button class="button-enter active" @onclick="RegUserAsync">Зарегистрироваться</button>
+			</div>
+		</div>
+	</login-menu>
+
 }
 else
 {
-    <PageTitle>Login</PageTitle>
-    <!-- Login markup -->
-    <login-menu>
-        <div class="login-back">
-            <div class="login-main">
-                @if (!string.IsNullOrWhiteSpace(error))
-                {
-                    <div class="alert alert-danger">@error</div>
-                }
+	<PageTitle>Login</PageTitle>
+	<!-- Login markup -->
+	<login-menu>
+		<div class="login-back">
+			<div class="login-main">
+				@if (!string.IsNullOrWhiteSpace(error))
+				{
+					<div class="alert alert-danger">@error</div>
+				}
+				<p>
+					<a class="button-login active" href="?id=login">Вход</a>
+					<a class="button-register" href="?id=register">Регистрация</a>
+				</p>
+				<p><input class="input-format-login" @bind="email" placeholder="Email" /> </p>
+				<p><input class="input-format-password" @bind="password" placeholder="Password" /> </p>
+				<button class="button-enter" @onclick="LoginAsync">Войти</button>
+				<button class="button-guest active" @onclick="NavigateToEditor">Войти как гость</button>
+			</div>
+		</div>
+	</login-menu>
 
-                <p>
-                    <a class="btn btn-primary" href="/Login?id=login">Вход</a>
-                    <a class="btn btn-primary" href="/Login?id=register">Регистрация</a>
-                </p>
-
-                <input class="input-format-login" @bind="email" placeholder="Email" />
-                <input class="input-format-password" @bind="password" placeholder="Пароль" />
-
-                <div class="row">
-                    <button class="btn btn-primary" @onclick="LoginAsync">Войти</button>
-                    <a class="btn btn-outline-primary" href="/">Закрыть</a>
-                </div>
-
-                <button class="button-guest" @onclick="NavigateToEditor">Войти как гость</button>
-            </div>
-        </div>
-    </login-menu>
 }
 
 
@@ -80,72 +75,72 @@ else
 @inject AuthenticationStateProvider provider
 @implements IDisposable
 @code {
-    private string currentId = "login";
+	private string currentId = "login";
 
-    // читаем параметр id
-    private void UpdateCurrentId()
-    {
-        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
-        var query = QueryHelpers.ParseQuery(uri.Query);
+	// читаем параметр id
+	private void UpdateCurrentId()
+	{
+		var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+		var query = QueryHelpers.ParseQuery(uri.Query);
 
-        if (query.TryGetValue("id", out var idValue) && !string.IsNullOrWhiteSpace(idValue))
-        {
-            currentId = idValue!;
-        }
-        else
-        {
-            currentId = "login";
-        }
-    }
+		if (query.TryGetValue("id", out var idValue) && !string.IsNullOrWhiteSpace(idValue))
+		{
+			currentId = idValue!;
+		}
+		else
+		{
+			currentId = "login";
+		}
+	}
 
-    protected override void OnInitialized()
-    {
-        Navigation.LocationChanged += OnLocationChanged;
-        UpdateCurrentId();
-    }
+	protected override void OnInitialized()
+	{
+		Navigation.LocationChanged += OnLocationChanged;
+		UpdateCurrentId();
+	}
 
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        UpdateCurrentId();
-        StateHasChanged(); // Обновление UI
-    }
+	private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+	{
+		UpdateCurrentId();
+		StateHasChanged(); // Обновление UI
+	}
 
-    public string email = "";
-    public string password = "";
-    public string ConfirmPassword = "";
-    public string error = "";
-    public string[] errors = [];
+	public string email = "";
+	public string password = "";
+	public string ConfirmPassword = "";
+	public string error = "";
+	public string[] errors = [];
 
-    private void NavigateToEditor() => Navigation.NavigateTo("/Editor");
+	private void NavigateToEditor() => Navigation.NavigateTo("/Editor");
 
-    private async Task LoginAsync()
-    {
-        var authStateProvider = (AuthStateProvider)provider;
-        var formResult = await authStateProvider.LoginAsync(email, password);
-        if (formResult.Succeeded)
-            Navigation.NavigateTo("/");
-        else
-            error = formResult.Errors[0];
-    }
+	private async Task LoginAsync()
+	{
+		var authStateProvider = (AuthStateProvider)provider;
+		var formResult = await authStateProvider.LoginAsync(email, password);
+		if (formResult.Succeeded)
+			Navigation.NavigateTo("/Editor");
+		else
+			error = formResult.Errors[0];
+	}
 
-    private async Task RegUserAsync()
-    {
-        if (password != ConfirmPassword)
-        {
-            errors = ["Пароли не совпадают!"];
-            return;
-        }
+	private async Task RegUserAsync()
+	{
+		if (password != ConfirmPassword)
+		{
+			errors = ["Пароли не совпадают!"];
+			return;
+		}
 
-        var authStateProvider = (AuthStateProvider)provider;
-        var resp = await authStateProvider.RegisterAsync(new RegisterDTO { Email = email, Password = password });
-        if (resp.Succeeded)
-            Navigation.NavigateTo("/");
-        else
-            errors = resp.Errors;
-    }
+		var authStateProvider = (AuthStateProvider)provider;
+		var resp = await authStateProvider.RegisterAsync(new RegisterDTO { Email = email, Password = password });
+		if (resp.Succeeded)
+			Navigation.NavigateTo("/");
+		else
+			errors = resp.Errors;
+	}
 
-    public void Dispose()
-    {
-        Navigation.LocationChanged -= OnLocationChanged;
-    }
+	public void Dispose()
+	{
+		Navigation.LocationChanged -= OnLocationChanged;
+	}
 }
