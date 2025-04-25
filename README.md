@@ -1,6 +1,5 @@
 # CSharpSevenMaslyat
----
-## Backend разработка
+## Команда er: Семеро Маслят
 
 - [Микуцких Григорий](https://github.com/Dr-Hartmann) - тимлид, проектировщик, сборщик; 
 - [Белоус Глеб](https://github.com/Sindy101) - фротненд, интерфейс и страницы;
