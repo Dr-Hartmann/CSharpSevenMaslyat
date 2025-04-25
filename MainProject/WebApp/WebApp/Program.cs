@@ -7,109 +7,108 @@ using System.Net;
 using System.Text;
 using WebApp.Services;
 
-namespace WebApp
+namespace WebApp;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(c =>
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
+                In = ParameterLocation.Header,
+                Description = "Please enter JWT with Bearer into field",
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey
+            });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] {}
-                    }
-                });
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
             });
+        });
 
-            builder.Services.AddCors(options =>
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
             {
-                options.AddDefaultPolicy(policy =>
-                {
-                    policy.AllowAnyOrigin()
-                      .AllowAnyHeader()
-                      .AllowAnyMethod();
-                });
+                policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
             });
+        });
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = "1",
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Flat_earth_hitler_caput_super_secret_key_1234512345!"))
-                };
-            });
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = "1",
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Flat_earth_hitler_caput_super_secret_key_1234512345!"))
+            };
+        });
 
-            // Добавляю поддержку HTTP
-            builder.WebHost.ConfigureKestrel(options =>
-            {
+        // Добавляю поддержку HTTP
+        //builder.WebHost.ConfigureKestrel(options =>
+        //{
+        //    builder.Services.AddAuthorization(options =>
+        //    {
+        //        options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+        //    });
+        //});
 
-            builder.Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-            });
-
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Services.AddSingleton<IDocumentEditorService, MockDocumentEditorService>();
-                builder.Services.AddSingleton<AuditService>();
-            }
-            else
-            {
-                builder.Services.AddScoped<IDocumentEditorService, DocumentEditorService>();
-            }
-
-            var app = builder.Build();
-
-            // Добавляю поддержку статических файлов
-            app.UseStaticFiles();
-
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
-                    options.RoutePrefix = string.Empty;
-                });
-            }
-            app.UseCors();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Services.AddSingleton<IDocumentEditorService, MockDocumentEditorService>();
+            builder.Services.AddSingleton<AuditService>();
         }
+        else
+        {
+            builder.Services.AddScoped<IDocumentEditorService, DocumentEditorService>();
+        }
+
+        var app = builder.Build();
+
+        // Добавляю поддержку статических файлов
+        app.UseStaticFiles();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+                options.RoutePrefix = string.Empty;
+            });
+        }
+        app.UseCors();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 }
