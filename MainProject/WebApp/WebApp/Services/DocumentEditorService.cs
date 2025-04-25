@@ -1,4 +1,4 @@
-using DTOmvp;
+﻿using DTOmvp;
 using Microsoft.EntityFrameworkCore;
 using MVPv4.Data;
 using MVPv4.Models;
@@ -20,8 +20,6 @@ public class DocumentEditorService(IServiceScopeFactory scopeFactory, MVPv4Conte
         };
     }
 
-    //TODO аналогично дополнить
-
     public async Task<IEnumerable<DTOdocumentV1>> GetAllAsync(CancellationToken cancellationToken)
     {
         var documents = await dbContext!.DocumentV1.Select(p => new DTOdocumentV1
@@ -35,7 +33,7 @@ public class DocumentEditorService(IServiceScopeFactory scopeFactory, MVPv4Conte
         return documents;
     }
 
-    public async Task AddAsync(DTOdocumentV1 product)
+    public async Task AddAsync(DTOdocumentV1 product, CancellationToken cancellationToken)
     {
         using var scope = scopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetService<MVPv4Context>();
@@ -48,26 +46,39 @@ public class DocumentEditorService(IServiceScopeFactory scopeFactory, MVPv4Conte
             Year = product.Year,
             Annotation = product.Annotation
         });
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    //public Task DeleteAsync(int? id)
-    //{
-    //}
+    public async Task UpdateAsync(DTOdocumentV1 product, CancellationToken cancellationToken)
+    {
+        using var scope = scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<MVPv4Context>();
+        var entity = await dbContext.DocumentV1.FindAsync(product.Id);
+        if (entity == null) throw new KeyNotFoundException();
 
-    //public Task<IEnumerable<DocumentV1>> GetAllAsync()
-    //{
-    //}
+        entity.Name = product.Name;
+        entity.File = product.File;
+        entity.Title = product.Title;
+        entity.Topic = product.Topic;
+        entity.Year = product.Year;
+        entity.Annotation = product.Annotation;
 
-    //public Task<DocumentV1> GetByIdAsync(int? id)
-    //{
-    //}
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
 
-    //public Task UpdateAsync(DocumentV1 product)
-    //{
-    //}
+    public async Task DeleteAsync(int? id, CancellationToken cancellationToken)
+    {
+        using var scope = scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<MVPv4Context>();
+        var entity = await dbContext.DocumentV1.FindAsync(id);
+        if (entity == null) throw new KeyNotFoundException();
+
+        dbContext.DocumentV1.Remove(entity);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
 
     /* TODO
+     * CancellationToken - что это, как работает и как подключать.
      * Дописать/создать новые сервисы, контроллеры,
      * обеспечить возможность связи с разными контекстами (один сервис - один контекст),
      * связать фабрику с контекстами и сервисами
