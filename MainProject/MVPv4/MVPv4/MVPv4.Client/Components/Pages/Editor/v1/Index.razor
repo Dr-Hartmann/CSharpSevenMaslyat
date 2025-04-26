@@ -1,0 +1,141 @@
+﻿@page "/editor-document/v1"
+@using System
+@using System.IO
+@using DTOmvp
+@using Newtonsoft.Json
+@inject IHttpClientFactory HttpClientFactory
+@* @rendermode InteractiveAuto *@
+@rendermode InteractiveServer
+@* @rendermode InteractiveWebAssembly *@
+
+<PageTitle>Редактор документов</PageTitle>
+
+@* <h3>@documentv1?.Name</h3>
+
+<dl class="row">
+    <dt class="col-sm-2">File</dt>
+    <dd class="col-sm-10">@documentv1?.File</dd>
+    <dt class="col-sm-2">Year</dt>
+    <dd class="col-sm-10">@documentv1?.Year</dd>
+    <dt class="col-sm-2">Title</dt>
+    <dd class="col-sm-10">@documentv1?.Title</dd>
+    <dt class="col-sm-2">Topic</dt>
+    <dd class="col-sm-10">@documentv1?.Topic</dd>
+    <dt class="col-sm-2">Annotation</dt>
+    <dd class="col-sm-10">@documentv1?.Annotation</dd>
+</dl>
+
+
+<div class="row mb-5">
+    <InputFile OnChange="@TemplateUpload" multiple accept=".docx" />
+</div> *@
+
+<div class="word-content">
+    @_content
+</div>
+
+@code {
+    // private bool _isNoDoc = true;
+    private string? _content = "none";
+    // private long maxsize = 512000;
+
+
+    // [SupplyParameterFromQuery]
+    // private int Id { get; set; }
+
+
+
+    // private async Task TemplateUpload(InputFileChangeEventArgs e)
+    // {
+    //     _content = "123";
+
+    //     if (e.File.Size > maxsize)
+    //     {
+    //         _content = "размер слишком велик";
+    //         return;
+    //     }
+
+    //     using var context = DbFactory.CreateDbContext();
+    //     context.Attach(documentv1!).State = EntityState.Modified;
+
+    //     try
+    //     {
+    //         MemoryStream ms = new MemoryStream();
+    //         await e.File.OpenReadStream(maxsize).CopyToAsync(ms);
+    //         documentv1!.File = ms.ToArray();
+    //         await context.SaveChangesAsync();
+    //         _content = e.File.Name;
+    //     }
+    //     catch (DbUpdateConcurrencyException)
+    //     {
+    //         if (!DocumentV1Exists(documentv1!.Id))
+    //         {
+    //             NavigationManager.NavigateTo("notfound");
+    //         }
+    //         else
+    //         {
+    //             throw;
+    //         }
+    //     }
+    // }
+
+    // private bool DocumentV1Exists(int id)
+    // {
+    //     using var context = DbFactory.CreateDbContext();
+    //     return context.DocumentV1.Any(e => e.Id == id);
+    // }
+
+    private async Task LoadDoc(InputFileChangeEventArgs e)
+    {
+        // var file = e.File;
+        // var content = new MultipartFormDataContent();
+        // var fileContent = new StreamContent(file.OpenReadStream());
+        // content.Add(fileContent, "file", file.Name);
+
+        // var response = await Http.PostAsync("api/read", content);
+        _content = "123";
+        // _content = await response.Content.ReadAsStringAsync();
+
+        // var file = e.File;
+        // var buffer = new byte[file.Size];
+        // await file.OpenReadStream(maxsize).ReadAsync(buffer);
+        // _content = "456";
+        // _content = WordService.ReadWordDocument(buffer);
+        // _content = "789";
+        // StateHasChanged();
+
+
+        // using (var wordDocument = WordprocessingDocument.Open(file.OpenReadStream(maxsize), true))
+        // {
+        //     _content = "456";
+        //     _isNoDoc = !_isNoDoc;
+        //     MainDocumentPart mainPart = wordDocument.MainDocumentPart!;
+        //     _content = mainPart.Document.Body!.InnerText;
+        // }
+
+
+        // var buffer = new byte[loadedFiles.Size];
+        // await loadedFiles.OpenReadStream(maxsize).ReadAsync(buffer);
+        // _content = System.Text.Encoding.UTF8.GetString(buffer);
+
+
+        // Logger.LogInformation(
+        //         "Unsafe Filename: {UnsafeFilename} File saved: {Filename}",
+        //         file.Name, trustedFileName);
+    }
+
+
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     using var context = DbFactory.CreateDbContext();
+    //     documentv1 = await context.DocumentV1.FirstOrDefaultAsync(m => m.Id == Id);
+
+    //     if (documentv1 is null)
+    //     {
+    //         NavigationManager.NavigateTo("notfound");
+    //     }
+
+    //     _content = "456";
+    // }
+}

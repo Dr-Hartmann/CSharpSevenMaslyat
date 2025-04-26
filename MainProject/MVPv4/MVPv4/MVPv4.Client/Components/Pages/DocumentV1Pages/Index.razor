@@ -1,0 +1,67 @@
+﻿@page "/documentv1s"
+@using DTOmvp
+@inject IHttpClientFactory HttpClientFactory
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Newtonsoft.Json
+@rendermode InteractiveAuto
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="documentv1s/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="Searching" Pagination="pagination">
+    <PropertyColumn Property="documentv1 => documentv1.Name" />
+    <PropertyColumn Property="documentv1 => documentv1.File" />
+    <PropertyColumn Property="documentv1 => documentv1.Year" />
+    <PropertyColumn Property="documentv1 => documentv1.Title" />
+    <PropertyColumn Property="documentv1 => documentv1.Topic" />
+    <PropertyColumn Property="documentv1 => documentv1.Annotation" />
+
+    <TemplateColumn Context="documentv1">
+        <a href="@($"documentv1s/edit?id={documentv1.Id}")">Edit</a> |
+        <a href="@($"documentv1s/details?id={documentv1.Id}")">Details</a> |
+        <a href="@($"documentv1s/delete?id={documentv1.Id}")">Delete</a>
+    </TemplateColumn>
+
+    <Paginator State="pagination" />
+</QuickGrid>
+
+@code {
+    [SupplyParameterFromQuery]
+    private string? TitleFilter { get; set; }
+
+    static int size = 10;
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = size };
+    private IQueryable<DTOdocumentV1> Searching { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpClient = HttpClientFactory.CreateClient("MyClient");
+        var response = await httpClient.GetAsync("documenteditor/all");
+
+        if (response.Content.Headers.ContentType?.MediaType != "application/json")
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Ошибка: сервер вернул не JSON. Ответ: {errorContent}");
+            Console.WriteLine($"{response.Content.Headers.ContentType?.MediaType}");
+            Console.WriteLine($"{response.Content.Headers.ContentType}");
+            Console.WriteLine($"{response.Content.Headers}");
+            Console.WriteLine($"{response.Content}");
+            Searching = new[] { new DTOdocumentV1() }.AsQueryable();
+        }
+
+        Searching = (await response.Content.ReadFromJsonAsync<IEnumerable<DTOdocumentV1>>()).AsQueryable()
+                .Where(m => m.Title!.Contains(TitleFilter ?? string.Empty));
+    }
+
+    protected override void OnParametersSet()
+    {
+        pagination = new PaginationState { ItemsPerPage = Searching.Count() < 10 ? Searching.Count() : 10 };
+    }
+}
