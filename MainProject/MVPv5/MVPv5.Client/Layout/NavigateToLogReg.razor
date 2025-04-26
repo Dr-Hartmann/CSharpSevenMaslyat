@@ -1,0 +1,72 @@
+﻿
+<div class="login-menu">
+    <div class="login-back">
+        <div class="login-main">
+            <button class="button-login" @onclick="ToLog">Вход</button>
+            <button class="button-register active" @onclick="ToReg">Регистрация</button>
+            <EditForm method="post" Model="Request" OnValidSubmit="Register" FormName="registration" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+                <div class="mb-3">
+                    <label for="login" class="form-label label-format">Логин</label>
+                    <InputText id="login" @bind-Value="Request.Login" class="form-control input-format-login" aria-required="true" />
+                    <ValidationMessage For="() => Request.Login" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label label-format">Пароль:</label>
+                    <InputText id="password" @bind-Value="Request.Password" class="form-control input-format-password" />
+                    <ValidationMessage For="() => Request.Password" class="text-danger" />
+                </div>
+                @if (CurrentPage == "login")
+                {
+                    <button type="submit" class="btn btn-primary button-enter">Войти</button>
+                    <button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
+                }
+                else if (CurrentPage == "registration")
+                {
+                    <button type="submit" class="btn btn-primary button-enter">Зарегистрироваться</button>
+                }
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@inject NavigationManager NavigationManager
+@code {
+    [Parameter]
+    public string? CurrentPage { get; set; }
+
+    private void ToLog()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+    private void ToReg()
+    {
+        NavigationManager.NavigateTo("/registration");
+    }
+
+    private RegistrationRequest Request { get; set; } = new();
+
+    private async Task Register()
+    {
+        // var httpClient = HttpClientFactory.CreateClient("MyClient");
+        // var response = await httpClient.PostAsJsonAsync("documenteditor/create", NewDocument);
+
+        // if (!response.IsSuccessStatusCode)
+        // {
+        //     Console.WriteLine($"There was an error! {errorMessage}");
+        //     Console.WriteLine($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
+        //     return;
+        // }
+
+        await Task.Delay(1000);
+        NavigationManager.NavigateTo("/editor");
+    }
+
+    private void EnterLikeGuest()
+    {
+        NavigationManager.NavigateTo("/editor");
+    }
+}

@@ -1,0 +1,39 @@
+﻿@page "/editor"
+<PageTitle>Editor</PageTitle>
+
+
+<UpperToolbar />
+
+<div id="editor-container" style="overflow-y:auto; height: 100vh; background: #eee;">
+    @foreach (var page in Pages)
+    {
+        <div @ref="page.ElementRef" class="page" contenteditable="true" @oninput="CheckOverflow">
+            <div>@(page.Content)</div>
+        </div>
+    }
+</div>
+@code {
+    class PageModel
+    {
+        public string Content { get; set; } = "";
+        public ElementReference ElementRef { get; set; }
+    }
+
+    List<PageModel> Pages = new() { new PageModel() };
+
+    [Inject] IJSRuntime JS { get; set; }
+
+    async Task CheckOverflow(ChangeEventArgs e)
+    {
+        var lastPage = Pages.Last();
+        bool isOverflowing = await JS.InvokeAsync<bool>("checkPageOverflow", lastPage.ElementRef);
+
+        if (isOverflowing)
+        {
+            Pages.Add(new PageModel());
+            StateHasChanged(); // Ререндерим компонент
+        }
+    }
+
+
+}

@@ -1,0 +1,73 @@
+﻿@* @page "/login"
+@using MVPv5.Login
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using System.Net.Http.Json
+
+<PageTitle>Login</PageTitle>
+
+
+<login-menu>
+    <div class="login-back">
+        <div class="login-main">
+            <p><NavigateToLogReg /></p>
+
+            <p><br><label class="label-format">Логин</label><input class="input-format-login" @bind="login" /><br></p>
+            <p><label class="label-format">Пароль</label><input class="input-format-password" @bind="password" /><br></p>
+            <br>
+            <br>
+            <p><button class="button-enter">Войти</button></p>
+            <p><button class="button-guest active" @onclick="NavigateToEditor">Войти как гость</button></p>
+        </div>
+    </div>
+</login-menu>
+
+@code {
+    private string currentId { get; set; } = "login"; // Значение по умолчанию
+    private string login;
+    private string password;
+    private string message;
+    public class RegisterRequest
+    {
+        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Получаем параметры из URL
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var idValue))
+        {
+            currentId = idValue.FirstOrDefault() ?? "login"; // Используем значение из URL или значение по умолчанию
+        }
+        else
+        {
+            // Если параметра 'id' нет, устанавливаем значение по умолчанию и перенаправляем
+            NavigationManager.NavigateTo("?id=login", replace: true);
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    // private void UpdateUrl()
+    // {
+    //     var uri = new Uri(Navigation.Uri);
+    //     var baseUri = uri.GetLeftPart(UriPartial.Path);
+    //     var newUri = $"{baseUri}?id={currentId}";
+    //     Navigation.NavigateTo(newUri);
+    // }
+
+
+    private void NavigateToEditor()
+    {
+        NavigationManager.NavigateTo("/Editor");
+    }
+    // private void Show()
+    // {
+    //     Console.Write(login);
+    // }
+
+}
+}
+
+ *@
