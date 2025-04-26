@@ -1,0 +1,47 @@
+﻿@page "/documentv1s"
+@using MVPv4.Data
+@using MVPv4.Models
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<MVPv4Context> DbFactory
+@implements IAsyncDisposable
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="documentv1s/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="Searching">
+    <PropertyColumn Property="documentv1 => documentv1.Name" />
+    @* <PropertyColumn Property="documentv1 => documentv1.File" /> *@
+    <PropertyColumn Property="documentv1 => documentv1.Year" />
+    <PropertyColumn Property="documentv1 => documentv1.Title" />
+    <PropertyColumn Property="documentv1 => documentv1.Topic" />
+    <PropertyColumn Property="documentv1 => documentv1.Annotation" />
+
+    <TemplateColumn Context="documentv1">
+        <a href="@($"documentv1s/edit?id={documentv1.Id}")">Edit</a> |
+        <a href="@($"documentv1s/details?id={documentv1.Id}")">Details</a> |
+        <a href="@($"documentv1s/delete?id={documentv1.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private MVPv4Context context = default!;
+
+    [SupplyParameterFromQuery]
+    private string? TitleFilter { get; set; }
+
+    private IQueryable<DocumentV1> Searching =>
+        context.DocumentV1.Where(m => m.Title!.Contains(TitleFilter ?? string.Empty));
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

@@ -1,0 +1,79 @@
+﻿@* Объявление модели, с которой работает представление. MovieGenreViewModel содержит список фильмов и параметры фильтрации *@
+@model AspNetCoreMVC.Models.MovieGenreViewModel
+
+@* Блок C# кода для установки заголовка страницы *@
+@{
+    ViewData["Title"] = "Index";
+}
+
+@* Заголовок страницы *@
+<h1>Index</h1>
+
+@* Ссылка для создания нового фильма. asp-action="Create" генерирует ссылку на действие Create контроллера *@
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@* Форма для фильтрации фильмов. Отправляет GET-запрос на действие Index контроллера Movies *@
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <p>
+        @* Выпадающий список жанров. asp-for привязывает к свойству MovieGenre модели *@
+        <select asp-for="MovieGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        @* Поле для поиска по названию. asp-for привязывает к свойству SearchString модели *@
+        <label>Title: <input type="text" asp-for="SearchString" /></label>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+@* Таблица для отображения списка фильмов *@
+<table class="table">
+    @* Заголовок таблицы *@
+    <thead>
+        <tr>
+            @* Заголовки столбцов. DisplayNameFor показывает название свойства модели *@
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies![0].Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @* Тело таблицы *@
+    <tbody>
+@* Цикл по всем фильмам в модели *@
+@foreach (var item in Model.Movies!) {
+        <tr>
+            @* Ячейки с данными фильма. DisplayFor показывает значение свойства *@
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            @* Ячейка с действиями. asp-route-id передает ID фильма в URL *@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registr", "Registr\Registr.csproj", "{5CD96F7F-A854-4089-B822-53EF1B6AB865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor", "Blazor\Blazor.csproj", "{B40D93BB-5269-4302-87FF-56CEB055A960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{A213AABD-0052-4BE3-8AD0-DE69B0FCA3E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CD96F7F-A854-4089-B822-53EF1B6AB865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CD96F7F-A854-4089-B822-53EF1B6AB865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CD96F7F-A854-4089-B822-53EF1B6AB865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CD96F7F-A854-4089-B822-53EF1B6AB865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40D93BB-5269-4302-87FF-56CEB055A960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40D93BB-5269-4302-87FF-56CEB055A960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40D93BB-5269-4302-87FF-56CEB055A960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40D93BB-5269-4302-87FF-56CEB055A960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A213AABD-0052-4BE3-8AD0-DE69B0FCA3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A213AABD-0052-4BE3-8AD0-DE69B0FCA3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A213AABD-0052-4BE3-8AD0-DE69B0FCA3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A213AABD-0052-4BE3-8AD0-DE69B0FCA3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DE4CF6C-0643-4852-ABC6-73FF579E3DEA}
+	EndGlobalSection
+EndGlobal

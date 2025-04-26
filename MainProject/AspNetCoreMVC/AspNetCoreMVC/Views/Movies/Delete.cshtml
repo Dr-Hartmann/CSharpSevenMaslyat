@@ -1,0 +1,63 @@
+﻿@* Объявление модели Movies, с которой работает представление *@
+@model AspNetCoreMVC.Models.Movies
+
+@* Блок C# кода для установки заголовка страницы *@
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@* Заголовок страницы *@
+<h1>Delete</h1>
+
+@* Предупреждение о невозможности отмены удаления *@
+<h3>Are you sure you want to delete this?</h3>
+
+@* Контейнер для отображения деталей удаляемого фильма *@
+<div>
+    <h4>Movies</h4>
+    <hr />
+    @* Определение списка для отображения свойств модели *@
+    <dl class="row">
+        @* Отображение названия фильма *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        @* Отображение даты выпуска *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+
+        @* Отображение жанра *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+
+        @* Отображение цены *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+    
+    @* Форма для подтверждения удаления. Отправляет POST-запрос на действие Delete контроллера *@
+    <form asp-action="Delete">
+        @* Скрытое поле для передачи ID фильма *@
+        <input type="hidden" asp-for="ID" />
+        @* Кнопка подтверждения удаления *@
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @* Ссылка для отмены удаления и возврата к списку *@
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
