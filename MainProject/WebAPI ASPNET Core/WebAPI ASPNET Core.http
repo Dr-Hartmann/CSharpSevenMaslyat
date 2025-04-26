@@ -1,0 +1,6 @@
+@WebAPI_ASPNET_Core_HostAddress = http://localhost:5294
+
+GET {{WebAPI_ASPNET_Core_HostAddress}}/?id=Login
+Accept: application/json
+
+###

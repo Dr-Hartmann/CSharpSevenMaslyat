@@ -1,0 +1,116 @@
+﻿@* @page "/documentv1s/edit"
+@using MVPv4.Data
+@using MVPv4.Models
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<MVPv4Context> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>DocumentV1</h2>
+<hr />
+@if (DocumentV1 is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="DocumentV1" OnValidSubmit="UpdateDocumentV1" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="DocumentV1.Id" value="@DocumentV1.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="DocumentV1.Name" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => DocumentV1.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="file" class="form-label">File:</label>
+                    <InputText id="file" @bind-Value="DocumentV1.File" class="form-control" aria-required="true"/>
+                    <ValidationMessage For="() => DocumentV1.File" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year:</label>
+                    <InputDate id="year" @bind-Value="DocumentV1.Year" class="form-control" />
+                    <ValidationMessage For="() => DocumentV1.Year" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <InputText id="title" @bind-Value="DocumentV1.Title" class="form-control" />
+                    <ValidationMessage For="() => DocumentV1.Title" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="topic" class="form-label">Topic:</label>
+                    <InputText id="topic" @bind-Value="DocumentV1.Topic" class="form-control" />
+                    <ValidationMessage For="() => DocumentV1.Topic" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="annotation" class="form-label">Annotation:</label>
+                    <InputText id="annotation" @bind-Value="DocumentV1.Annotation" class="form-control" />
+                    <ValidationMessage For="() => DocumentV1.Annotation" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/documentv1s">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private DocumentV1? DocumentV1 { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        DocumentV1 ??= await context.DocumentV1.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (DocumentV1 is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateDocumentV1()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(DocumentV1!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!DocumentV1Exists(DocumentV1!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/documentv1s");
+    }
+
+    private bool DocumentV1Exists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.DocumentV1.Any(e => e.Id == id);
+    }
+}
+ *@
