@@ -7,9 +7,6 @@ public class DocumentV1
     [Key]
     public int Id { get; set; }
 
-    [Required(ErrorMessage = "Не указано имя документа")]
-    [StringLength(20, MinimumLength = 3, ErrorMessage = "Длина должна быть в диапазоне от 3 до 20")]
-    [RegularExpression(@"^[A-Za-zА-Яа-яёЁ0-9_]+$", ErrorMessage = "Должны быть только буквы, цифры или '_'")]
     public string? Name { get; set; }
 
     //[Required(ErrorMessage = "Не указан шаблон документа!")]

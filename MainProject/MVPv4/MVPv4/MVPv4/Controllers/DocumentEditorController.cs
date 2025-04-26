@@ -5,7 +5,7 @@ namespace MVPv4.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class DocumentEditorController(IDocumentEditorService docEditorService) : Controller
+public class DocumentEditorController(IDocumentEditorService docEditorService) : ControllerBase
 {
     [HttpGet("{id}")]
     public async Task<ActionResult<DTOdocumentV1>> Get(int? id, CancellationToken cancellationToken)

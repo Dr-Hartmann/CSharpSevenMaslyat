@@ -19,15 +19,10 @@ public class Program
             => client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("applicationUrl")
             ?? throw new InvalidOperationException("'applicationUrl' not found.")));
 
-        var dbContext = (DbContextOptionsBuilder options) =>
-        {
-            options.UseNpgsql(
-            builder.Configuration.GetConnectionString("MVPv4Context")
-            ?? throw new InvalidOperationException("Connection string 'MVPv4Context' not found."));
-        };
-
         builder.Services.AddControllers();
-        builder.Services.AddDbContextFactory<MVPv4Context>(dbContext);
+        builder.Services.AddDbContextFactory<MVPv4Context>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("MVPv4Context")
+            ?? throw new InvalidOperationException("Connection string 'MVPv4Context' not found.")));
+
         builder.Services.AddScoped<IDocumentEditorService, DocumentEditorService>();
         //builder.Services.AddSingleton<StatusComponent>();
         builder.Services.AddQuickGridEntityFrameworkAdapter();
@@ -40,7 +35,9 @@ public class Program
         //builder.Services.AddRazorPages();
         //builder.Services.AddServerSideBlazor();
         //builder.Services.AddEndpointsApiExplorer();
-        //builder.Services.AddScoped<DocumentEditorController>();
+
+        builder.Services.AddScoped<DocumentEditorController>();
+
         //builder.Services.AddScoped<TestController>();
 
         //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
