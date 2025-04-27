@@ -4,35 +4,28 @@
 
 <FormLoginRegistration CurrentPage="login" OnDataChanged="Handler" />
 
-@* TODO - не работает *@
-@if(user1 != null)
-{
-    @user1.Nickname
-    @user1.Password
-}
-
 @using MVPv5.Core.Models
 @inject ILogger<Login> Logger
 @code {
     // [Parameter]
     // public RenderFragment renderFragment;
 
-    private User? user1 = new();
+    // private UserModel? user1 = new();
 
     protected override void OnInitialized()
     {
         Logger.LogWarning("Открыт Login");
     }
 
-    private void Handler(User user)
+    private void Handler(UserModel user)
     {
-        user1 = new() { Nickname = user.Nickname, Password = user.Password };
-        Logger.LogDebug($"Вошёл пользователь: {user.Nickname}");
-        Logger.LogError($"Вошёл: {user.Nickname}");
-        Logger.LogCritical($"Вошёл: {user.Nickname}");
-        Logger.LogInformation($"Вошёл: {user.Nickname}");
-        Logger.LogTrace($"Вошёл: {user.Nickname}");
-        Logger.LogWarning($"Вошёл: {user.Nickname}");
+        // user1 = new() { Nickname = user.Nickname, Password = user.Password };
+        // Logger.LogDebug($"Вошёл пользователь: {user.Nickname}");
+        // Logger.LogError($"Вошёл: {user.Nickname}");
+        // Logger.LogCritical($"Вошёл: {user.Nickname}");
+        // Logger.LogInformation($"Вошёл: {user.Nickname}");
+        // Logger.LogTrace($"Вошёл: {user.Nickname}");
+        // Logger.LogWarning($"Вошёл: {user.Nickname}");
 
         // StateHasChanged();
 

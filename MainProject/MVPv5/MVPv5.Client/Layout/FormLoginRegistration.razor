@@ -20,7 +20,7 @@
         <div class="login-main">
             <button class="button-login" @onclick="ToLog">Вход</button>
             <button class="button-register active" @onclick="ToReg">Регистрация</button>
-            <EditForm method="post" Model="NewUser" OnValidSubmit="Register" FormName="registration" Enhance>
+            @*             <EditForm method="post" Model="NewUser" OnValidSubmit="Register" FormName="registration" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert" />
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                 {
                     <button type="submit" class="btn btn-primary button-enter">Зарегистрироваться</button>
                 }
-            </EditForm>
+            </EditForm> *@
         </div>
     </div>
 </div>
@@ -59,7 +59,7 @@
     public string? CurrentPage { get; set; }
 
     [Parameter]
-    public EventCallback<User> OnDataChanged { get; set; }
+    public EventCallback<UserModel> OnDataChanged { get; set; }
 
     private void ToLog()
     {
@@ -71,31 +71,31 @@
         NavigationManager.NavigateTo("/registration");
     }
 
-    private User NewUser { get; set; } = new();
+    // private UserModel NewUser { get; set; } = new();
 
-    private async Task Register()
-    {
-        // TODO - нормальный запрос
-        // var response = await httpClient.PostAsJsonAsync("documenteditor/create", NewDocument);
-        // if (!response.IsSuccessStatusCode)
-        // {
-        //     Logger.LogError($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
-        //     return;
-        // }
-
-
-        await OnDataChanged.InvokeAsync(NewUser);
-        Logger.LogError($"Вошёл: {NewUser.Password}");
-        Logger.LogCritical($"Вошёл: {NewUser.Password}");
-        Logger.LogInformation($"Вошёл: {NewUser.Password}");
-        Logger.LogTrace($"Вошёл: {NewUser.Password}");
-        Logger.LogWarning($"Вошёл: {NewUser.Password}");
-        // TODO - не работает логгер
+    // private async Task Register()
+    // {
+    // TODO - нормальный запрос
+    // var response = await httpClient.PostAsJsonAsync("documenteditor/create", NewDocument);
+    // if (!response.IsSuccessStatusCode)
+    // {
+    //     Logger.LogError($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
+    //     return;
+    // }
 
 
-        // await Task.Delay(1000);
-        // NavigationManager.NavigateTo("/editor");
-    }
+    // await OnDataChanged.InvokeAsync(NewUser);
+    // Logger.LogError($"Вошёл: {NewUser.Password}");
+    // Logger.LogCritical($"Вошёл: {NewUser.Password}");
+    // Logger.LogInformation($"Вошёл: {NewUser.Password}");
+    // Logger.LogTrace($"Вошёл: {NewUser.Password}");
+    // Logger.LogWarning($"Вошёл: {NewUser.Password}");
+    // TODO - не работает логгер
+
+
+    // await Task.Delay(1000);
+    // NavigationManager.NavigateTo("/editor");
+    // }
 
     private void EnterLikeGuest()
     {

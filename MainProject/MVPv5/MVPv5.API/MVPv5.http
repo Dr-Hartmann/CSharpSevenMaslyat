@@ -1,11 +1,8 @@
 @MVPv5_HostAddress = http://localhost:5123
 # TODO - можно ли как-то отвязать от прямого написания адреса?
 
-# тестовый полигон для запросов 
-# TODO - переписать часть из Swagger
-
-GET {{MVPv5_HostAddress}}/weatherforecast/
-Accept: application/json
+# GET {{MVPv5_HostAddress}}/weatherforecast/
+# Accept: application/json
 
 ###
 
@@ -13,12 +10,31 @@ POST {{MVPv5_HostAddress}}/User/create/
 Content-Type: application/json
 {
   "Nickname": "big ass dick",
-  "Login" : "login",
+  "Login" : "looooooooooogin",
   "Password": "1234567",
-  "AccessRule": 1
+  "PasswordConfirm": "1"
 }
 
 ###
 
+POST {{MVPv5_HostAddress}}/User/create/
+Content-Type: application/json
+{
+  "Nickname": "ass we can",
+  "Login" : "boynextdoor",
+  "Password": "123",
+  "PasswordConfirm": "123"
+}
+
+###
+
+POST {{MVPv5_HostAddress}}/User/create/
+Content-Type: application/json
+{
+  "Nickname": "Билли Херрингтон",
+  "Login" : "dungeonmaster",
+  "Password": "14881488",
+  "PasswordConfirm": "14881488"
+}
 
 ###

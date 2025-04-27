@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVPv5.API.Services;
-using MVPv5.Core.Models;
+using MVPv5.Application.Contracts;
+using MVPv5.Core.Abstractions;
 
 namespace MVPv5.API.Controllers;
 
-// TODO - заставить работать
 // TDOD - разработать новые контроллеры
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class UserController(UserService service) : ControllerBase
+public class UserController(IUserService service) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> Create(User doc)
+    public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token)
     {
-        return Ok();
         try
         {
-            await service.AddAsync(doc);
+            int id = await service.CreateAsync(user.Nickname, user.Login, user.Password, 30, token);
+            if (id == -1) return BadRequest("Такой пользователь уже существует");
             return Ok();
         }
-        catch (KeyNotFoundException)
+        catch (Exception)
         {
             return NotFound();
         }

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVPv5.API", "MVPv5.API\MVPv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVPv5.Core", "MVPv5.Core\MVPv5.Core.csproj", "{A0F48B7A-77F2-49F9-AF12-16F2F3EB4143}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVPv5.Application", "MVPv5.Application\MVPv5.Application.csproj", "{79146B43-83CF-4B5C-95AA-E84308DD4E8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVPv5.Domain", "MVPv5.Domain\MVPv5.Domain.csproj", "{9607FDAD-0ACA-4878-9B69-7D23E36F8B39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{A0F48B7A-77F2-49F9-AF12-16F2F3EB4143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0F48B7A-77F2-49F9-AF12-16F2F3EB4143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0F48B7A-77F2-49F9-AF12-16F2F3EB4143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79146B43-83CF-4B5C-95AA-E84308DD4E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79146B43-83CF-4B5C-95AA-E84308DD4E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79146B43-83CF-4B5C-95AA-E84308DD4E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79146B43-83CF-4B5C-95AA-E84308DD4E8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9607FDAD-0ACA-4878-9B69-7D23E36F8B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9607FDAD-0ACA-4878-9B69-7D23E36F8B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9607FDAD-0ACA-4878-9B69-7D23E36F8B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9607FDAD-0ACA-4878-9B69-7D23E36F8B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

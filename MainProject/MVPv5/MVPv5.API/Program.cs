@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVPv5.API.Controllers;
-using MVPv5.API.Data;
-using MVPv5.API.Services;
+using MVPv5.Application.Services;
+using MVPv5.Core.Abstractions;
+using MVPv5.Domain.Data;
+using MVPv5.Domain.Repositories;
 
 namespace MVPv5.API;
 
@@ -11,6 +12,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddControllers();
+        builder.Services.AddOpenApi();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddAntiforgery();
 
         // TODO - как создавать клиентов?
         //builder.Services.AddHttpClient("MyClient", client
@@ -22,12 +28,8 @@ public class Program
             ?? throw new InvalidOperationException("Connection string 'BlazorWebAppMoviesContext' not found.")));
 
         builder.Services.AddScoped<UserController>();
-        builder.Services.AddTransient<UserService>(); // AddScoped
-        //builder.Services.AddSingleton<StatusComponent>();
-
-        builder.Services.AddControllers();
-        builder.Services.AddOpenApi();
-        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
 
         // TODO - не работает
         //builder.Services.AddAuthorization();
@@ -51,16 +53,6 @@ public class Program
             //{
             //    options.SwaggerEndpoint("/openapi/v1.json", "api");
             //});
-
-            //или
-
-            //app.UseSwagger();
-            //app.UseSwaggerUI(options =>
-            //{
-            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
-            //    options.RoutePrefix = string.Empty;
-            //});
-
         }
         //else
         //{
@@ -73,13 +65,13 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
-        //app.UseAntiforgery();
         app.UseStaticFiles();
 
         //app.MapControllerRoute(
         //    name: "default",
         //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+        app.UseAntiforgery();
         app.Run();
     }
 }
