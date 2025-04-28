@@ -10,10 +10,16 @@
     <div class="PopUp-menu">
         <p><button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button></p>
     </div>
-    @if (ShowMenu)
-    {
-        <Profil></Profil>
-    }
+}
+
+@if (ShowMenu)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <Profil></Profil>
+            <button @onclick="CloseModal">Закрыть</button>
+        </div>
+    </div>
 }
 
 @code {
@@ -26,5 +32,9 @@
     public void ShowModal()
     {
         ShowMenu = !ShowMenu;
+    }
+    public void CloseModal()
+    {
+        ShowMenu = false;
     }
 } 
