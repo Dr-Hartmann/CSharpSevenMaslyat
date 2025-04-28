@@ -57,3 +57,15 @@
     width: 50px;
     border: none;
 }
+.button-user-menu {
+    width: 100%;
+    border-radius: 9px 9px 0 0;
+    border: none;
+    border-bottom: 1px solid #000000;
+    text-align: left;
+}
+
+.profil-img {
+    width: 25px;
+    height: 25px;
+}

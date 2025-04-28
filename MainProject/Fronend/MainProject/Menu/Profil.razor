@@ -1,0 +1,14 @@
+﻿<div class="@("modal " + (IsVisible ? "show" : ""))">
+    <div class="modal-content">
+        <span class="close" @onclick="Close">×</span>
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private void Close() => OnClose.InvokeAsync();
+}

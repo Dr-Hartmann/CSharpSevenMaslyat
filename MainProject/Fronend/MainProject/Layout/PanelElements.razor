@@ -1,52 +1,4 @@
-﻿@* <style>
-    .button-menu {
-        background-image: url('Menu.png');
-        background-color: transparent;
-        position: absolute;
-        left: 2rem;
-        height: 45px;
-        width: 45px;
-        border: none;
-    }
-
-    .separator-icon {
-        position: absolute;
-        left: 7rem;
-        height: auto;
-    }
-
-    .button-save {
-        background-image: url('Save.png');
-        background-color: transparent;
-        position: absolute;
-        left: 9.5rem;
-        height: auto;
-        height: 50px;
-        width: 50px;
-        border: none;
-    }
-
-    .button-undo {
-        background-image: url('Undo.png');
-        background-color: transparent;
-        position: absolute;
-        left: 14rem;
-        height: auto;
-        height: 50px;
-        width: 50px;
-        border: none;
-    }
-
-    .button-redo {
-        background-image: url('Redo.png');
-        background-color: transparent;
-        position: absolute;
-        left: 18rem;
-        height: auto;
-        height: 50px;
-        width: 50px;
-        border: none;
-    }</style> *@
+﻿@using MainProject.Menu
 <button class="button-menu" @onclick="click"></button>
 <img class="separator-icon" src="Separator.png" alt="Separator">
 <button class="button-save"></button>
@@ -55,14 +7,24 @@
 
 @if (ShowDiv)
 {
-    <div class="PopUp-menu"></div>
+    <div class="PopUp-menu">
+        <p><button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button></p>
+    </div>
+    @if (ShowMenu)
+    {
+        <Profil></Profil>
+    }
 }
 
-
 @code {
+    public bool ShowMenu { get; set; } = false;
+    public bool ShowDiv { get; set; } = false;
     public void click()
     {
         ShowDiv = !ShowDiv;
     }
-    public bool ShowDiv { get; set; } = false;
+    public void ShowModal()
+    {
+        ShowMenu = !ShowMenu;
+    }
 } 
