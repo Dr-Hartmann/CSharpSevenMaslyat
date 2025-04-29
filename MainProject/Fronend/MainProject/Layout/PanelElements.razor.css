@@ -86,7 +86,24 @@
 .modal-content {
     background: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     max-width: 500px;
     width: 90%;
+}
+
+.button-close {
+    border-radius: 0 12px 0 0;
+    top: 0;
+    right: 0;
+    position: absolute;
+    border: none;
+    justify-self: right;
+    width: 35px;
+    height: 25px;
+    align-items: center;
+}
+.button-close:hover {
+    border: 1px solid #000000;
+    background-color: #e6432e;
+    border-color: black;
 }

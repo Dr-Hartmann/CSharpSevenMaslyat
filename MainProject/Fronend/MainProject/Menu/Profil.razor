@@ -1,14 +1,10 @@
-﻿<div class="@("modal " + (IsVisible ? "show" : ""))">
-    <div class="modal-content">
-        <span class="close" @onclick="Close">×</span>
-        @ChildContent
-    </div>
-</div>
-
+﻿<p><br><label class="label-center">Настройки профиля</label></p>
+<p><label>Никнейм</label></p>
+<p><input class="input-format" /><br></p>
+<p><label>Пароль</label></p>
+<p><input class="input-format" /><br></p>
+<br>
+<Buttons></Buttons>
 @code {
-    [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public bool IsVisible { get; set; }
-    [Parameter] public EventCallback OnClose { get; set; }
 
-    private void Close() => OnClose.InvokeAsync();
 }

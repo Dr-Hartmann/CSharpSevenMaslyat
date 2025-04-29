@@ -8,7 +8,7 @@
 @if (ShowDiv)
 {
     <div class="PopUp-menu">
-        <p><button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button></p>
+        <p><button class="button-user-menu" @onclick="ShowModal" ><img src="Profil.png" class="profil-img">Профиль</button></p>
     </div>
 }
 
@@ -16,8 +16,8 @@
 {
     <div class="modal-overlay">
         <div class="modal-content">
+            <button class="button-close" @onclick="CloseModal">X</button>
             <Profil></Profil>
-            <button @onclick="CloseModal">Закрыть</button>
         </div>
     </div>
 }
@@ -32,6 +32,7 @@
     public void ShowModal()
     {
         ShowMenu = !ShowMenu;
+        click();
     }
     public void CloseModal()
     {
