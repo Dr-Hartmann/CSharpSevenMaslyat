@@ -11,4 +11,5 @@ public interface IUserRepository
     Task<(UserModel User, string Error)> GetByIdAsync(int id, CancellationToken token);
     Task<IEnumerable<(UserModel User, string Error)>> GetWithDocumentsAsync(CancellationToken token);
     Task<int> Update(int id, string nickname, string login, string password, byte accessRule, CancellationToken token);
+    Task<bool> UpdatePassword(int id, string password, CancellationToken token);
 }

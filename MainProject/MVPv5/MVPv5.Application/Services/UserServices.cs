@@ -10,17 +10,29 @@ public class UserService(IUserRepository userRepository) : IUserService
         return await userRepository.AddAsync(nickname, login, password, accessRule, DateOnly.FromDateTime(DateTime.Now), new List<DocumentModel>(), token);
     }
 
-    //public async Task<User> GetAsync(int? id, CancellationToken token)
-    //{
-    //    var document = await dbContext!.Users
-    //        .AsNoTracking().FirstOrDefaultAsync(m => m.Id == id, token);
-    //    return new User
-    //    {
-    //        Id = document!.Id,
-    //        Nickname = document!.Nickname,
-    //        Login = document!.Login,
-    //        Password = document!.Password,
-    //        AccessRule = document!.AccessRule,
-    //    };
-    //}
+    public async Task<UserModel> GetByIdAsync(int id, CancellationToken token)
+    {
+        var response = await userRepository.GetByIdAsync(id, token);
+
+        if (response.Error != string.Empty)
+        {
+            throw new KeyNotFoundException($"Ошибка: {response.Error}");
+        }
+
+        return response.User;
+    }
+
+    public async Task<IEnumerable<UserModel>> GetAllAsync(CancellationToken token)
+    {
+        return (await userRepository.GetAllAsync(token)).Select(l => l.User);
+    }
+
+    public async Task<bool> UpdatePasswordById(int id, string password, string confirmPassword, CancellationToken token)
+    {
+        if (!string.Equals(password, confirmPassword))
+        {
+            throw new KeyNotFoundException($"Пароли не совпадают");
+        }
+        return await userRepository.UpdatePassword(id, password, token);
+    }
 }

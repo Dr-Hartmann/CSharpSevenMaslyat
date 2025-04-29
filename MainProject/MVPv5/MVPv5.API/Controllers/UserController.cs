@@ -11,11 +11,11 @@ namespace MVPv5.API.Controllers;
 public class UserController(IUserService service) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token)
+    public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token = default)
     {
         try
         {
-            int id = await service.CreateAsync(user.Nickname, user.Login, user.Password, 30, token);
+            var id = await service.CreateAsync(user.Nickname, user.Login, user.Password, 30, token);
             if (id == -1) return BadRequest("Такой пользователь уже существует");
             return Ok();
         }
@@ -25,16 +25,47 @@ public class UserController(IUserService service) : ControllerBase
         }
     }
 
-    //[HttpGet("{id}")]
-    //public async Task<ActionResult<User>> Get(int? id, CancellationToken cancellationToken)
-    //{
-    //    try
-    //    {
-    //        return await service.GetAsync(id, cancellationToken);
-    //    }
-    //    catch (KeyNotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserGetResponse>> Get(int id, CancellationToken token = default)
+    {
+        try
+        {
+            var response = await service.GetByIdAsync(id, token);
+            return new UserGetResponse()
+            {
+                Id = response.Id,
+                Nickname = response.Nickname,
+                Login = response.Login,
+                AccessRule = response.AccessRule,
+                DateCreation = response.DateCreation,
+                Password = response.Password,
+                Documents = response.Documents
+            };
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserGetResponse>>> GetAll(CancellationToken token = default)
+    {
+        return Ok((await service.GetAllAsync(token)).Select(response => new UserGetResponse()
+        {
+            Id = response.Id,
+            Nickname = response.Nickname,
+            Login = response.Login,
+            AccessRule = response.AccessRule,
+            DateCreation = response.DateCreation,
+            Password = response.Password,
+            Documents = response.Documents
+        }));
+    }
+
+    [HttpPatch]
+    public async Task<ActionResult<bool>> UpdatePassword(int id, [FromBody] UserPatchResponse user, CancellationToken token = default)
+    {
+        return await service.UpdatePasswordById(id, user.Password!, user.PasswordConfirm!, token);
+    }
 }

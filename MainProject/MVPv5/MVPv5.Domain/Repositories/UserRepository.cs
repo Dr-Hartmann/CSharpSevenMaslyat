@@ -15,8 +15,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
     public async Task<int> AddAsync(string nickname, string login, string password, byte accessRule,
         DateOnly dateCreation, IEnumerable<DocumentModel> documents, CancellationToken token)
     {
-        var a = dbContext!.TableUsers.Where(u => u.Login == login);
-        if (a.Count() > 0)
+        if (dbContext!.TableUsers.Where(u => u.Login == login).Count() > 0)
         {
             return -1;
         }
@@ -45,6 +44,15 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
                 .SetProperty(u => u.Password, password)
                 .SetProperty(u => u.AccessRule, accessRule), token);
         return id;
+    }
+
+    public async Task<bool> UpdatePassword(int id, string password, CancellationToken token)
+    {
+        await dbContext.TableUsers
+            .Where(user => user.Id == id)
+            .ExecuteUpdateAsync(user => user
+                .SetProperty(u => u.Password, password), token);
+        return true;
     }
 
     /// <returns>Количество удалённых записей из БД.</returns>
@@ -94,7 +102,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
         if (response == null) throw new Exception();
 
         return UserModel.Create(response.Id, response.Nickname, response.Login, response.Password, response.AccessRule,
-            response.DateCreation, response.Documents!.Select(i => new DocumentModel() { UserId = i.UserId }));
+            response.DateCreation, response.Documents?.Select(i => new DocumentModel() { UserId = i.UserId }));
     }
 
     private IEnumerable<(UserModel User, string Error)> GetListOfUsers(List<UserEntity>? response)
@@ -102,6 +110,6 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
         if (response == null) throw new Exception();
 
         return response.Select(a => UserModel.Create(a.Id, a.Nickname, a.Login, a.Password, a.AccessRule,
-                a.DateCreation, a.Documents!.Select(i => new DocumentModel() { UserId = i.UserId })));
+                a.DateCreation, a.Documents?.Select(i => new DocumentModel() { UserId = i.UserId })));
     }
 }

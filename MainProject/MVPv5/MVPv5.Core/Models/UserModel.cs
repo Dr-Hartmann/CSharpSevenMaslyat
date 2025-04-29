@@ -3,7 +3,7 @@
 public class UserModel
 {
     private UserModel(int id, string nickname, string login, string password,
-        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel> documents)
+        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel>? documents)
     {
         Id = id;
         Nickname = nickname;
@@ -11,7 +11,7 @@ public class UserModel
         Password = password;
         AccessRule = accessRule;
         DateCreation = dateCreation;
-        Documents = documents.Select(i => new DocumentModel() { UserId = i.UserId, User = this });
+        Documents = documents?.Select(i => new DocumentModel() { UserId = i.UserId, User = this });
     }
     public int Id { get; }
     public string Nickname { get; }
@@ -19,10 +19,10 @@ public class UserModel
     public string Password { get; }
     public byte AccessRule { get; }
     public DateOnly DateCreation { get; }
-    public IEnumerable<DocumentModel> Documents { get; }
+    public IEnumerable<DocumentModel>? Documents { get; }
 
     public static (UserModel, string) Create(int id, string nickname, string login, string password,
-        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel> documents)
+        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel>? documents)
     {
         var error = string.Empty;
 
