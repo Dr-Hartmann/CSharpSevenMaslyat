@@ -12,11 +12,11 @@ namespace MVPv5.API.Controllers;
 [Route("[controller]/[action]")]
 public class UserController(IUserService service) : ControllerBase
 {
-    private readonly IUserService service;
-    public UserController(IUserService service)
-    {
-        this.service = service;
-    }
+    //private readonly IUserService service;
+    //public UserController(IUserService service)
+    //{
+    //    this.service = service;
+    //}
 
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token = default)
