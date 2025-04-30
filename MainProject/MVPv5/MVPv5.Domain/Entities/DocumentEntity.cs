@@ -9,6 +9,10 @@ public class DocumentEntity
     public int Id { get; set; }
 
     /*  TODO  */
+    /// <summary>
+    /// Сериализованные метаданные документа (JSON)
+    /// </summary>
+    public string? MetadataJson { get; set; }
 
     [ForeignKey(nameof(UserEntity))]
     public int UserId { get; set; }

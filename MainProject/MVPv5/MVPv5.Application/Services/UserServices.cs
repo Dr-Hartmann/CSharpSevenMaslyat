@@ -5,6 +5,9 @@ namespace MVPv5.Application.Services;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {
+    // Кэш пользователей по ID
+    private readonly Dictionary<int, UserModel> _userCache = new();
+
     public async Task<int> CreateAsync(string nickname, string login, string password, byte accessRule, CancellationToken token)
     {
         return await userRepository.AddAsync(nickname, login, password, accessRule, DateOnly.FromDateTime(DateTime.Now), new List<DocumentModel>(), token);
@@ -12,6 +15,11 @@ public class UserService(IUserRepository userRepository) : IUserService
 
     public async Task<UserModel> GetByIdAsync(int id, CancellationToken token)
     {
+        if (_userCache.TryGetValue(id, out var cachedUser))
+        {
+            return cachedUser;
+        }
+
         var response = await userRepository.GetByIdAsync(id, token);
 
         if (response.Error != string.Empty)
@@ -19,6 +27,7 @@ public class UserService(IUserRepository userRepository) : IUserService
             throw new KeyNotFoundException($"Ошибка: {response.Error}");
         }
 
+        _userCache[id] = response.User;
         return response.User;
     }
 
