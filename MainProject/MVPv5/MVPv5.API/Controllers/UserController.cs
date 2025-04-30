@@ -72,7 +72,7 @@ public class UserController(IUserService service) : ControllerBase
     }
 
     [HttpPatch]
-    public async Task<ActionResult<bool>> UpdatePassword(int id, [FromBody] UserPatchResponse user, CancellationToken token = default)
+    public async Task<ActionResult<bool>> UpdatePassword(int id, [FromBody] UserPatchRequest user, CancellationToken token = default)
     {
         return await service.UpdatePasswordById(id, user.Password!, user.PasswordConfirm!, token);
     }

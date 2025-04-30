@@ -1,4 +1,5 @@
 ﻿using MVPv5.Core.Models;
+using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
 
 public static class DocumentMapper

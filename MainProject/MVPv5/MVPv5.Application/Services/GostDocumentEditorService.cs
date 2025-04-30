@@ -1,5 +1,6 @@
 ﻿//using DTOmvp;
 using MVPv5.Core.Models;
+using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
 
 public static class TemplateMapper
@@ -31,18 +32,18 @@ public class GostDocumentEditorService
     {
         this.dbContext = dbContext;
     }
-    public void SaveTemplate(TemplateModel model)
-    {
-        var entity = TemplateMapper.ToEntity(model);
-        dbContext.TableTemplates.Add(entity);
-        dbContext.SaveChanges();
-    }
+    //public void SaveTemplate(TemplateModel model)
+    //{
+    //    var entity = TemplateMapper.ToEntity(model);
+    //    dbContext.TableTemplates.Add(entity);
+    //    dbContext.SaveChanges();
+    //}
 
-    public TemplateModel LoadTemplate(int id)
-    {
-        var entity = dbContext.TableTemplates.Find(id);
-        return TemplateMapper.ToModel(entity);
-    }
+    //public TemplateModel LoadTemplate(int id)
+    //{
+    //    var entity = dbContext.TableTemplates.Find(id);
+    //    return TemplateMapper.ToModel(entity);
+    //}
 }
 
 //namespace WebApp.Services
