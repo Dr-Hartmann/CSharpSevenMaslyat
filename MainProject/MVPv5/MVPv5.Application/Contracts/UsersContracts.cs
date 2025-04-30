@@ -31,7 +31,7 @@ public class UserGetResponse
     public IEnumerable<DocumentModel>? Documents { get; set; }
 }
 
-public class UserPatchResponse
+public class UserPatchRequest
 {
     [StringLength(20, MinimumLength = 2)]
     public string? Nickname { get; set; }
