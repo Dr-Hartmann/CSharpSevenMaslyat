@@ -1,6 +1,6 @@
 ﻿.login-back {
-    width: 45rem;
-    height: 26rem;
+    width: 50rem;
+    height: 32rem;
     background-color: #6D7CFF;
     position: relative;
     border-radius: 17px;
@@ -20,8 +20,8 @@
     position: absolute;
     left: 10px;
     top: 10px;
-    width: 45rem;
-    height: 26rem;
+    width: 50rem;
+    height: 32rem;
     border-radius: 17px;
     background-color: #FFFFFF;
     box-shadow: 4px 4px 10px rgba(0,0,0, 0.3);
@@ -29,7 +29,7 @@
 
 .button-login {
     border: none;
-    margin-left: 140px;
+    margin-left: 214px;
     margin-top: 50px;
     font-size: 4vh;
 }
@@ -57,18 +57,10 @@
     font-size: 2vh;
 }
 
-.input-format-login {
-    margin-left: 100px;
+::deep .input-format {
+    margin-left: 10%; 
     border-radius: 15px;
-    width: 59%;
-    border: 1.5px solid #6e6e6e;
-    padding-left: 10px;
-}
-
-.input-format-password {
-    margin-left: 33px;
-    border-radius: 15px;
-    width: 59%;
+    width: 80%; 
     border: 1.5px solid #6e6e6e;
     padding-left: 10px;
 }
@@ -105,4 +97,9 @@
     color: #6D7CFF;
     text-align: center;
     font-weight: bold;
+}
+::deep .text-danger-override {
+    --bs-text-opacity: 1;
+    margin-left: 10%;
+    color: #ff0000;
 }

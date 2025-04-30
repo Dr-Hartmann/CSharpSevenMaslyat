@@ -1,0 +1,17 @@
+﻿.button-cancel {
+    border-radius: 12px;
+    background-color: #f26868;
+    border: none;
+    margin-right: 30px;
+}
+    .button-cancel:hover {
+        border: 1px solid #000000;
+    }
+.button-accept {
+    border-radius: 12px;
+    background-color: #4DAEEA;
+    border: none;
+}
+.button-accept:hover {
+    border: 1px solid #000000;
+}

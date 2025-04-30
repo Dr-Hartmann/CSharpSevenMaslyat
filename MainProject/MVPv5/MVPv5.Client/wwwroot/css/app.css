@@ -112,3 +112,10 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+.upper-panel {
+    display: flex;
+    height: 5.5rem;
+    width: 100%;
+    background: linear-gradient(to right, #2FE3FF,#CC08FD,#FAFAFA);
+    align-items: center;
+}

@@ -1,0 +1,44 @@
+﻿@using MVPv5.Client.Menu
+<button class="button-menu" @onclick="click"></button>
+<img class="separator-icon" src="Separator.png" alt="Separator">
+<button class="button-save"></button>
+<button class="button-undo"></button>
+<button class="button-redo"></button>
+
+@if (ShowDiv)
+{
+    <div class="PopUp-menu">
+        <p><button class="button-user-menu" @onclick="ShowModal" ><img src="Profil.png" class="profil-img">Профиль</button></p>
+    </div>
+}
+
+@if (ShowMenu)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p class="profile-upper"> 
+                <button class="button-close" @onclick="CloseModal">X</button>
+            </p>
+            <Profile></Profile>
+        </div>
+    </div>
+}
+
+@code {
+    public bool ShowMenu { get; set; } = false;
+    public bool ShowDiv { get; set; } = false;
+    public void click()
+    {
+        ShowDiv = !ShowDiv;
+    }
+    public void ShowModal()
+    {
+        ShowMenu = !ShowMenu;
+        click();
+    }
+    public void CloseModal()
+    {
+        ShowMenu = false;
+    }
+
+} 
