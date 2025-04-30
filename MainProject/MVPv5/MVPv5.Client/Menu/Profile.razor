@@ -1,0 +1,21 @@
+﻿
+<p><br><label class="label-center">Настройки профиля</label></p>
+<p><label>Никнейм</label></p>
+<p><input class="input-format" @bind=login/><br></p>
+<p><label>Пароль</label></p>
+<p><input class="input-format" @bind=password/><br></p>
+<br>
+<Buttons></Buttons>
+@code {
+    //Заглушка
+
+    public UserGetResponse getResponse { get; set; } = new UserGetResponse { Id = 1, AccessRule = 1, DateCreation = new DateOnly(2023, 12, 1), Documents = null, Login = "Pensil", Nickname = "Nazi228", Password = "1488" };
+    private string login { get; set; }
+    private string password { get; set; }
+    protected override void OnInitialized()
+    {
+        login = getResponse.Login;
+        password = getResponse.Password;
+    }
+
+}

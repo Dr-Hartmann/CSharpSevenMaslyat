@@ -1,0 +1,120 @@
+﻿.PopUp-menu {
+    background-color: white;
+    position: absolute;
+    top: 75px;
+    left: 2rem;
+    width: 250px;
+    height: 150px;
+    border-radius: 9px;
+    box-shadow: 4px 4px 10px rgba(0,0,0, 0.3);
+}
+
+.button-menu {
+    background-image: url('Menu.png');
+    background-color: transparent;
+    position: absolute;
+    left: 2rem;
+    height: 45px;
+    width: 45px;
+    border: none;
+}
+
+.separator-icon {
+    position: absolute;
+    left: 7rem;
+    height: auto;
+}
+
+.button-save {
+    background-image: url('Save.png');
+    background-color: transparent;
+    position: absolute;
+    left: 9.5rem;
+    height: auto;
+    height: 50px;
+    width: 50px;
+    border: none;
+}
+
+.button-undo {
+    background-image: url('Undo.png');
+    background-color: transparent;
+    position: absolute;
+    left: 14rem;
+    height: auto;
+    height: 50px;
+    width: 50px;
+    border: none;
+}
+
+.button-redo {
+    background-image: url('Redo.png');
+    background-color: transparent;
+    position: absolute;
+    left: 18rem;
+    height: auto;
+    height: 50px;
+    width: 50px;
+    border: none;
+}
+.button-user-menu {
+    width: 100%;
+    border-radius: 9px 9px 0 0;
+    border: none;
+    border-bottom: 1px solid #000000;
+    text-align: left;
+}
+
+.profil-img {
+    width: 25px;
+    height: 25px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+}
+
+.button-close {
+    border-radius: 0 12px 0 0;
+    top: 0;
+    right: 0;
+    position: absolute;
+    border: none;
+    justify-self: right;
+    width: 35px;
+    height: 25px;
+    align-items: center;
+    background-color: #60aff0;
+}
+.button-close:hover {
+    border: 1px solid #000000;
+    background-color: #e6432e;
+    border-color: black;
+}
+.profile-upper {
+    border-radius: 12px 12px 0 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 25px;
+    background-color: #60aff0;
+    border-color: black;
+}

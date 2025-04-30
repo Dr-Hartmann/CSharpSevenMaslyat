@@ -16,36 +16,58 @@
 
 
 <div class="login-menu">
-    <div class="login-back">
-        <div class="login-main">
-            <button class="button-login" @onclick="ToLog">Вход</button>
-            <button class="button-register active" @onclick="ToReg">Регистрация</button>
-            @*             <EditForm method="post" Model="NewUser" OnValidSubmit="Register" FormName="registration" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" role="alert" />
-                <div class="mb-3">
-                    <label for="login" class="form-label label-format">Логин</label>
-                    <InputText id="login" @bind-Value="NewUser.Login" class="form-control input-format-login" aria-required="true" />
-                    <ValidationMessage For="() => NewUser.Login" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label label-format">Пароль:</label>
-                    <InputText id="password" @bind-Value="NewUser.Password" class="form-control input-format-password" />
-                    <ValidationMessage For="() => NewUser.Password" class="text-danger" />
-                </div>
-                @if (CurrentPage == "login")
-                {
-                    <button type="submit" class="btn btn-primary button-enter">Войти</button>
-                    <button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
-                }
-                else if (CurrentPage == "registration")
-                {
-                    <button type="submit" class="btn btn-primary button-enter">Зарегистрироваться</button>
-                }
-            </EditForm> *@
-        </div>
-    </div>
+	<div class="login-back">
+		<div class="login-main">
+			<button class="@GetLoginButtonClass()" @onclick="ToLog">Вход</button>
+			<button class="@GetRegisterButtonClass()" @onclick="ToReg">Регистрация</button>
+			<EditForm method="post" Model="createdUser" OnValidSubmit="Register" FormName="registration" Enhance>
+				<DataAnnotationsValidator />
+				<br />
+
+
+				@if (currentPage == "registration")
+				{
+					<div class="mb-3">
+						<InputText id="nickname" @bind-Value="createdUser.Nickname" class="form-control input-format" placeholder="Никнейм" />
+						<ValidationMessage For="() => createdUser.Nickname" class="text-danger-override" />
+					</div>
+				}
+				<div class="mb-3">
+					<InputText id="login" @bind-Value="createdUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
+					<ValidationMessage For="() => createdUser.Login" class="text-danger-override" />
+				</div>
+				<div class="mb-3">
+
+					<InputText id="password" @bind-Value="createdUser.Password" class="form-control input-format" placeholder="Пароль" />
+				</div>
+				@if (currentPage == "registration")
+				{
+
+					<InputText id="password" @bind-Value="createdUser.PasswordConfirm" class="form-control input-format" placeholder="Подтверждение пароля" />
+
+				}
+				<ValidationMessage For="() => createdUser.PasswordConfirm" class="text-danger-override" />
+				<br />
+				@if (currentPage == "login")
+				{
+					<button type="submit" class="btn btn-primary button-enter">Войти</button>
+					<button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
+				}
+				else if (currentPage == "registration")
+				{
+					<button type="submit" class="btn btn-primary button-enter" @onclick="Register">Зарегистрироваться</button>
+
+				}
+			</EditForm>
+		</div>
+	</div>
 </div>
+
+
+
+
+
+
 
 
 @* TODO - Можно ли часть перенести в класс? *@
@@ -54,52 +76,83 @@
 @inject HttpClient httpClient
 @inject ILogger<FormLoginRegistration> Logger
 @using MVPv5.Core.Models
+@using MVPv5.Application.Contracts
+@using System.Text.Json
 @code {
-    [Parameter]
-    public string? CurrentPage { get; set; }
 
-    [Parameter]
-    public EventCallback<UserModel> OnDataChanged { get; set; }
-
-    private void ToLog()
-    {
-        NavigationManager.NavigateTo("/login");
-    }
-
-    private void ToReg()
-    {
-        NavigationManager.NavigateTo("/registration");
-    }
-
-    // private UserModel NewUser { get; set; } = new();
-
-    // private async Task Register()
-    // {
-    // TODO - нормальный запрос
-    // var response = await httpClient.PostAsJsonAsync("documenteditor/create", NewDocument);
-    // if (!response.IsSuccessStatusCode)
-    // {
-    //     Logger.LogError($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
-    //     return;
-    // }
+	[Parameter]
+	public string? currentPage { get; set; }
 
 
-    // await OnDataChanged.InvokeAsync(NewUser);
-    // Logger.LogError($"Вошёл: {NewUser.Password}");
-    // Logger.LogCritical($"Вошёл: {NewUser.Password}");
-    // Logger.LogInformation($"Вошёл: {NewUser.Password}");
-    // Logger.LogTrace($"Вошёл: {NewUser.Password}");
-    // Logger.LogWarning($"Вошёл: {NewUser.Password}");
-    // TODO - не работает логгер
+	[Parameter]
+	public EventCallback<UserModel> OnDataChanged { get; set; }
+
+	private void ToLog() => NavigationManager.NavigateTo("/login");
+
+	private void ToReg()
+	{
+		NavigationManager.NavigateTo("/registration");
+	}
+
+	private string GetLoginButtonClass()
+	{
+		return currentPage == "login" ? "button-login active" : "button-login";
+	}
+	private string GetRegisterButtonClass()
+	{
+		return currentPage == "registration" ? "button-register active" : "button-register";
+	}
 
 
-    // await Task.Delay(1000);
-    // NavigationManager.NavigateTo("/editor");
-    // }
 
-    private void EnterLikeGuest()
-    {
-        // TODO - создание клиента-гостя с низким уровнем привелегий
-        NavigationManager.NavigateTo("/editor");
-    }
+
+	private async Task Register()
+	{
+		//TODO - нормальный запрос
+		var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
+
+
+		if (!response.IsSuccessStatusCode)
+		{
+			Logger.LogError($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
+			return;
+		}
+		else if (response.IsSuccessStatusCode)
+		{
+
+			NavigationManager.NavigateTo("/editor");
+		}
+	}
+	// await OnDataChanged.InvokeAsync(NewUser);
+	// Logger.LogError($"Вошёл: {NewUser.Password}");
+	// Logger.LogCritical($"Вошёл: {NewUser.Password}");
+	// Logger.LogInformation($"Вошёл: {NewUser.Password}");
+	// Logger.LogTrace($"Вошёл: {NewUser.Password}");
+	// Logger.LogWarning($"Вошёл: {NewUser.Password}");
+	// TODO - не работает логгер
+
+
+	// await Task.Delay(1000);
+	// NavigationManager.NavigateTo("/editor");
+	// }
+	private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+	{
+		currentPage = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
+		StateHasChanged();
+	}
+	private void EnterLikeGuest()
+	{
+		// TODO - создание клиента-гостя с низким уровнем привелегий
+		NavigationManager.NavigateTo("/editor");
+	}
+	private void Register(EditContext args)
+	{
+		throw new NotImplementedException();
+	}
+
+
+	UserCreateRequest createdUser { get; set; } = new();
+
+
 }
+
