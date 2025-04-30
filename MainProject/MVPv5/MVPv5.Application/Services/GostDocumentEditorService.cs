@@ -1,4 +1,49 @@
 ﻿//using DTOmvp;
+using MVPv5.Core.Models;
+using MVPv5.Domain.Entities;
+
+public static class TemplateMapper
+{
+    public static TemplateEntity ToEntity(TemplateModel model)
+    {
+        return new TemplateEntity
+        {
+            Id = 0, // или model.Id
+            MetadataJson = JsonHelper.Serialize(model.Metadata)
+        };
+    }
+
+    public static TemplateModel ToModel(TemplateEntity entity)
+    {
+        return new TemplateModel
+        {
+            Metadata = string.IsNullOrEmpty(entity.MetadataJson)
+                ? new Dictionary<string, object>()
+                : JsonHelper.Deserialize<Dictionary<string, object>>(entity.MetadataJson)
+        };
+    }
+}
+
+public class GostDocumentEditorService
+{
+    private readonly MVPv5DbContext dbContext;
+    public GostDocumentEditorService(MVPv5DbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+    public void SaveTemplate(TemplateModel model)
+    {
+        var entity = TemplateMapper.ToEntity(model);
+        dbContext.TableTemplates.Add(entity);
+        dbContext.SaveChanges();
+    }
+
+    public TemplateModel LoadTemplate(int id)
+    {
+        var entity = dbContext.TableTemplates.Find(id);
+        return TemplateMapper.ToModel(entity);
+    }
+}
 
 //namespace WebApp.Services
 //{

@@ -1,9 +1,37 @@
-//using Microsoft.AspNetCore.Mvc;
-//using MVPv5.Core.Abstractions;
-//using MVPv5.Core.Services;
+using Microsoft.AspNetCore.Mvc;
+using MVPv5.Core.Models;
+using MVPv5.Application.Services;
 
-//namespace MVPv5.API.Controllers;
+namespace MVPv5.API.Controllers;
 
+[ApiController]
+[Route("[controller]/[action]")]
+public class DocumentEditorController : ControllerBase
+{
+    private readonly DocumentEditorService _documentService;
+    public DocumentEditorController(DocumentEditorService documentService)
+    {
+        _documentService = documentService;
+    }
+
+    // Экспорт документа в JSON-файл
+    [HttpGet("export/{id}")]
+    public IActionResult ExportDocument(int id)
+    {
+        var doc = _documentService.LoadDocument(id);
+        var json = JsonHelper.Serialize(doc);
+        return File(System.Text.Encoding.UTF8.GetBytes(json), "application/json", $"document_{id}.json");
+    }
+ 
+    // Импорт документа из JSON-строки
+    [HttpPost("import")]
+    public IActionResult ImportDocument([FromBody] string json)
+    {
+        var doc = JsonHelper.Deserialize<DocumentModel>(json);
+        _documentService.SaveDocument(doc);
+        return Ok();
+    }
+}
 //[ApiController]
 //[Route("[controller]/[action]")]
 //public class DocumentEditorController(IDocumentEditorService docEditorService, AuditService auditService) : ControllerBase

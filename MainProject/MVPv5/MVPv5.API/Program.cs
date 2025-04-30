@@ -13,12 +13,17 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
         builder.Services.AddOpenApi();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAntiforgery();
 
-        // TODO - как создавать клиентов?
+        // TODO - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?
         //builder.Services.AddHttpClient("MyClient", client
         //=> client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("applicationUrl")
         //?? throw new InvalidOperationException("'applicationUrl' not found.")));
@@ -31,12 +36,12 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-        // TODO - не работает
+        // TODO - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         //builder.Services.AddAuthorization();
         //builder.Services.AddIdentityApiEndpoints<IdentityUser>()
         //    .AddEntityFrameworkStores<MVPv5DbContext>();
 
-        // TODO - нужен?
+        // TODO - пїЅпїЅпїЅпїЅпїЅ?
         //builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
         var app = builder.Build();

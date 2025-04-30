@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVPv5.Application.Contracts;
 using MVPv5.Core.Abstractions;
+using MVPv5.Core.Models;
+using MVPv5.Application.Services;
 
 namespace MVPv5.API.Controllers;
 
@@ -10,6 +12,12 @@ namespace MVPv5.API.Controllers;
 [Route("[controller]/[action]")]
 public class UserController(IUserService service) : ControllerBase
 {
+    private readonly IUserService service;
+    public UserController(IUserService service)
+    {
+        this.service = service;
+    }
+
     [HttpPost]
     public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token = default)
     {
@@ -67,5 +75,22 @@ public class UserController(IUserService service) : ControllerBase
     public async Task<ActionResult<bool>> UpdatePassword(int id, [FromBody] UserPatchResponse user, CancellationToken token = default)
     {
         return await service.UpdatePasswordById(id, user.Password!, user.PasswordConfirm!, token);
+    }
+
+    [HttpGet("export/{id}")]
+    public async Task<IActionResult> ExportUser(int id, CancellationToken token = default)
+    {
+        var user = await service.GetByIdAsync(id, token);
+        var json = JsonHelper.Serialize(user);
+        return File(System.Text.Encoding.UTF8.GetBytes(json), "application/json", $"user_{id}.json");
+    }
+
+    [HttpPost("import")]
+    public async Task<IActionResult> ImportUser([FromBody] string json, CancellationToken token = default)
+    {
+        var user = JsonHelper.Deserialize<UserModel>(json);
+        var id = await service.CreateAsync(user.Nickname, user.Login, user.Password, user.AccessRule, token);
+        if (id == -1) return BadRequest("Такой пользователь уже существует");
+        return Ok();
     }
 }

@@ -18,4 +18,9 @@ public class DocumentModel
 
     public int UserId { get; set; }
     public UserModel? User { get; set; }
+
+    /// <summary>
+    /// Дополнительные метаданные документа (пользовательские поля, параметры, теги и т.д.)
+    /// </summary>
+    public Dictionary<string, object> Metadata { get; set; } = new();
 }

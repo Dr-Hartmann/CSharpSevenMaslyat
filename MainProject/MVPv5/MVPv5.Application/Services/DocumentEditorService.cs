@@ -1,4 +1,52 @@
-﻿//using DTOmvp;
+﻿using MVPv5.Core.Models;
+using MVPv5.Domain.Entities;
+
+public static class DocumentMapper
+{
+    public static DocumentEntity ToEntity(DocumentModel model)
+    {
+        return new DocumentEntity
+        {
+            Id = 0, // или model.Id
+            UserId = model.UserId,
+            MetadataJson = JsonHelper.Serialize(model.Metadata)
+        };
+    }
+
+    public static DocumentModel ToModel(DocumentEntity entity)
+    {
+        return new DocumentModel
+        {
+            UserId = entity.UserId,
+            Metadata = string.IsNullOrEmpty(entity.MetadataJson)
+                ? new Dictionary<string, object>()
+                : JsonHelper.Deserialize<Dictionary<string, object>>(entity.MetadataJson)
+        };
+    }
+}
+
+public class DocumentEditorService
+{
+    private readonly MVPv5DbContext dbContext;
+    public DocumentEditorService(MVPv5DbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+
+    public void SaveDocument(DocumentModel model)
+    {
+        var entity = DocumentMapper.ToEntity(model);
+        dbContext.TableDocuments.Add(entity);
+        dbContext.SaveChanges();
+    }
+
+    public DocumentModel LoadDocument(int id)
+    {
+        var entity = dbContext.TableDocuments.Find(id);
+        return DocumentMapper.ToModel(entity);
+    }
+}
+//using DTOmvp;
 //using Microsoft.EntityFrameworkCore;
 //using MVPv4.Data;
 //using MVPv4.Models;
