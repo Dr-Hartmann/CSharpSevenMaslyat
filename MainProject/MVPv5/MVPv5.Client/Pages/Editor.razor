@@ -14,6 +14,9 @@
     }
 </div>
 @code {
+    @inject HttpClient httpClient
+    @inject NavigationManager NavigationManager
+
     class PageModel
     {
         public string Content { get; set; } = "";
@@ -36,5 +39,18 @@
         }
     }
 
+    //doc request
+    protected override void OnInitialized()
+    {
+        var doc = GetDocumentCreateRequest.JsonData;
+        Pages[0].Content = doc;
 
+        //Нормальная реализация
+        // var doc1 = httpClient.PostAsJsonAsync("DocumentEditor/ImportDocument", "123");
+        // var doc = httpClient.GetAsync($"DocumentEditor/export/?id=0");
+        // Pages[0].Content = doc.Result.ToString();
+    }
+    
+    DocumentCreateRequest GetDocumentCreateRequest { get; set; } = new DocumentCreateRequest { Name = "FirstDoc", JsonData = "12312312312", Metadata = null, TemplateId = 0 };
+    
 }
