@@ -4,11 +4,31 @@
     <button class="button-template" @onclick="Select">Курсовая</button>
     <button class="button-template" @onclick="Select">Диплом</button>
 </div>
-
+@if (ShowSelectMenu)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p class="profile-upper">
+                <button class="button-close" @onclick="CloseModal">X</button>
+            </p>
+            <Select></Select>
+        </div>
+    </div>
+}
 @code {
     public bool ShowSelectMenu { get; set; } = false;
+    public bool flag = false;
     public void Select()
     {
         ShowSelectMenu = !ShowSelectMenu;
+        flag = !flag;
+    }
+    public void CloseModal()
+    {
+        ShowSelectMenu = false;
+    }
+    public bool GetFlag()
+    {
+        return flag;
     }
 }

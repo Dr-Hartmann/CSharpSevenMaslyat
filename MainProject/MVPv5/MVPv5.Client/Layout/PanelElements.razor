@@ -8,10 +8,18 @@
 @if (ShowDiv)
 {
     <div class="PopUp-menu">
-        <p><button class="button-user-menu" @onclick="ShowModal" ><img src="Profil.png" class="profil-img">Профиль</button></p>
+        <button class="button-user-menu" @onclick="ShowModal" ><img src="Profil.png" class="profil-img">Профиль</button>
+        <button class="button-user-menu" @onclick="DivShow"><img src="Shablon.png" class="profil-img">Выбор шаблона</button>
+        @if (ShowDiv1)
+        {
+            <SelectPanelElements></SelectPanelElements>
+        }
     </div>
 }
-
+@if (Flag() == true)
+{
+    
+}
 @if (ShowMenu)
 {
     <div class="modal-overlay">
@@ -39,6 +47,8 @@
     public bool ShowMenu { get; set; } = false;
     public bool ShowDiv1 { get; set; } = false;
     public bool ShowDiv { get; set; } = false;
+    SelectPanelElements f = new SelectPanelElements();
+
     public void click()
     {
         ShowDiv = !ShowDiv;
@@ -71,5 +81,13 @@
         {
             Console.WriteLine("Делегат не передан");
         }
+    }
+    public void DivShow()
+    {
+        ShowDiv1 = !ShowDiv1;
+    }
+    public bool Flag()
+    {
+        return f.GetFlag();
     }
 }
