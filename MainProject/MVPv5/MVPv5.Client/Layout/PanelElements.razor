@@ -8,7 +8,7 @@
 @if (ShowDiv)
 {
     <div class="PopUp-menu">
-        <p><button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button></p>
+        <p><button class="button-user-menu" @onclick="ShowModal" ><img src="Profil.png" class="profil-img">Профиль</button></p>
     </div>
 }
 
@@ -23,14 +23,29 @@
         </div>
     </div>
 }
+@if (f.ShowSelectMenu == true)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p class="profile-upper">
+                <button class="button-close" @onclick="CloseModal">X</button>
+            </p>
+            <Select></Select>
+        </div>
+    </div>
+}
 
 @code {
     public bool ShowMenu { get; set; } = false;
+    public bool ShowDiv1 { get; set; } = false;
     public bool ShowDiv { get; set; } = false;
-
     public void click()
     {
         ShowDiv = !ShowDiv;
+        if (!ShowDiv)
+        {
+            ShowDiv1 = false;
+        }
     }
 
     public void ShowModal()
@@ -38,7 +53,6 @@
         ShowMenu = !ShowMenu;
         click();
     }
-
     public void CloseModal()
     {
         ShowMenu = false;

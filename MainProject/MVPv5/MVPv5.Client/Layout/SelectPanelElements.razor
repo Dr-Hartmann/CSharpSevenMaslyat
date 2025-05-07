@@ -1,0 +1,14 @@
+﻿@using MVPv5.Client.Menu
+<div class="PopUp-menu">
+    <button class="button-template" @onclick="Select">Лабораторная</button>
+    <button class="button-template" @onclick="Select">Курсовая</button>
+    <button class="button-template" @onclick="Select">Диплом</button>
+</div>
+
+@code {
+    public bool ShowSelectMenu { get; set; } = false;
+    public void Select()
+    {
+        ShowSelectMenu = !ShowSelectMenu;
+    }
+}
