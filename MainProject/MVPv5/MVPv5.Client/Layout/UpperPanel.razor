@@ -5,7 +5,8 @@
 @if (IsPanelVisible)
 {
     <div class="upper-panel">
-        <PanelElements />
+        <!-- Передаем параметр OnSave дальше в PanelElements -->
+        <PanelElements OnSave="OnSave" />
     </div>
 }
 
@@ -14,6 +15,12 @@
 </main>
 
 @code {
+    [Parameter]
+    public EventCallback OnSave { get; set; }
+
+      <!-- Получаем делегат здесь -->
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
     private string currentUrl = "";
     private bool IsPanelVisible =>
         currentUrl != "/" &&
