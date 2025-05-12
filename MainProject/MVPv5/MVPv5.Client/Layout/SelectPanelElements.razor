@@ -1,8 +1,9 @@
 ﻿@using MVPv5.Client.Menu
+
 <div class="PopUp-menu">
-    <button class="button-template" @onclick="Select">Лабораторная</button>
-    <button class="button-template" @onclick="Select">Курсовая</button>
-    <button class="button-template" @onclick="Select">Диплом</button>
+    <button class="button-template" @onclick="() => Select(Template.Lab)">Лабораторная</button>
+    <button class="button-template" @onclick="() => Select(Template.Course)">Курсовая</button>
+    <button class="button-template" @onclick="() => Select(Template.Thesis)">Диплом</button>
 </div>
 @if (ShowSelectMenu)
 {
@@ -10,18 +11,47 @@
         <div class="modal-content">
             <p class="profile-upper">
                 <button class="button-close" @onclick="CloseModal">X</button>
+                @switch (template)
+                {
+                    case Template.Lab:
+                    <p><br><label class="label-center">Шаблон: лабораторная</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        Console.WriteLine("Выбран шаблон лабы");
+                        break;
+                    case Template.Course:
+                    <p><br><label class="label-center">Шаблон: курсовая</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        Console.WriteLine("Выбран шаблон курсовой");
+                        break;
+                    case Template.Thesis:
+                    <p><br><label class="label-center">Шаблон: дипломная работа</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        Console.WriteLine("Выбран шаблон диплома");
+                        break;
+
+
+                }
             </p>
-            <Select></Select>
+
+            @*     <Select></Select> *@
         </div>
     </div>
 }
 @code {
+    public enum Template
+    {
+        Lab,
+        Course,
+        Thesis
+    }
+    Template template;
     public bool ShowSelectMenu { get; set; } = false;
     public bool flag = false;
-    public void Select()
+    public void Select(Template Temp)
     {
         ShowSelectMenu = !ShowSelectMenu;
         flag = !flag;
+        template = Temp;
     }
     public void CloseModal()
     {

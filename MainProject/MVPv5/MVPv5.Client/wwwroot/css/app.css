@@ -119,3 +119,9 @@ code {
     background: linear-gradient(to right, #2FE3FF,#CC08FD,#FAFAFA);
     align-items: center;
 }
+
+.label-center {
+    text-align: center;
+    display: block;
+    font-size: 40px;
+}

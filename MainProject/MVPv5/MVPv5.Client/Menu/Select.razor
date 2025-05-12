@@ -1,4 +1,4 @@
-﻿<p><br><label class="label-center">Настройки профиля</label></p>
+﻿@* <p><br><label class="label-center">Настройки профиля</label></p>
 <p><label>Никнейм</label></p>
 <p><input class="input-format" @bind=login /><br></p>
 <p><label>Пароль</label></p>
@@ -22,4 +22,4 @@
         //Imitation
         var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.Id}", currentUser);
     }
-}
+} *@
