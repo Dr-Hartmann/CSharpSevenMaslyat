@@ -1,0 +1,26 @@
+﻿.input-format {
+    border-radius: 15px;
+    border: 1.5px solid #6e6e6e;
+    padding-left: 10px;
+    width: 100%;
+}
+.button-cancel {
+    border-radius: 12px;
+    background-color: #f26868;
+    border: none;
+    margin-right: 30px;
+}
+
+    .button-cancel:hover {
+        border: 1px solid #000000;
+    }
+
+.button-accept {
+    border-radius: 12px;
+    background-color: #4DAEEA;
+    border: none;
+}
+
+    .button-accept:hover {
+        border: 1px solid #000000;
+    }
