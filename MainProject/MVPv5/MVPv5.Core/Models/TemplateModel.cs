@@ -2,29 +2,24 @@
 
 public class TemplateModel
 {
-    private TemplateModel(int id, string name, string type, DateOnly dateCreation)
+    private TemplateModel(int id, string name, string type, DateOnly dateCreation, byte[] content)
     {
         Id = id;
         Name = name;
         Type = type;
         DateCreation = dateCreation;
+        Content = content;
     }
 
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Type { get; set; }
-    public DateOnly DateCreation { get; set; }
-    //public string? FilePath { get; set; }// Если храним файл на диске
+    public int Id { get; }
+    public string Name { get; }
+    public string Type { get; }
+    public DateOnly DateCreation { get; }
+    public byte[] Content { get; }
 
-    public static (TemplateModel, string) Create(int id, string name, string type, DateOnly dateCreation)
+    public static (TemplateModel, string) Create(int id, string name, string type, DateOnly dateCreation, byte[] content)
     {
         var error = string.Empty;
-
-        //if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-        //{
-        //    error = "Никнейм, логин или пароль пусты";
-        //}
-
-        return (new TemplateModel(id, name, type, dateCreation), error);
+        return (new TemplateModel(id, name, type, dateCreation, content), error);
     }
 }

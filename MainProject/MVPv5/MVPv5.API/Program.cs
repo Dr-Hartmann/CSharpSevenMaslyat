@@ -5,6 +5,7 @@ using MVPv5.Core.Abstractions.v1;
 using MVPv5.Domain.Data;
 using MVPv5.Domain.Repositories;
 
+
 namespace MVPv5.API;
 
 public class Program
@@ -13,35 +14,32 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.WriteIndented = true;
-            });
+        builder.Services.AddControllers();
+            //.AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //    options.JsonSerializerOptions.WriteIndented = true;
+            //});
         builder.Services.AddOpenApi();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAntiforgery();
 
-        // TODO - ��� ��������� ��������?
-        //builder.Services.AddHttpClient("MyClient", client
-        //=> client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("applicationUrl")
-        //?? throw new InvalidOperationException("'applicationUrl' not found.")));
-
         builder.Services.AddDbContextFactory<MVPv5DbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("MVPv5Database")
+            options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(MVPv5DbContext))
             ?? throw new InvalidOperationException("Connection string 'BlazorWebAppMoviesContext' not found.")));
 
         builder.Services.AddScoped<UserController>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-        // TODO - �� ��������
+        builder.Services.AddScoped<TemplateController>();
+        builder.Services.AddScoped<ITemplateService, TemplateService>();
+        builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
+
         //builder.Services.AddAuthorization();
         //builder.Services.AddIdentityApiEndpoints<IdentityUser>()
         //    .AddEntityFrameworkStores<MVPv5DbContext>();
 
-        // TODO - �����?
         //builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
         var app = builder.Build();
@@ -59,6 +57,7 @@ public class Program
                 options.SwaggerEndpoint("/openapi/v1.json", "api");
             });
         }
+
         //else
         //{
         //    app.UseExceptionHandler("/Error");

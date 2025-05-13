@@ -9,18 +9,18 @@ public class DocumentEntity : IDisposable
     [Key]
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
-    public DateOnly DateCreation { get; set; }
+    public required DateOnly DateCreation { get; set; }
 
     [Column(TypeName = "jsonb")]
     public JsonDocument? MetadataJson { get; set; }
 
     [ForeignKey(nameof(TemplateEntity))]
-    public int TemplateId { get; set; }
+    public required int TemplateId { get; set; }
 
     [ForeignKey(nameof(UserEntity))]
-    public int UserId { get; set; }
+    public required int UserId { get; set; }
 
     public void Dispose() => MetadataJson?.Dispose();
 }

@@ -41,6 +41,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
                 .SetProperty(u => u.Login, login)
                 .SetProperty(u => u.Password, password)
                 .SetProperty(u => u.AccessRule, accessRule), token);
+        await dbContext.SaveChangesAsync(token);
         return id;
     }
 
@@ -50,15 +51,18 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
             .Where(user => user.Id == id)
             .ExecuteUpdateAsync(user => user
                 .SetProperty(u => u.Password, password), token);
+        await dbContext.SaveChangesAsync(token);
         return true;
     }
 
     /// <returns>Количество удалённых записей из БД.</returns>
     public async Task<int> DeleteById(int id, CancellationToken token)
     {
-        return await dbContext.Users
+        var count = await dbContext.Users
             .Where(user => user.Id == id)
             .ExecuteDeleteAsync(token);
+        await dbContext.SaveChangesAsync(token);
+        return count;
     }
 
     public async Task<(UserModel User, string Error)> GetByIdAsync(int id, CancellationToken token)
