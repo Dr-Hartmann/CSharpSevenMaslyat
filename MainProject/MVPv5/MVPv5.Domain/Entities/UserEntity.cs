@@ -13,5 +13,4 @@ public class UserEntity
 #pragma warning restore CS8618
     public byte AccessRule { get; set; }
     public DateOnly DateCreation { get; set; }
-    public IEnumerable<DocumentEntity>? Documents { get; set; }
 }

@@ -1,9 +1,10 @@
 ﻿@page "/editor"
 @using System.Text
+@using MVPv5.Application.Contracts.Document.v1
 
 <PageTitle>Editor</PageTitle>
 
-<UpperToolbar />
+@* <UpperToolbar /> *@
 <UpperPanel OnSave="saveDoc">
     <PanelElements OnSave="saveDoc" />  <!-- Передаем делегат сюда -->
 </UpperPanel>
@@ -17,10 +18,10 @@
     }
 </div>
 
-@code {
-    @inject HttpClient httpClient
-    @inject NavigationManager NavigationManager
 
+@inject HttpClient httpClient
+    @inject NavigationManager NavigationManager
+@code {
     class PageModel
     {
         public string Content { get; set; } = "";
@@ -45,8 +46,8 @@
 
     protected override void OnInitialized()
     {
-        var doc = GetDocumentCreateRequest.JsonData;
-        Pages[0].Content = doc;
+        // var doc = GetDocumentCreateRequest.JsonData;
+        // Pages[0].Content = doc;
     }
 
     public async Task saveDoc()
@@ -67,6 +68,6 @@
             textFromByte += Encoding.UTF8.GetString(bytes);
         Console.WriteLine(textFromByte);
     }
-    string ?userDoc = null;
-    DocumentCreateRequest GetDocumentCreateRequest { get; set; } = new DocumentCreateRequest { Name = "FirstDoc", JsonData = "12312312312", Metadata = null, TemplateId = 0 };
+    // string ?userDoc = null;
+    DocumentCreateRequest GetDocumentCreateRequest { get; set; } = new DocumentCreateRequest { Name = "FirstDoc", TemplateId = 0 };
 }

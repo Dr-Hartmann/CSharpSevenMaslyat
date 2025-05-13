@@ -6,9 +6,8 @@ public class TemplateEntity
 {
     [Key]
     public int Id { get; set; }
-
-    /// <summary>
-    /// Сериализованные метаданные шаблона (JSON)
-    /// </summary>
-    public string? MetadataJson { get; set; }
+    public required string Name { get; set; }
+    public required string Type { get; set; }
+    public required DateOnly DateCreation { get; set; }
+    //public IFormFile Doc { get; set; }
 }

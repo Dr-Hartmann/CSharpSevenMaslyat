@@ -6,16 +6,15 @@ namespace MVPv5.Domain.Data;
 public class MVPv5DbContext : DbContext
 {
     public MVPv5DbContext(DbContextOptions<MVPv5DbContext> options)
-        :base(options)
+        : base(options)
     {
         Database.EnsureCreated();
     }
-    public DbSet<UserEntity> TableUsers { get; set; }
-    public DbSet<DocumentEntity> TableDocuments { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<DocumentEntity> Documents { get; set; }
+    public DbSet<TemplateEntity> Templates { get; set; }
 }
 
 /* TODO
- * Научиться создавать и объединять миграции
- * Написать интерфейсы и сервисы к ним, внедрить зависимости
- * Создать новые сущности и дополнить контекст
+ * Научиться объединять миграции
  */

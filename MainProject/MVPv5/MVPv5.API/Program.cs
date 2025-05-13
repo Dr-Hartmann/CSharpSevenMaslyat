@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MVPv5.API.Controllers;
-using MVPv5.Application.Services;
-using MVPv5.Core.Abstractions;
+using MVPv5.API.Controllers.v1;
+using MVPv5.Application.Services.v1;
+using MVPv5.Core.Abstractions.v1;
 using MVPv5.Domain.Data;
 using MVPv5.Domain.Repositories;
 

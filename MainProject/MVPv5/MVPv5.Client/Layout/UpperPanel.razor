@@ -22,6 +22,9 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
     private string currentUrl = "";
+
+    // TODO - можно ли отвязаться от имён страниц так, 
+    // чтобы каждая страница сама решала нужна ей панель или нет?
     private bool IsPanelVisible =>
         currentUrl != "/" &&
         currentUrl != "/login" &&

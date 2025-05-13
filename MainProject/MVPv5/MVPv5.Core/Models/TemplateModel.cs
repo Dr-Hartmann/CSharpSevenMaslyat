@@ -2,19 +2,29 @@
 
 public class TemplateModel
 {
-    //[Key]
-    //public int Id { get; set; }
+    private TemplateModel(int id, string name, string type, DateOnly dateCreation)
+    {
+        Id = id;
+        Name = name;
+        Type = type;
+        DateCreation = dateCreation;
+    }
 
-    //[Required]
-    //[MaxLength(100)]
-    //public string Name { get; set; }
-
-    //// Хранить путь к файлу или сам файл в виде byte[]
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Type { get; set; }
+    public DateOnly DateCreation { get; set; }
     //public string? FilePath { get; set; }// Если храним файл на диске
-    ////public byte[]? FileData { get; set; } // Если храним файл в БД
 
-    /// <summary>
-    /// Дополнительные метаданные шаблона (параметры, пользовательские поля и т.д.)
-    /// </summary>
-    public Dictionary<string, object> Metadata { get; set; } = new();
+    public static (TemplateModel, string) Create(int id, string name, string type, DateOnly dateCreation)
+    {
+        var error = string.Empty;
+
+        //if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+        //{
+        //    error = "Никнейм, логин или пароль пусты";
+        //}
+
+        return (new TemplateModel(id, name, type, dateCreation), error);
+    }
 }

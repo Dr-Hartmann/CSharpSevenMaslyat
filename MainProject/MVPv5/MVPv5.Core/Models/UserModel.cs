@@ -2,8 +2,7 @@
 
 public class UserModel
 {
-    private UserModel(int id, string nickname, string login, string password,
-        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel>? documents)
+    private UserModel(int id, string nickname, string login, string password, byte accessRule, DateOnly dateCreation)
     {
         Id = id;
         Nickname = nickname;
@@ -11,7 +10,6 @@ public class UserModel
         Password = password;
         AccessRule = accessRule;
         DateCreation = dateCreation;
-        Documents = documents?.Select(i => new DocumentModel() { UserId = i.UserId, User = this });
     }
     public int Id { get; }
     public string Nickname { get; }
@@ -19,10 +17,8 @@ public class UserModel
     public string Password { get; }
     public byte AccessRule { get; }
     public DateOnly DateCreation { get; }
-    public IEnumerable<DocumentModel>? Documents { get; }
 
-    public static (UserModel, string) Create(int id, string nickname, string login, string password,
-        byte accessRule, DateOnly dateCreation, IEnumerable<DocumentModel>? documents)
+    public static (UserModel, string) Create(int id, string nickname, string login, string password, byte accessRule, DateOnly dateCreation)
     {
         var error = string.Empty;
 
@@ -31,6 +27,6 @@ public class UserModel
             error = "Никнейм, логин или пароль пусты";
         }
 
-        return (new UserModel(id, nickname, login, password, accessRule, dateCreation, documents), error);
+        return (new UserModel(id, nickname, login, password, accessRule, dateCreation), error);
     }
 }
