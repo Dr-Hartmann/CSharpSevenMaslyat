@@ -1,9 +1,10 @@
 ﻿@page "/"
 @page "/login"
 <PageTitle>Login</PageTitle>
-
 <FormLoginRegistration CurrentPage="login" OnDataChanged="Handler" />
 
+@* <FormLoginRegistration CurrentPage="login" OnDataChanged="Handler" />
+ *@
 @using MVPv5.Core.Models
 @inject ILogger<Login> Logger
 @code {
