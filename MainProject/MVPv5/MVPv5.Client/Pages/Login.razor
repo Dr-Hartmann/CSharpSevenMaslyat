@@ -1,35 +1,5 @@
 ﻿@page "/"
 @page "/login"
 <PageTitle>Login</PageTitle>
-<FormLoginRegistration CurrentPage="login" OnDataChanged="Handler" />
 
-@* <FormLoginRegistration CurrentPage="login" OnDataChanged="Handler" />
- *@
-@using MVPv5.Core.Models
-@inject ILogger<Login> Logger
-@code {
-    // [Parameter]
-    // public RenderFragment renderFragment;
-
-    // private UserModel? user1 = new();
-
-    protected override void OnInitialized()
-    {
-        Logger.LogWarning("Открыт Login");
-    }
-
-    private void Handler(UserModel user)
-    {
-
-        // Logger.LogDebug($"Вошёл пользователь: {user.Nickname}");
-        // Logger.LogError($"Вошёл: {user.Nickname}");
-        // Logger.LogCritical($"Вошёл: {user.Nickname}");
-        // Logger.LogInformation($"Вошёл: {user.Nickname}");
-        // Logger.LogTrace($"Вошёл: {user.Nickname}");
-        // Logger.LogWarning($"Вошёл: {user.Nickname}");
-
-        // StateHasChanged();
-
-        // TODO - не работает логгер
-    }
-}
+<FormLoginRegistration CurrentPage="login" />

@@ -1,50 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MVPv5.Application.Contracts;
-using MVPv5.Application.Contracts.User.v1;
+using Microsoft.Net.Http.Headers;
+using MVPv5.Application.Contracts.Template.v1;
 using MVPv5.Core.Abstractions.v1;
 
 namespace MVPv5.API.Controllers.v1;
 
 [ApiController]
-[Route("v1/[controller]/[action]")]
-public class TemplateController(ITemplateService service) : ControllerBase
+[Area("v1")]
+[Route("[controller]")]
+public class TemplateController(ITemplateService service, ILogger<TemplateController> logger) : ControllerBase
 {
-    [HttpPost]
-    public async Task<ActionResult> Create([FromBody] TemplateCreateRequest user, CancellationToken token = default)
+    [HttpPost("create")]
+    public async Task<IActionResult> Add([FromBody] TemplateCreateRequest t, CancellationToken token = default)
     {
         if (!ModelState.IsValid)
         {
-            // TODO - logger
-            return BadRequest(ModelState);
+            logger.LogError(ModelState.ToString());
+            return ValidationProblem(ModelState);
         }
 
         try
         {
-            var id = await service.CreateAsync(user.Name, user.Type, DateOnly.FromDateTime(DateTime.Now), user.Content, token);
-            if (id == -1) return BadRequest("Такой шаблон уже существует");
-            return Ok();
+            await service.AddAsync(t.Name, t.Type, DateOnly.FromDateTime(DateTime.Now), t.Content, t.ContentType, t.Tags, token);
+            return Created();
         }
         catch (Exception ex)
         {
-            return NotFound(ex.Message);
+            logger.LogError(ModelState.ToString());
+            return Problem(detail: ex.Message);
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<TemplateGetResponse>> Get(int id, CancellationToken token = default)
+    [HttpGet("read/{id:int}")]
+    public async Task<ActionResult<TemplateReadResponse>> Get(int id, CancellationToken token = default)
     {
         try
         {
-            var response = await service.GetByIdAsync(id, token);
-            return new TemplateGetResponse()
-            {
-                Id = response.Id,
-                Name = response.Name,
-                Type = response.Type,
-                Content = response.Content,
-                DateCreation = response.DateCreation
-            };
+            var r = await service.GetByIdAsync(id, token);
+            return new TemplateReadResponse(
+                r.Id,
+                r.Name,
+                r.Type,
+                r.DateCreation,
+                r.Content,
+                r.ContentType,
+                r.Tags);
         }
         catch (KeyNotFoundException ex)
         {
@@ -52,12 +52,40 @@ public class TemplateController(ITemplateService service) : ControllerBase
         }
     }
 
-    [HttpGet]
-    public IActionResult Download([FromBody] TemplateGetResponse file)
+    [HttpGet("read-all")]
+    public async Task<ActionResult<IEnumerable<TemplateReadResponse>>> GetAll(CancellationToken token = default)
     {
-        if (file.Content == null)
+        try
+        {
+            return Ok((await service.GetAllAsync(token)).Select(
+                r => new TemplateReadResponse(
+                    r.Id,
+                    r.Name,
+                    r.Type,
+                    r.DateCreation,
+                    r.Content,
+                    r.ContentType,
+                    r.Tags)));
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Data);
+        }
+    }
+
+    // TODO - разные поля или целиком
+    //[HttpPatch("update")]
+    //[HttpPut("refresh")]
+
+    //[HttpDelete("delete")]
+
+    [HttpGet("download")]
+    public IActionResult Download([FromBody] TemplateDownloadRequest file)
+    {
+        if (file.content == null)
             return NotFound();
 
-        return File(file.Content, file.ContentType, file.Name);
+        // TODO - проверить
+        return File(file.content, file.contentType, file.name, DateTime.Now, new EntityTagHeaderValue("<doc>"), true);
     }
 }

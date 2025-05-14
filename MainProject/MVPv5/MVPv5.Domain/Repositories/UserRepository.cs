@@ -8,15 +8,12 @@ namespace MVPv5.Domain.Repositories;
 
 public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
 {
-
-    /*  TODO - дополнить недостающие  */
-
-
-    public async Task<int> AddAsync(string nickname, string login, string password, byte accessRule, DateOnly dateCreation, CancellationToken token)
+    public async Task AddAsync(string nickname, string login, string password,
+        byte accessRule, DateOnly dateCreation, CancellationToken token)
     {
         if (dbContext!.Users.Where(u => u.Login == login).Count() > 0)
         {
-            return -1;
+            throw new Exception("Такой пользователь уже существует");
         }
 
         await dbContext!.Users.AddAsync(new UserEntity
@@ -27,42 +24,41 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
             AccessRule = accessRule,
             DateCreation = dateCreation,
         }, token);
-        await dbContext.SaveChangesAsync(token);
 
-        return dbContext!.Users.FirstOrDefaultAsync(u => u.Login == login, token).Id;
+        await dbContext.SaveChangesAsync(token);
     }
 
-    public async Task<int> Update(int id, string nickname, string login, string password, byte accessRule, CancellationToken token)
+    public async Task UpdateNicknameAsync(int id, string nickname, CancellationToken token)
     {
         await dbContext.Users
             .Where(user => user.Id == id)
             .ExecuteUpdateAsync(user => user
-                .SetProperty(u => u.Nickname, nickname)
-                .SetProperty(u => u.Login, login)
-                .SetProperty(u => u.Password, password)
-                .SetProperty(u => u.AccessRule, accessRule), token);
+                .SetProperty(u => u.Nickname, nickname),
+                token);
+
         await dbContext.SaveChangesAsync(token);
-        return id;
     }
 
-    public async Task<bool> UpdatePassword(int id, string password, CancellationToken token)
+    public async Task UpdateLoginAsync(int id, string login, CancellationToken token)
     {
         await dbContext.Users
             .Where(user => user.Id == id)
             .ExecuteUpdateAsync(user => user
-                .SetProperty(u => u.Password, password), token);
+                .SetProperty(u => u.Login, login),
+                token);
+
         await dbContext.SaveChangesAsync(token);
-        return true;
     }
 
-    /// <returns>Количество удалённых записей из БД.</returns>
-    public async Task<int> DeleteById(int id, CancellationToken token)
+    public async Task UpdatePasswordByLoginAsync(string login, string password, CancellationToken token)
     {
-        var count = await dbContext.Users
-            .Where(user => user.Id == id)
-            .ExecuteDeleteAsync(token);
+        await dbContext.Users
+            .Where(user => user.Login == login)
+            .ExecuteUpdateAsync(user => user
+                .SetProperty(u => u.Password, password),
+                token);
+
         await dbContext.SaveChangesAsync(token);
-        return count;
     }
 
     public async Task<(UserModel User, string Error)> GetByIdAsync(int id, CancellationToken token)
@@ -72,13 +68,12 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
             .FirstOrDefaultAsync(user => user.Id == id, token));
     }
 
-    //public async Task<IEnumerable<(UserModel User, string Error)>> GetWithDocumentsAsync(CancellationToken token)
-    //{
-    //    return GetListOfUsers(await dbContext.Users
-    //        .AsNoTracking()
-    //        .Include(user => user.Documents)
-    //        .ToListAsync(token));
-    //}
+    public async Task<(UserModel User, string Error)> GetByLoginAsync(string login, CancellationToken token)
+    {
+        return GetUser(await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Login == login, token));
+    }
 
     public async Task<IEnumerable<(UserModel User, string Error)>> GetAllAsync(CancellationToken token)
     {
@@ -87,27 +82,30 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
             .ToListAsync(token));
     }
 
-    //public async Task<IEnumerable<(UserModel User, string Error)>> GetByFilterAsync(int lessThan, CancellationToken token)
-    //{
-    //    var query = dbContext!.Users.AsNoTracking();
-    //    if (lessThan > 0)
-    //    {
-    //        query = query.Where(user => user.Documents!.Count() < lessThan);
-    //    }
+    public async Task DeleteById(int id, CancellationToken token)
+    {
+        var count = await dbContext.Users
+            .Where(user => user.Id == id)
+            .ExecuteDeleteAsync(token);
 
-    //    return GetListOfUsers(await query.ToListAsync(token));
-    //}
+        await dbContext.SaveChangesAsync(token);
 
+        if (count != 1)
+        {
+            throw new Exception($"Удалено {count} пользователей вместо 1");
+        }
+    }
 
     private (UserModel User, string Error) GetUser(UserEntity? response)
     {
-        if (response == null) throw new Exception("Пустой пользователь в ответе");
-        return UserModel.Create(response.Id, response.Nickname, response.Login, response.Password, response.AccessRule, response.DateCreation);
+        if (response == null) throw new Exception("Пользователь не существует");
+        return UserModel.Create(response.Id, response.Nickname, response.Login, response.Password, 
+            response.AccessRule, response.DateCreation);
     }
 
-    private IEnumerable<(UserModel User, string Error)> GetListOfUsers(List<UserEntity>? response)
+    private IEnumerable<(UserModel User, string Error)> GetListOfUsers(IEnumerable<UserEntity>? response)
     {
         if (response == null) throw new Exception("Пустой лист в ответе");
-        return response.Select(a => UserModel.Create(a.Id, a.Nickname, a.Login, a.Password, a.AccessRule, a.DateCreation));
+        return response.Select(GetUser);
     }
 }

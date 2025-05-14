@@ -5,8 +5,9 @@ using MVPv5.Core.Abstractions.v1;
 using MVPv5.Domain.Data;
 using MVPv5.Domain.Repositories;
 
-
 namespace MVPv5.API;
+
+// TODO - порядок не менять!
 
 public class Program
 {
@@ -14,15 +15,12 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
-            //.AddJsonOptions(options =>
-            //{
-            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            //    options.JsonSerializerOptions.WriteIndented = true;
-            //});
-        builder.Services.AddOpenApi();
-        builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAntiforgery();
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddOpenApi();
+        builder.Services.AddAuthentication();
+        builder.Services.AddAuthorization();
 
         builder.Services.AddDbContextFactory<MVPv5DbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(MVPv5DbContext))
@@ -34,13 +32,7 @@ public class Program
 
         builder.Services.AddScoped<TemplateController>();
         builder.Services.AddScoped<ITemplateService, TemplateService>();
-        builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
-
-        //builder.Services.AddAuthorization();
-        //builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-        //    .AddEntityFrameworkStores<MVPv5DbContext>();
-
-        //builder.Logging.SetMinimumLevel(LogLevel.Debug);
+        builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();        
 
         var app = builder.Build();
 
@@ -54,26 +46,26 @@ public class Program
             app.MapOpenApi();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/openapi/v1.json", "api");
+                options.SwaggerEndpoint("/openapi/v1.json", "v1");
             });
+            app.UseMigrationsEndPoint();
         }
-
         //else
         //{
         //    app.UseExceptionHandler("/Error");
-        //    app.UseMigrationsEndPoint();
+        //    app.UseHsts();
         //}
 
-        app.UseCors();
         app.UseHttpsRedirection();
-        app.UseAuthorization();
-        app.MapControllers();
         app.UseStaticFiles();
+        //app.UseRouting();
+        app.UseCors();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
-        //app.MapControllerRoute(
-        //    name: "default",
-        //    pattern: "{controller=Home}/{action=Index}/{id?}");
+        // свой Middleware<>()
 
+        app.MapControllers();
         app.UseAntiforgery();
         app.Run();
     }

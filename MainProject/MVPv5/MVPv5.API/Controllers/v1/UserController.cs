@@ -4,102 +4,114 @@ using MVPv5.Application.Contracts.User.v1;
 
 namespace MVPv5.API.Controllers.v1;
 
-// TDOD - разработать новые контроллеры
-
 [ApiController]
-[Route("v1/[controller]/[action]")]
-public class UserController(IUserService service) : ControllerBase
+[Area("v1")]
+[Route("[controller]")]
+public class UserController(IUserService service, ILogger<UserController> logger) : ControllerBase
 {
-    [HttpPost]
-    public async Task<ActionResult> Create([FromBody] UserCreateRequest user, CancellationToken token = default)
+    [HttpPost("create")]
+    public async Task<ActionResult> Add([FromBody] UserCreateRequest user, CancellationToken token = default)
     {
         if (!ModelState.IsValid)
         {
-            // TODO - logger
-            return BadRequest(ModelState);
+            logger.LogError(ModelState.ToString());
+            return ValidationProblem(ModelState);
         }
 
         try
         {
-            var id = await service.CreateAsync(user.Nickname, user.Login, user.Password, 30, token);
-            if (id == -1) return BadRequest("Такой пользователь уже существует");
+            await service.CreateAsync(user.Nickname, user.Login, user.Password, 30, token);
             return Ok();
         }
         catch (Exception ex)
         {
-            return NotFound(ex.Message);
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserGetResponse>> Get(int id, CancellationToken token = default)
+    [HttpGet("read/{id:int}")]
+    public async Task<ActionResult<UserReadResponse>> Get(int id, CancellationToken token = default)
     {
         try
         {
             var response = await service.GetByIdAsync(id, token);
-            return new UserGetResponse()
-            {
-                Id = response.Id,
-                Nickname = response.Nickname,
-                Login = response.Login,
-                AccessRule = response.AccessRule,
-                DateCreation = response.DateCreation,
-                Password = response.Password
-            };
+            return new UserReadResponse(
+                    response.Id,
+                    response.Nickname,
+                    response.Login,
+                    response.Password,
+                    response.AccessRule,
+                    response.DateCreation);
         }
         catch (KeyNotFoundException ex)
         {
+            logger.LogError(ex.Message);
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet("read/{login}")]
+    public async Task<ActionResult<UserReadResponse>> Get(string login, CancellationToken token = default)
+    {
+        try
+        {
+            var response = await service.GetByLoginAsync(login, token);
+            return new UserReadResponse(
+                    response.Id,
+                    response.Nickname,
+                    response.Login,
+                    response.Password,
+                    response.AccessRule,
+                    response.DateCreation);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            logger.LogError(ex.Message);
             return NotFound(ex.Data);
         }
     }
 
-
-    // TODO - другие Get, но с другим набором параметров.
-    // Как сделать несколько разных гетов без переименования? (я ответ знаю)
-
-
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserGetResponse>>> GetAll(CancellationToken token = default)
+    [HttpGet("read-all")]
+    public async Task<ActionResult<IEnumerable<UserReadResponse>>> Get(CancellationToken token = default)
     {
-        return Ok((await service.GetAllAsync(token)).Select(response => new UserGetResponse()
+        try
         {
-            Id = response.Id,
-            Nickname = response.Nickname,
-            Login = response.Login,
-            AccessRule = response.AccessRule,
-            DateCreation = response.DateCreation,
-            Password = response.Password
-        }));
+            return Ok((await service.GetAllAsync(token)).Select(response =>
+                new UserReadResponse(
+                    response.Id, 
+                    response.Nickname, 
+                    response.Login,
+                    response.Password,
+                    response.AccessRule,
+                    response.DateCreation)));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return Problem(ex.Message);
+        }
     }
 
     [HttpPatch]
-    public async Task<ActionResult<bool>> UpdatePassword([FromBody] UserPatchRequest user, CancellationToken token = default)
+    public async Task<IActionResult> UpdatePassword([FromBody] UserPatchPasswordRequest user, CancellationToken token = default)
     {
         if (!ModelState.IsValid)
         {
-            // TODO - logger
-            return BadRequest(ModelState);
+            logger.LogError(ModelState.ToString());
+            return ValidationProblem(ModelState);
         }
 
-        //if(не заполнены поля) return BadRequest(); // TODO
+        try
+        {
+            await service.UpdatePasswordByLogin(user.Login, user.Password, user.PasswordConfirm, token);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
 
-        return await service.UpdatePasswordById(user.Id, user.Password!, user.PasswordConfirm!, token);
+        return Created();
     }
-
-    //[HttpGet("export/{id}")]
-    //public async Task<IActionResult> ExportUser(int id, CancellationToken token = default)
-    //{
-    //    var user = await service.GetByIdAsync(id, token);
-    //    var json = JsonHelper.Serialize(user);
-    //    return File(System.Text.Encoding.UTF8.GetBytes(json), "application/json", $"user_{id}.json");
-    //}
-
-    //[HttpPost("import")]
-    //public async Task<IActionResult> ImportUser([FromBody] string json, CancellationToken token = default)
-    //{
-    //    var user = JsonHelper.Deserialize<UserModel>(json);
-    //    var id = await service.CreateAsync(user.Nickname, user.Login, user.Password, user.AccessRule, token);
-    //    if (id == -1) return BadRequest("Такой пользователь уже существует");
-    //    return Ok();
-    //}
 }

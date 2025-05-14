@@ -18,7 +18,7 @@ namespace MVPv5.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -49,6 +49,10 @@ namespace MVPv5.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TemplateId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Documents");
                 });
 
@@ -64,6 +68,10 @@ namespace MVPv5.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateOnly>("DateCreation")
                         .HasColumnType("date");
 
@@ -71,8 +79,11 @@ namespace MVPv5.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Type")
+                    b.PrimitiveCollection<string[]>("Tags")
                         .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Type")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -109,6 +120,25 @@ namespace MVPv5.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MVPv5.Domain.Entities.DocumentEntity", b =>
+                {
+                    b.HasOne("MVPv5.Domain.Entities.TemplateEntity", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVPv5.Domain.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Template");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

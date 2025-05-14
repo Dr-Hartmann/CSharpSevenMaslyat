@@ -1,29 +1,24 @@
 ﻿@using MVPv5.Application.Contracts.User
 @using MVPv5.Application.Contracts.User.v1
 
-<p><br><label class="label-center">Настройки профиля</label></p>
+@* TODO - переделать на валидируемые компоненты *@
+
+@* <p><br><label class="label-center">Настройки профиля</label></p>
 <p><label>Никнейм</label></p>
-<p><input class="input-format" @bind=login/><br></p>
+<p><input class="input-format" @bind=login /><br></p>
 <p><label>Пароль</label></p>
-<p><input class="input-format" @bind=password/><br></p>
+<p><input class="input-format" @bind=password /><br></p>
 <br>
 <p style="text-align: center;"><button class="button-cancel">Отменить</button><button class="button-accept" @onclick="ChangeUser">Принять</button></p>
 
 @code {
-    //Заглушка
 
-    private UserGetResponse currentUser { get; set; } = new UserGetResponse { Id = 1, AccessRule = 1, DateCreation = new DateOnly(2023, 12, 1), Login = "Pensil", Nickname = "Vova228", Password = "1488" };
-    private string? login { get; set; }
-    private string? password { get; set; }
-    protected override void OnInitialized()
-    {
-        login = currentUser.Login;
-        password = currentUser.Password;
-    }
+    private UserCreateRequest currentUser { get; set; }
+        = new() { Login = "Pensil", Nickname = "Vova228", Password = "1488" };
+
     private async Task ChangeUser()
     {
-        //Imitation
         // TODO - слишком жёсткая привязка к адресу
-        var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.Id}", currentUser);
+        var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.id}", currentUser);
     }
-}
+} *@

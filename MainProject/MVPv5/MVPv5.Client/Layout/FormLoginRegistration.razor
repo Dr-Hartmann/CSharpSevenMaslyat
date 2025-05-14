@@ -1,158 +1,125 @@
 ﻿@* @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize] *@
 
-
-@* TODO
-        По возможности перенёс стили CSS по своим местам,
-        но применение сделал вместе с bootstrap.
-        Ваша задача - либо найти подходящие bootstrap стили,
-        либо удалить их из class="" и использовать своё.
-
-        Нужно как-то избавиться от лишних вложенностей,
-        или просто мне кажется.
-
-        Скорее всего что-то потерял.
-    *@
+@Status
 
 
 <div class="login-menu">
-	<div class="login-back">
-		<div class="login-main">
-			<button class="@GetLoginButtonClass()" @onclick="ToLog">Вход</button>
-			<button class="@GetRegisterButtonClass()" @onclick="ToReg">Регистрация</button>
-			<EditForm method="post" Model="createdUser" OnValidSubmit="Register" FormName="registration" Enhance>
-				<DataAnnotationsValidator />
-				<br />
+    <div class="login-back">
+        <div class="login-main">
+            <button class="@GetLoginButtonClass()" @onclick="ToLog">Вход</button>
+            <button class="@GetRegisterButtonClass()" @onclick="ToReg">Регистрация</button>
+            <EditForm method="post" Model="createdUser" OnValidSubmit="Register" FormName="Registration" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
 
+                @if (currentPage == "registration")
+                {
+                    <div class="mb-3">
+                        <InputText id="nickname" @bind-Value="createdUser.Nickname" class="form-control input-format" placeholder="Никнейм" />
+                        <ValidationMessage For="() => createdUser.Nickname" class="text-danger" />
+                    </div>
+                }
 
-				@if (currentPage == "registration")
-				{
-					<div class="mb-3">
-						<InputText id="nickname" @bind-Value="createdUser.Nickname" class="form-control input-format" placeholder="Никнейм" />
-						<ValidationMessage For="() => createdUser.Nickname" class="text-danger-override" />
-					</div>
-				}
-				<div class="mb-3">
-					<InputText id="login" @bind-Value="createdUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
-					<ValidationMessage For="() => createdUser.Login" class="text-danger-override" />
-				</div>
-				<div class="mb-3">
+                <div class="mb-3">
+                    <InputText id="login" @bind-Value="createdUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
+                    <ValidationMessage For="() => createdUser.Login" class="text-danger" />
+                </div>
 
-					<InputText id="password" @bind-Value="createdUser.Password" class="form-control input-format" placeholder="Пароль" />
-				</div>
-				@if (currentPage == "registration")
-				{
+                <div class="mb-3">
+                    <InputText id="password" @bind-Value="createdUser.Password" class="form-control input-format" placeholder="Пароль" />
+                    <ValidationMessage For="() => createdUser.Password" class="text-danger" />
+                </div>
 
-					<InputText id="password" @bind-Value="createdUser.PasswordConfirm" class="form-control input-format" placeholder="Подтверждение пароля" />
+                @if (currentPage == "registration")
+                {
+                    <InputText id="password" @bind-Value="createdUser.PasswordConfirm" class="form-control input-format" placeholder="Подтверждение пароля" />
+                    <ValidationMessage For="() => createdUser.PasswordConfirm" class="text-danger" />
+                }
 
-				}
-				<ValidationMessage For="() => createdUser.PasswordConfirm" class="text-danger-override" />
-				<br />
-				@if (currentPage == "login")
-				{
-					<button type="submit" class="btn btn-primary button-enter">Войти</button>
-					<button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
-				}
-				else if (currentPage == "registration")
-				{
-					<button type="submit" class="btn btn-primary button-enter" @onclick="Register">Зарегистрироваться</button>
-
-				}
-			</EditForm>
-		</div>
-	</div>
+                @if (currentPage == "login")
+                {
+                    <button type="submit" class="btn btn-primary button-enter">Войти</button>
+                    <button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
+                }
+                else if (currentPage == "registration")
+                {
+                    <button type="submit" class="btn btn-primary button-enter">Зарегистрироваться</button>
+                }
+            </EditForm>
+        </div>
+    </div>
 </div>
 
 
-
-
-
-
-
-
-@* TODO - Можно ли часть перенести в класс? *@
-
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
-@inject ILogger<FormLoginRegistration> Logger
-@using MVPv5.Core.Models
 @using MVPv5.Application.Contracts.User.v1
-@using System.Text.Json
 @code {
+    private string Status { get; set; } = "";
 
-	[Parameter]
-	public string? currentPage { get; set; }
+    [Parameter]
+    public string? currentPage { get; set; } = "";
+    public string currentMethod => currentPage == "login" ? "OnValidSubmit=\"Login\"" : "OnValidSubmit=\"Register\"";
 
-
-	[Parameter]
-	public EventCallback<UserModel> OnDataChanged { get; set; }
-
-	private void ToLog() => NavigationManager.NavigateTo("/login");
-
-	private void ToReg()
-	{
-		NavigationManager.NavigateTo("/registration");
-	}
-
-	private string GetLoginButtonClass()
-	{
-		return currentPage == "login" ? "button-login active" : "button-login";
-	}
-	private string GetRegisterButtonClass()
-	{
-		return currentPage == "registration" ? "button-register active" : "button-register";
-	}
+    private UserCreateRequest createdUser { get; set; } = new();
 
 
+    private string GetLoginButtonClass()
+    {
+        return currentPage == "login" ? "button-login active" : "button-login";
+    }
+    private string GetRegisterButtonClass()
+    {
+        return currentPage == "registration" ? "button-register active" : "button-register";
+    }
+
+    private async Task Register()
+    {
+        //TODO - нормальный запрос
+        var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/editor");
+        }
+        else
+        {
+            Status = await response.Content.ReadAsStringAsync();
+        }
+    }
+
+    private async Task Login()
+    {
+        // var response = await httpClient.PostAsJsonAsync("User/read", createdUser);
+
+        // if (response.IsSuccessStatusCode)
+        // {
+        //     NavigationManager.NavigateTo("/editor");
+        // }
+        // else
+        // {
+        //     Status = await response.Content.ReadAsStringAsync();
+        // }
+
+        Status = "Вошёл";
+    }
 
 
-	private async Task Register()
-	{
-		//TODO - нормальный запрос
-		var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
+    // private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    // {
+    //     currentPage = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
+    //     StateHasChanged();
+    // }
 
+    private void EnterLikeGuest()
+    {
+        // TODO - создание клиента-гостя с низким уровнем привелегий
+        NavigationManager.NavigateTo("/editor");
+    }
 
-		if (!response.IsSuccessStatusCode)
-		{
-			Logger.LogError($"Ошибка: сервер вернул не JSON. Ответ: {response.Content.ReadAsStringAsync()}");
-			return;
-		}
-		else if (response.IsSuccessStatusCode)
-		{
+    private void ToLog() => NavigationManager.NavigateTo("/login");
 
-			NavigationManager.NavigateTo("/editor");
-		}
-	}
-	// await OnDataChanged.InvokeAsync(NewUser);
-	// Logger.LogError($"Вошёл: {NewUser.Password}");
-	// Logger.LogCritical($"Вошёл: {NewUser.Password}");
-	// Logger.LogInformation($"Вошёл: {NewUser.Password}");
-	// Logger.LogTrace($"Вошёл: {NewUser.Password}");
-	// Logger.LogWarning($"Вошёл: {NewUser.Password}");
-	// TODO - не работает логгер
-
-
-	// await Task.Delay(1000);
-	// NavigationManager.NavigateTo("/editor");
-	// }
-	private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
-	{
-		currentPage = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
-		StateHasChanged();
-	}
-	private void EnterLikeGuest()
-	{
-		// TODO - создание клиента-гостя с низким уровнем привелегий
-		NavigationManager.NavigateTo("/editor");
-	}
-	private void Register(EditContext args)
-	{
-		throw new NotImplementedException();
-	}
-
-
-	UserCreateRequest createdUser { get; set; } = new();
-
-
+    private void ToReg() => NavigationManager.NavigateTo("/registration");
 }
 

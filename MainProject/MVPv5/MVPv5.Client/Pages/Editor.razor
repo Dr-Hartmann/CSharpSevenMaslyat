@@ -1,10 +1,12 @@
 ﻿@page "/editor"
-@using System.Text
-@using MVPv5.Application.Contracts.Document.v1
 <PageTitle>Editor</PageTitle>
-<UpperToolbar />
+
+
+@* <UpperToolbar /> TODO - это что? *@
+
+
 <UpperPanel>
-	<PanelElements />  <!-- Передаем делегат сюда -->
+    <PanelElements />  <!-- Передаем делегат сюда -->
 </UpperPanel>
 
 @* <div id="editor-container" style="overflow-y:auto; height: 100vh; background: #eee;">
@@ -15,91 +17,85 @@
 		</div>
 	}
 </div> *@
-<div>
 
-	@foreach (var input in Inputs)
-	{
-		<textarea type="text" class="inputTextarea" @bind="input.Value" />
-		<div class="buttons">
-			<button @onclick="@(a =>  AddInput(Inputs.IndexOf(input)))" class="btn btn-primary">+</button>
-			<button @onclick="@(a =>  Remove(Inputs.IndexOf(input)))" class="btn btn-primary">-</button>
-		</div>
-	}
-
+<div class="row d-flex" style="justify-self: center; width: 40%;">
+    @foreach (var input in Inputs)
+    {
+        <InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" />
+        <div class="gap-3 d-flex justify-content-center">
+            <button @onclick="a =>  AddInput(Inputs.IndexOf(input))" class=@buttonStyle>+</button>
+            <button @onclick="a =>  Remove(Inputs.IndexOf(input))" class=@buttonStyle>-</button>
+        </div>
+    }
 </div>
 
 @code {
-	@inject HttpClient httpClient
-	@inject NavigationManager NavigationManager
-	private int incr { get; set; } = 0;
-	private int flag { get; set; } = 0;
-	private List<InputModel> Inputs { get; set; } = new() { new() };
+    private string buttonStyle = "btn btn-outline-primary btn-sm px-4";
 
-	class PageModel
-	{
-		public string Content { get; set; } = "";
-		public ElementReference ElementRef { get; set; }
-	}
-	private void Add()
-	{
-		incr++;
-	}
-	private class InputModel
-	{
-		public Guid id { get; set; } = Guid.NewGuid();
-		public string Value { get; set; }
-	}
-	private void AddInput(int index)
-	{
-		Inputs.Insert(index + 1, new());
-	}
-	private void Remove(int index)
-	{
-		if (index > 0)
-			Inputs.RemoveAt(index);
-	}
+    @using MVPv5.Application.Contracts.Document.v1
+    @inject HttpClient httpClient
+    @inject NavigationManager NavigationManager
 
-	// List<PageModel> Pages = new() { new PageModel() };
+    private List<InputModel> Inputs { get; set; } = new() { new() };
 
-	// [Inject] IJSRuntime? JS { get; set; }
+    private class InputModel
+    {
+        public Guid id { get; set; } = Guid.NewGuid();
+        public string? Value { get; set; }
+    }
 
-	// async Task CheckOverflow(ChangeEventArgs e)
-	// {
-	// 	var lastPage = Pages.Last();
-	// 	bool isOverflowing = await JS!.InvokeAsync<bool>("checkPageOverflow", lastPage.ElementRef);
+    private void AddInput(int index)
+    {
+        Inputs.Insert(index + 1, new());
+    }
 
-	// 	if (isOverflowing)
-	// 	{
-	// 		Pages.Add(new PageModel());
-	// 		StateHasChanged(); // Ререндерим компонент
-	// 	}
-	// }
+    private void Remove(int index)
+    {
+        if (Inputs.Count() <= 1) return;
+        Inputs.RemoveAt(index);
+    }
 
-	// protected override void OnInitialized()
-	// {
-	// 	var doc = GetDocumentCreateRequest.JsonData;
-	// 	Pages[0].Content = doc;
-	// }
 
-	// public async Task saveDoc()
-	// {
-	// 	// userDoc = Pages[0].Content;
-	// 	var page = Pages[0];
-	// 	string content = await JS!.InvokeAsync<string>("getContent", page.ElementRef);
-	// 	page.Content = content;
-	// 	//text to bytes
-	// 	byte[] bytes = Encoding.UTF8.GetBytes(content);
-	// 	foreach (byte b in bytes)
-	// 	{
-	// 		Console.WriteLine(b);
-	// 	}
-	// 	//bytes to string
-	// 	string? textFromByte = null;
 
-	// 	textFromByte += Encoding.UTF8.GetString(bytes);
-	// 	Console.WriteLine(textFromByte);
-	// }
-	string? userDoc = null;
+    // TODO - это нужно?
 
-	DocumentCreateRequest GetDocumentCreateRequest { get; set; } = new DocumentCreateRequest { Name = "FirstDoc", TemplateId = 0 };
+
+    // [Inject] IJSRuntime? JS { get; set; }
+
+    // async Task CheckOverflow(ChangeEventArgs e)
+    // {
+    // 	var lastPage = Pages.Last();
+    // 	bool isOverflowing = await JS!.InvokeAsync<bool>("checkPageOverflow", lastPage.ElementRef);
+
+    // 	if (isOverflowing)
+    // 	{
+    // 		Pages.Add(new PageModel());
+    // 		StateHasChanged(); // Ререндерим компонент
+    // 	}
+    // }
+
+    // protected override void OnInitialized()
+    // {
+    // 	var doc = GetDocumentCreateRequest.JsonData;
+    // 	Pages[0].Content = doc;
+    // }
+
+    // public async Task saveDoc()
+    // {
+    // 	// userDoc = Pages[0].Content;
+    // 	var page = Pages[0];
+    // 	string content = await JS!.InvokeAsync<string>("getContent", page.ElementRef);
+    // 	page.Content = content;
+    // 	//text to bytes
+    // 	byte[] bytes = Encoding.UTF8.GetBytes(content);
+    // 	foreach (byte b in bytes)
+    // 	{
+    // 		Console.WriteLine(b);
+    // 	}
+    // 	//bytes to string
+    // 	string? textFromByte = null;
+
+    // 	textFromByte += Encoding.UTF8.GetString(bytes);
+    // 	Console.WriteLine(textFromByte);
+    // }
 }

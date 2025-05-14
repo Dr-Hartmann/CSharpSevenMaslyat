@@ -9,80 +9,65 @@
     @foreach (var file in files)
     {
         <li>
-            @file.Id
-            @file.Name
-            <button @onclick="() => DownloadFile(file.Id)">Скачать</button>
+            @file.id
+            @file.name
+            <button @onclick="() => DownloadFile(file)">Скачать</button>
         </li>
     }
 </ul>
 
+
 @code {
+    @using MVPv5.Application.Contracts.Template.v1;
+
     private string? statusMessage;
 
-    private List<TemplateGetResponse> files = new();
+    private List<TemplateReadResponse> files = new();
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-        statusMessage = "111";
-        try
-        {
-            var file = e.File;
-            if (file != null)
+        var file = e.File;
+        if (file == null) return;
+
+        using var stream = new MemoryStream();
+        await file.OpenReadStream().CopyToAsync(stream);
+
+        var response = await httpClient.PostAsJsonAsync("template/create", new TemplateCreateRequest()
             {
-                using var stream = new MemoryStream();
-                await file.OpenReadStream().CopyToAsync(stream);
-                var response = await httpClient.PostAsJsonAsync("v1/Template/Create", new TemplateCreateRequest()
-                    {
-                        Name = "имя",
-                        Type = "УЭЭЭ",
-                        Content = stream.ToArray()
-                    }, new CancellationTokenSource(5000).Token);
+                Name = file.Name,
+                Type = "курсач",
+                Content = stream.ToArray(),
+                ContentType = file.ContentType,
+                Tags = new List<string> { "{{name}}", "{{teacher}}" }
+            },
+            new CancellationTokenSource(5000).Token);
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    statusMessage = await response.Content.ReadAsStringAsync();
-                    return;
-                }
-
-            }
-        }
-        catch (Exception ex)
+        if (!response.IsSuccessStatusCode)
         {
-            statusMessage = ex.Message;
+            statusMessage = await response.Content.ReadAsStringAsync();
             return;
         }
 
-
-
         statusMessage = "Файл успешно загружен в базу данных!";
+
+        await OnInitializedAsync();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        files.Add(await httpClient.GetFromJsonAsync<TemplateGetResponse>("v1/Template/get/1"));
+        // var response = await httpClient.GetFromJsonAsync<IEnumerable<TemplateReadResponse>>("Template/read-all");
+        // files.AddRange(response!);
     }
 
-    private async Task DownloadFile(int id)
+    private async Task DownloadFile(TemplateReadResponse file)
     {
     @inject IJSRuntime JS
-
-        try
+        await JS.InvokeVoidAsync("downloadFromByteArray", new
         {
-            var fileBytes = files[0].Content;
-            var base64 = Convert.ToBase64String(fileBytes);
-            var fileName = "document.docx";
-
-            await JS.InvokeVoidAsync("downloadFromByteArray", new
-            {
-                byteBase64 = base64,
-                fileName,
-                mimeType = "application/octet-stream"
-            });
-        }
-        catch (Exception ex)
-        {
-            statusMessage = ex.Message;
-        }
+            byteBase64 = Convert.ToBase64String(file.content!),
+            fileName = $"{file.name}{file.contentType}",
+            mimeType = "application/octet-stream"
+        });
     }
     // Navigation.NavigateTo("/v1/Template/download", forceLoad: true);
 }

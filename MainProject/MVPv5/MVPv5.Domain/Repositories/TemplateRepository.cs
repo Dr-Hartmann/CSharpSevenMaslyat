@@ -7,11 +7,12 @@ namespace MVPv5.Domain.Repositories;
 
 public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
 {
-    public async Task<int> AddAsync(string name, string type, DateOnly dateCreation, byte[] content, CancellationToken token)
+    public async Task AddAsync(string name, string? type, DateOnly dateCreation, byte[] content,
+        string contentType, IEnumerable<string> tags, CancellationToken token)
     {
         if (dbContext!.Templates.Where(u => u.Name == name).Count() > 0)
         {
-            return -1;
+            throw new Exception("Такой шаблон уже существует");
         }
 
         await dbContext!.Templates.AddAsync(new TemplateEntity
@@ -19,11 +20,12 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
             Name = name,
             Type = type,
             DateCreation = dateCreation,
-            Content = content
+            Content = content,
+            ContentType = contentType,
+            Tags = tags.ToArray()
         }, token);
-        await dbContext.SaveChangesAsync(token);
 
-        return dbContext!.Templates.FirstOrDefaultAsync(u => u.Name == name, token).Id;
+        await dbContext.SaveChangesAsync(token);
     }
 
     public async Task<(TemplateModel Template, string Error)> GetByIdAsync(int id, CancellationToken token)
@@ -33,9 +35,25 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
             .FirstOrDefaultAsync(t => t.Id == id, token));
     }
 
-    private (TemplateModel User, string Error) GetTemplate(TemplateEntity? response)
+    public async Task<IEnumerable<(TemplateModel Template, string Error)>> GetAllAsync(CancellationToken token)
     {
-        if (response == null) throw new Exception("Пустой пользователь в ответе");
-        return TemplateModel.Create(response.Id, response.Name, response.Type, response.DateCreation, response.Content);
+        return GetListOfTemplates(await dbContext.Templates
+            .AsNoTracking()
+            .ToListAsync(token));
+    }
+
+    // TODO - Delete    Update
+
+    private (TemplateModel Template, string Error) GetTemplate(TemplateEntity? response)
+    {
+        if (response == null) throw new Exception("Пустая сущность в ответе");
+        return TemplateModel.Create(response.Id, response.Name, response.Type, response.DateCreation,
+            response.Content, response.ContentType, response.Tags);
+    }
+
+    private IEnumerable<(TemplateModel Template, string Error)> GetListOfTemplates(IEnumerable<TemplateEntity>? response)
+    {
+        if (response == null) throw new Exception("Пустой лист в ответе");
+        return response.Select(GetTemplate);
     }
 }
