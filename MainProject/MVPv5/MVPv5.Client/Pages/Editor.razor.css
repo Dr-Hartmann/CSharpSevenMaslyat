@@ -11,3 +11,17 @@
     border-color: gray;
     border-radius: 6px;
 }
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.inputTextarea{
+    display:flex;
+    justify-self: center;
+    margin-top: 30px;
+    width: 40%;
+    min-height: 100px;
+    border-radius: 12px;
+}
