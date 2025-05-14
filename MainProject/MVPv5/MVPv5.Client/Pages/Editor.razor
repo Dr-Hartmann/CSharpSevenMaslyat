@@ -3,7 +3,7 @@
 @using MVPv5.Application.Contracts.Document.v1
 <PageTitle>Editor</PageTitle>
 <UpperToolbar />
-<UpperPanel >
+<UpperPanel>
 	<PanelElements />  <!-- Передаем делегат сюда -->
 </UpperPanel>
 
@@ -16,20 +16,24 @@
 	}
 </div> *@
 <div>
+
 	@foreach (var input in Inputs)
 	{
 		<textarea type="text" class="inputTextarea" @bind="input.Value" />
+		<div class="buttons">
+			<button @onclick="@(a =>  AddInput(Inputs.IndexOf(input)))" class="btn btn-primary">+</button>
+			<button @onclick="@(a =>  Remove(Inputs.IndexOf(input)))" class="btn btn-primary">-</button>
+		</div>
 	}
 
-	<button @onclick="AddInput" class="btn btn-primary">Добавить поле</button><button @onclick="Remove" class="btn btn-primary">Удалить</button>
 </div>
-<div class="buttons"><button @onclick="Add">+</button> <button>-</button></div>
+
 @code {
-@inject HttpClient httpClient
+	@inject HttpClient httpClient
 	@inject NavigationManager NavigationManager
 	private int incr { get; set; } = 0;
 	private int flag { get; set; } = 0;
-	private List<InputModel> Inputs { get; set; } = new();
+	private List<InputModel> Inputs { get; set; } = new() { new() };
 
 	class PageModel
 	{
@@ -42,16 +46,19 @@
 	}
 	private class InputModel
 	{
+		public Guid id { get; set; } = Guid.NewGuid();
 		public string Value { get; set; }
 	}
-	private void AddInput()
+	private void AddInput(int index)
 	{
-		Inputs.Add(new InputModel());
+		Inputs.Insert(index + 1, new());
 	}
-	private void Remove()
+	private void Remove(int index)
 	{
-		Inputs.Remove(Inputs[Inputs.Count()-1]);
+		if (index > 0)
+			Inputs.RemoveAt(index);
 	}
+
 	// List<PageModel> Pages = new() { new PageModel() };
 
 	// [Inject] IJSRuntime? JS { get; set; }
