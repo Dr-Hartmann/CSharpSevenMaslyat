@@ -1,0 +1,88 @@
+﻿@page "/download"
+@inject NavigationManager Navigation
+
+<InputFile OnChange="HandleFileSelected" />
+<p>@statusMessage</p>
+
+
+<ul>
+    @foreach (var file in files)
+    {
+        <li>
+            @file.Id
+            @file.Name
+            <button @onclick="() => DownloadFile(file.Id)">Скачать</button>
+        </li>
+    }
+</ul>
+
+@code {
+    private string? statusMessage;
+
+    private List<TemplateGetResponse> files = new();
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        statusMessage = "111";
+        try
+        {
+            var file = e.File;
+            if (file != null)
+            {
+                using var stream = new MemoryStream();
+                await file.OpenReadStream().CopyToAsync(stream);
+                var response = await httpClient.PostAsJsonAsync("v1/Template/Create", new TemplateCreateRequest()
+                    {
+                        Name = "имя",
+                        Type = "УЭЭЭ",
+                        Content = stream.ToArray()
+                    }, new CancellationTokenSource(5000).Token);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    statusMessage = await response.Content.ReadAsStringAsync();
+                    return;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            statusMessage = ex.Message;
+            return;
+        }
+
+
+
+        statusMessage = "Файл успешно загружен в базу данных!";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        files.Add(await httpClient.GetFromJsonAsync<TemplateGetResponse>("v1/Template/get/1"));
+    }
+
+    private async Task DownloadFile(int id)
+    {
+    @inject IJSRuntime JS
+
+        try
+        {
+            var fileBytes = files[0].Content;
+            var base64 = Convert.ToBase64String(fileBytes);
+            var fileName = "document.docx";
+
+            await JS.InvokeVoidAsync("downloadFromByteArray", new
+            {
+                byteBase64 = base64,
+                fileName,
+                mimeType = "application/octet-stream"
+            });
+        }
+        catch (Exception ex)
+        {
+            statusMessage = ex.Message;
+        }
+    }
+    // Navigation.NavigateTo("/v1/Template/download", forceLoad: true);
+}
