@@ -21,7 +21,7 @@
 <div class="row d-flex" style="justify-self: center; width: 40%;">
     @foreach (var input in Inputs)
     {
-        <InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" />
+        <InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" placeholder="Введите текст" />
         <div class="gap-3 d-flex justify-content-center">
             <button @onclick="a =>  AddInput(Inputs.IndexOf(input))" class=@buttonStyle>+</button>
             <button @onclick="a =>  Remove(Inputs.IndexOf(input))" class=@buttonStyle>-</button>

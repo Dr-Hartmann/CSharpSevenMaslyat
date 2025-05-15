@@ -35,6 +35,18 @@ public class UserService(IUserRepository repository) : IUserService
         return response.User;
     }
 
+    public async Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token)
+    {
+        var response = await repository.GetByLoginAndPasswordAsync(login, password, token);
+
+        if (response.Error != string.Empty)
+        {
+            throw new KeyNotFoundException($"Ошибка: {response.Error}");
+        }
+
+        return response.User;
+    }
+
     public async Task<IEnumerable<UserModel>> GetAllAsync(CancellationToken token)
     {
         var response = await repository.GetAllAsync(token);

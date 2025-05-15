@@ -12,4 +12,5 @@ public interface IUserService
     Task UpdateNicknameAsync(int id, string nickname, string confirmNickname, CancellationToken token);
     Task UpdateLoginAsync(int id, string login, string confirmLogin, CancellationToken token);
     Task UpdatePasswordByLogin(string login, string password, string confirmPassword, CancellationToken token);
+    Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token);
 }

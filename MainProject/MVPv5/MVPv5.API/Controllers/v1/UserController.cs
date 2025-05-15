@@ -65,10 +65,31 @@ public class UserController(IUserService service, ILogger<UserController> logger
                     response.AccessRule,
                     response.DateCreation);
         }
-        catch (KeyNotFoundException ex)
+        catch (Exception ex)
         {
             logger.LogError(ex.Message);
-            return NotFound(ex.Data);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("check")]
+    public async Task<ActionResult<UserReadResponse>> Get([FromBody] UserLoginRequest request, CancellationToken token = default)
+    {
+        try
+        {
+            var response = await service.GetByLoginAndPasswordAsync(request.Login, request.Password, token);
+            return new UserReadResponse(
+                    response.Id,
+                    response.Nickname,
+                    response.Login,
+                    response.Password,
+                    response.AccessRule,
+                    response.DateCreation);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 

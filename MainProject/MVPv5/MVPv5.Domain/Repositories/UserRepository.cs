@@ -75,6 +75,13 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
             .FirstOrDefaultAsync(user => user.Login == login, token));
     }
 
+    public async Task<(UserModel User, string Error)> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token)
+    {
+        return GetUser(await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Login == login && user.Password == password, token));
+    }
+
     public async Task<IEnumerable<(UserModel User, string Error)>> GetAllAsync(CancellationToken token)
     {
         return GetListOfUsers(await dbContext.Users

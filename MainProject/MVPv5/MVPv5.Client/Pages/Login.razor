@@ -2,4 +2,69 @@
 @page "/login"
 <PageTitle>Login</PageTitle>
 
-<FormLoginRegistration CurrentPage="login" />
+@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+
+
+<div class="login-menu">
+    <div class="login-back">
+        <div class="login-main">
+            <button class="button-login active" @onclick="ToLog">Вход</button>
+            <button class="button-register" @onclick="ToReg">Регистрация</button>
+            <EditForm method="post" class="px-4" Model="loginedUser" OnValidSubmit="OnLogin" FormName="Login" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="mb-3 mt-2">
+                    <InputText id="login" @bind-Value="loginedUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
+                    <ValidationMessage For="() => loginedUser.Login" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText id="password" @bind-Value="loginedUser.Password" class="form-control input-format" placeholder="Пароль" />
+                    <ValidationMessage For="() => loginedUser.Password" class="text-danger" />
+                </div>
+
+                <button type="submit" class="btn btn-primary button-enter">Войти</button>
+                <button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
+                <div class="justify-content-center mt-3">@Status</div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    @inject NavigationManager NavigationManager
+    @inject HttpClient httpClient
+    @using MVPv5.Application.Contracts.User.v1
+
+    private string Status { get; set; } = "";
+    private UserLoginRequest loginedUser { get; set; } = new();
+
+    private async Task OnLogin()
+    {
+        var response = await httpClient.PostAsJsonAsync("User/check", loginedUser);
+
+        // получить ID и передавать его между страницами?
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/editor");
+        }
+        else
+        {
+            Status = await response.Content.ReadAsStringAsync();
+        }
+    }
+
+    private void EnterLikeGuest()
+    {
+        // TODO - создание клиента-гостя с низким уровнем привелегий
+        NavigationManager.NavigateTo("/editor");
+    }
+
+    private void ToLog() => NavigationManager.NavigateTo("/login");
+
+    private void ToReg() => NavigationManager.NavigateTo("/registration");
+}

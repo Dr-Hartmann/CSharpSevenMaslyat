@@ -1,4 +1,72 @@
 ﻿@page "/registration"
 <PageTitle>Register</PageTitle>
 
-<FormLoginRegistration CurrentPage="registration" />
+
+@* @using Microsoft.AspNetCore.Authorization
+@attribute [Authorize] *@
+
+@Status
+
+<div class="login-menu">
+    <div class="login-back">
+        <div class="login-main">
+            <button class="button-login" @onclick="ToLog">Вход</button>
+            <button class="button-register active" @onclick="ToReg">Регистрация</button>
+            <EditForm method="post" Model="createdUser" OnValidSubmit="OnRegister" FormName="Registration" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="mb-3 mt-2">
+                    <InputText id="nickname" @bind-Value="createdUser.Nickname" class="form-control input-format" placeholder="Никнейм" />
+                    <ValidationMessage For="() => createdUser.Nickname" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText id="login" @bind-Value="createdUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
+                    <ValidationMessage For="() => createdUser.Login" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText id="password" @bind-Value="createdUser.Password" class="form-control input-format" placeholder="Пароль" />
+                    <ValidationMessage For="() => createdUser.Password" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText id="password" @bind-Value="createdUser.PasswordConfirm" class="form-control input-format" placeholder="Подтверждение пароля" />
+                    <ValidationMessage For="() => createdUser.PasswordConfirm" class="text-danger" />
+                </div>
+
+                <button type="submit" class="btn btn-primary button-enter">Зарегистрироваться</button>
+                <div class="justify-content-center mt-3">@Status</div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    @inject NavigationManager NavigationManager
+    @inject HttpClient httpClient
+    @using MVPv5.Application.Contracts.User.v1
+
+    private string Status { get; set; } = "";
+    private UserCreateRequest createdUser { get; set; } = new();
+
+    private async Task OnRegister()
+    {
+        var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/editor");
+        }
+        else
+        {
+            Status = await response.Content.ReadAsStringAsync();
+        }
+    }
+
+    private void ToLog() => NavigationManager.NavigateTo("/login");
+
+    private void ToReg() => NavigationManager.NavigateTo("/registration");
+}

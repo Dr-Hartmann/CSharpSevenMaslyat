@@ -13,4 +13,5 @@ public interface IUserRepository
     Task<IEnumerable<(UserModel User, string Error)>> GetAllAsync(CancellationToken token);
     Task DeleteById(int id, CancellationToken token);
     Task<(UserModel User, string Error)> GetByLoginAsync(string login, CancellationToken token);
+    Task<(UserModel User, string Error)> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token);
 }
