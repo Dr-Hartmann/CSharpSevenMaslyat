@@ -13,11 +13,13 @@
             @file.id
             @file.name
             <button @onclick="() => DownloadFile(file)">Скачать</button>
+            <button @onclick="() => BuildAndDownloadFile(file)">Собрать и скачать</button>
         </li>
     }
 </ul>
 
 
+@using MVPv5.Application.Contracts.Document.v1
 @code {
     @using MVPv5.Application.Contracts.Template.v1;
 
@@ -54,7 +56,7 @@
 
             statusMessage = "Файл успешно загружен в базу данных!";
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             status = ex.Message;
         }
@@ -75,9 +77,9 @@
         files = new(response!);
     }
 
+    @inject IJSRuntime JS
     private async Task DownloadFile(TemplateReadResponse file)
     {
-    @inject IJSRuntime JS
         await JS.InvokeVoidAsync("downloadFromByteArray", new
         {
             byteBase64 = Convert.ToBase64String(file.content!),
@@ -85,5 +87,42 @@
             mimeType = "application/octet-stream"
         });
     }
-    // Navigation.NavigateTo("/v1/Template/download", forceLoad: true);
+
+    private async Task BuildAndDownloadFile(TemplateReadResponse file)
+    {
+        Dictionary<string, string> values = new() {
+            {"{{institute}}", "Институт информационных технологий" },
+            {"{{faculty}}", "МПО ЭВМ" },
+            {"{{type}}", "КУРСОВАЯ РАБОТА" },
+            { "{{class}}", "С#-программирование" },
+            { "{{plot}}", "Blazor, Rest API, Entity Framework, PostrgreSQL, сериализация, работа с файлами"},
+            { "{{group}}", "1ПИб-02-1оп-22" },
+            {"{{code}}", "09.03.04" },
+            {"{{specialization}}", "Программная инженерия" },
+            {"{{fullname}}", "Микуцких Григорий Андреевич" },
+            {"{{teacher}}", "Шаханов Н.И." },
+            {"{{position}}", "доцент"},
+            { "{{year}}", "2025"},
+            { "{{annotation}}", $"Курсовая работа посвящена (SOME TEXT) разработке...\r\nВ ходе работы было ...\r\nВ работе присутствует введение в предметную область, …, сопровождение графическим материалом и диаграммами, код итоговой программы и результаты её тестирования."}
+        };
+
+        var response = await httpClient.PostAsJsonAsync("document/build-document",
+            new DocumentBuildRequest()
+                {
+                    Name = file.name,
+                    Content = file.content,
+                    Data = values
+                });
+
+        if (!response.IsSuccessStatusCode) return;
+
+        var rep = await response.Content.ReadFromJsonAsync<DocumentBuildResponse>();
+
+        await JS.InvokeVoidAsync("downloadFromByteArray", new
+        {
+            byteBase64 = Convert.ToBase64String(rep.content),
+            fileName = rep.name,
+            mimeType = "application/octet-stream"
+        });
+    }
 }

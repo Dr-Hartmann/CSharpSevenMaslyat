@@ -1,93 +1,91 @@
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Packaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MVPv5.Application.Contracts.Document.v1;
 
 namespace MVPv5.API.Controllers.v1;
 
 [ApiController]
-[Route("v1/[controller]/[action]")]
-public class DocumentController(/*IDocumentService service*//*, AuditService auditService*/) : ControllerBase
+[Area("v1")]
+[Route("[controller]")]
+public class DocumentController(/*IDocumentService service*/ILogger<DocumentController> logger/*, AuditService auditService*/) : ControllerBase
 {
-    //[HttpGet("{id}")]
-    //[Authorize]
-    //public async Task<ActionResult<DTOdocumentV1>> Get(int? id, CancellationToken cancellationToken)
-    //{
-    //    try
-    //    {
-    //        // Аудит получения документа
-    //        await auditService.AuditAsync($"Получение документа с id={id}", User?.Identity?.Name ?? "anonymous", cancellationToken);
-    //        return await docEditorService.GetAsync(id, cancellationToken);
-    //    }
-    //    catch (KeyNotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+    [HttpPost("build-document")]
+    public ActionResult<DocumentBuildResponse> DocumentEditor([FromBody] DocumentBuildRequest request)
+    {
+        try
+        {
+            using var stream = new MemoryStream();
+            stream.Write(request.Content, 0, request.Content.Length);
 
-    //[HttpGet]
-    //[Authorize]
-    //public async Task<ActionResult<IEnumerable<DTOdocumentV1>>> All(CancellationToken cancellationToken)
-    //{
-    //    try
-    //    {
-    //        // Аудит получения всех документов
-    //        await auditService.AuditAsync("Получение всех документов", User?.Identity?.Name ?? "anonymous", cancellationToken);
-    //        var doc = await docEditorService.GetAllAsync(cancellationToken);
-    //        return Ok(doc);
-    //    }
-    //    catch (KeyNotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+            using var doc = WordprocessingDocument.Open(stream, true);
+            var body = doc.MainDocumentPart!.Document.Body;
+
+            foreach (var text in body!.Descendants<Text>())
+            {
+                foreach (var replacement in request.Data)
+                {
+                    if (!text.InnerText.Contains(replacement.Key)) continue;
+                    if (replacement.Value.Contains("\r\n"))
+                    {
+                        var run = (Run)text.Parent;
+                        if (run == null) continue;
+                        var paragraph = (Paragraph)run.Parent;
+                        if (paragraph == null) continue;
+
+                        var pPr = paragraph.ParagraphProperties;
+                        var rPr = run.RunProperties;
+                        int index = body.ToList().IndexOf(paragraph);
+                        paragraph.Remove();
+
+                        string[] newParagraphs
+                            = replacement.Value.Split("\r\n", StringSplitOptions.None);
+
+                        foreach (var newText in newParagraphs)
+                        {
+                            Paragraph newPar = new();
+                            if (pPr != null)
+                            {
+                                newPar.ParagraphProperties =
+                                    (ParagraphProperties)pPr.CloneNode(true);
+                            }
+
+                            Run newRun = new();
+                            if (rPr != null)
+                            {
+                                newRun.RunProperties =
+                                    (RunProperties)rPr.CloneNode(true);
+                            }
+
+                            newRun.Append(new Text(newText));
+                            newPar.Append(newRun);
+                            body.InsertAt(newPar, index++);
+                        }
+                    }
+                    else
+                    {
+                        text.Text = text.Text.Replace(replacement.Key, replacement.Value);
+                    }
+                }
+                doc.Save();
+            }
+
+            return Ok(new DocumentBuildResponse(request.Name, stream.ToArray()));
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
 
     //[HttpPost]
     //[Authorize]
     ////[ValidateAntiForgeryToken]
-    //public async Task<ActionResult> Create(DTOdocumentV1 doc, CancellationToken cancellationToken)
-    //{
-    //    // Проверяем валидность полученных данных согласно аннотациям модели
-    //    if (!ModelState.IsValid)
-    //    {
-    //        // Если данные невалидны, возвращаем ошибку 400 с описанием ошибок
-    //        return BadRequest(ModelState);
-    //    }
-    //    try
-    //    {
-    //        // Аудит создания документа
-    //        await auditService.AuditAsync($"Создание документа: {doc.Name}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
-    //        // Если данные валидны, добавляем документ через сервис
-    //        await docEditorService.AddAsync(doc, cancellationToken);
-    //        return Ok();
-    //    }
-    //    catch (KeyNotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
 
-    //[HttpPut]
-    //[Authorize]
-    //public async Task<IActionResult> Update(DTOdocumentV1 doc, CancellationToken cancellationToken)
-    //{
-    //    // Проверяем валидность полученных данных согласно аннотациям модели
-    //    if (!ModelState.IsValid)
-    //    {
-    //        // Если данные невалидны, возвращаем ошибку 400 с описанием ошибок
-    //        return BadRequest(ModelState);
-    //    }
-    //    try
-    //    {
-    //        // Аудит обновления документа
-    //        await auditService.AuditAsync($"Обновление документа: {doc.Id}", User?.Identity?.Name ?? "anonymous", HttpContext.RequestAborted);
-    //        // Если данные валидны, обновляем документ через сервис
-    //        await docEditorService.UpdateAsync(doc, cancellationToken);
-    //        return Ok();
-    //    }
-    //    catch (KeyNotFoundException)
-    //    {
-    //        return NotFound();
-    //    }
-    //}
+
 
     //[HttpDelete("{id}")]
     //[Authorize]

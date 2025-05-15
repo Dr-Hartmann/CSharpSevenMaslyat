@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using MVPv5.Application.Contracts.Template.v1;
 using MVPv5.Core.Abstractions.v1;
 
