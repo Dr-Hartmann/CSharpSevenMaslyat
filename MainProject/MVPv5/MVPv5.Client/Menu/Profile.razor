@@ -2,8 +2,8 @@
 @using MVPv5.Application.Contracts.User.v1
 
 @* TODO - переделать на валидируемые компоненты *@
-
-@* <p><br><label class="label-center">Настройки профиля</label></p>
+@* 
+<p><br><label class="label-center">Настройки профиля</label></p>
 <p><label>Никнейм</label></p>
 <p><input class="input-format" @bind=login /><br></p>
 <p><label>Пароль</label></p>
@@ -12,7 +12,9 @@
 <p style="text-align: center;"><button class="button-cancel">Отменить</button><button class="button-accept" @onclick="ChangeUser">Принять</button></p>
 
 @code {
-
+    string? login;
+    string? password;
+    
     private UserCreateRequest currentUser { get; set; }
         = new() { Login = "Pensil", Nickname = "Vova228", Password = "1488" };
 
@@ -21,4 +23,4 @@
         // TODO - слишком жёсткая привязка к адресу
         var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.id}", currentUser);
     }
-} *@
+}  *@

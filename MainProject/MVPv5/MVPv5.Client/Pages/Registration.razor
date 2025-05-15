@@ -45,20 +45,24 @@
 
 
 @code {
-    @inject NavigationManager NavigationManager
+@inject NavigationManager NavigationManager
     @inject HttpClient httpClient
     @using MVPv5.Application.Contracts.User.v1
 
+    public string? login;
     private string Status { get; set; } = "";
     private UserCreateRequest createdUser { get; set; } = new();
 
+  
+    public String? hashLogin { get; set; }
     private async Task OnRegister()
     {
         var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
 
         if (response.IsSuccessStatusCode)
         {
-            NavigationManager.NavigateTo("/editor");
+            hashLogin = createdUser.Login;
+            NavigationManager.NavigateTo(hashLogin+"/editor");
         }
         else
         {

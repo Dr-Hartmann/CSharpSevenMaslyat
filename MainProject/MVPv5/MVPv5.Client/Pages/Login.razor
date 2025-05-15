@@ -38,10 +38,10 @@
     @inject NavigationManager NavigationManager
     @inject HttpClient httpClient
     @using MVPv5.Application.Contracts.User.v1
-
+    public String? hashLogin { get; set; }
     private string Status { get; set; } = "";
     private UserLoginRequest loginedUser { get; set; } = new();
-
+    @using System.Security.Cryptography
     private async Task OnLogin()
     {
         var response = await httpClient.PostAsJsonAsync("User/check", loginedUser);
@@ -53,7 +53,8 @@
 
         if (response.IsSuccessStatusCode)
         {
-            NavigationManager.NavigateTo("/editor");
+            hashLogin = loginedUser.Login;
+            NavigationManager.NavigateTo(hashLogin + "/editor");
         }
         else
         {
