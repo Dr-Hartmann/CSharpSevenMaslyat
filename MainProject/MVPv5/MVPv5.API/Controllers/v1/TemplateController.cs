@@ -46,9 +46,10 @@ public class TemplateController(ITemplateService service, ILogger<TemplateContro
                 r.ContentType,
                 r.Tags);
         }
-        catch (KeyNotFoundException ex)
+        catch (Exception ex)
         {
-            return NotFound(ex.Data);
+            logger.LogError(ex.Message);
+            return NotFound(ex.Message);
         }
     }
 
@@ -67,9 +68,10 @@ public class TemplateController(ITemplateService service, ILogger<TemplateContro
                     r.ContentType,
                     r.Tags)));
         }
-        catch (KeyNotFoundException ex)
+        catch (Exception ex)
         {
-            return NotFound(ex.Data);
+            logger.LogError(ex.Message);
+            return NotFound(ex.Message);
         }
     }
 
@@ -82,10 +84,18 @@ public class TemplateController(ITemplateService service, ILogger<TemplateContro
     [HttpGet("download")]
     public IActionResult Download([FromBody] TemplateDownloadRequest file)
     {
-        if (file.content == null)
-            return NotFound();
+        try
+        {
+            if (file.content == null)
+                return NotFound();
 
-        // TODO - проверить
-        return File(file.content, file.contentType, file.name, DateTime.Now, new EntityTagHeaderValue("<doc>"), true);
+            // TODO - проверить
+            return File(file.content, file.contentType, file.name, true);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex.Message);
+            return NotFound(ex.Message);
+        }
     }
 }

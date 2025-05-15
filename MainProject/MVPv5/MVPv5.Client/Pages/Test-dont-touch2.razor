@@ -3,6 +3,7 @@
 
 <InputFile OnChange="HandleFileSelected" />
 <p>@statusMessage</p>
+<p>!!! @status !!!</p>
 
 
 <ul>
@@ -21,42 +22,57 @@
     @using MVPv5.Application.Contracts.Template.v1;
 
     private string? statusMessage;
+    private string? status;
 
     private List<TemplateReadResponse> files = new();
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-        var file = e.File;
-        if (file == null) return;
-
-        using var stream = new MemoryStream();
-        await file.OpenReadStream().CopyToAsync(stream);
-
-        var response = await httpClient.PostAsJsonAsync("template/create", new TemplateCreateRequest()
-            {
-                Name = file.Name,
-                Type = "курсач",
-                Content = stream.ToArray(),
-                ContentType = file.ContentType,
-                Tags = new List<string> { "{{name}}", "{{teacher}}" }
-            },
-            new CancellationTokenSource(5000).Token);
-
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            statusMessage = await response.Content.ReadAsStringAsync();
-            return;
-        }
+            var file = e.File;
+            if (file == null) return;
 
-        statusMessage = "Файл успешно загружен в базу данных!";
+            using var stream = new MemoryStream();
+            await file.OpenReadStream().CopyToAsync(stream);
+
+            var response = await httpClient.PostAsJsonAsync("template/create", new TemplateCreateRequest()
+                {
+                    Name = file.Name,
+                    Type = "курсач",
+                    Content = stream.ToArray(),
+                    ContentType = file.ContentType,
+                    Tags = new List<string> { "{{name}}", "{{teacher}}" }
+                },
+                new CancellationTokenSource(5000).Token);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                statusMessage = await response.Content.ReadAsStringAsync();
+                return;
+            }
+
+            statusMessage = "Файл успешно загружен в базу данных!";
+        }
+        catch(Exception ex)
+        {
+            status = ex.Message;
+        }
 
         await OnInitializedAsync();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        // var response = await httpClient.GetFromJsonAsync<IEnumerable<TemplateReadResponse>>("Template/read-all");
-        // files.AddRange(response!);
+        var response = await httpClient.GetFromJsonAsync<IEnumerable<TemplateReadResponse>>("Template/read-all");
+
+        if (!response.TryGetNonEnumeratedCount(out var a))
+        {
+            statusMessage = "Ошибка";
+            return;
+        }
+
+        files = new(response!);
     }
 
     private async Task DownloadFile(TemplateReadResponse file)
@@ -65,7 +81,7 @@
         await JS.InvokeVoidAsync("downloadFromByteArray", new
         {
             byteBase64 = Convert.ToBase64String(file.content!),
-            fileName = $"{file.name}{file.contentType}",
+            fileName = file.name,
             mimeType = "application/octet-stream"
         });
     }

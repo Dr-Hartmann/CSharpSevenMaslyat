@@ -27,14 +27,14 @@ public class TemplateService(ITemplateRepository repository) : ITemplateService
     public async Task<IEnumerable<TemplateModel>> GetAllAsync(CancellationToken token)
     {
         var response = await repository.GetAllAsync(token);
-        var errors = response.Select(r => r.Error != string.Empty);
+        //var errors = response.Select(r => r.Error != string.Empty);
 
-        if (errors.Count() > 0)
-        {
-            System.Text.StringBuilder str = new();
-            response.Select(r => r.Error).Select(item => str.Append($"| {item}"));
-            throw new Exception($"Ошибка: {str.ToString()}");
-        }
+        //if (errors.Count() > 0)
+        //{
+        //    System.Text.StringBuilder str = new();
+        //    response.Select(r => r.Error).Select(item => str.Append($"| {item}"));
+        //    throw new Exception($"Ошибка: {str.ToString()}");
+        //}
 
         return response.Select(l => l.Template);
     }
