@@ -6,6 +6,10 @@
 @attribute [Authorize] *@
 
 
+@*  TODO - создавать Хэш на основе всех данных пользователя?
+    Вводимый пароль - недостающий компонент при разхэшировании *@
+
+
 <div class="login-menu">
     <div class="login-back">
         <div class="login-main">
@@ -35,8 +39,6 @@
 
 
 @code {
-    @inject NavigationManager NavigationManager
-    @inject HttpClient httpClient
     @using MVPv5.Application.Contracts.User.v1
     public String? hashLogin { get; set; }
     private string Status { get; set; } = "";
@@ -44,7 +46,8 @@
     @using System.Security.Cryptography
     private async Task OnLogin()
     {
-        var response = await httpClient.PostAsJsonAsync("User/check", loginedUser);
+        var token = new CancellationTokenSource(3000);
+        var response = await httpClient.PostAsJsonAsync("User/check", loginedUser, token.Token);
 
         // получить ID и передавать его между страницами?
         // да, передавать логин и пароль через запрос (не показывается в URL?)

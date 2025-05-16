@@ -1,5 +1,4 @@
 ﻿@page "/download"
-@inject NavigationManager Navigation
 
 <InputFile OnChange="HandleFileSelected" />
 <p>@statusMessage</p>
@@ -68,7 +67,7 @@
     {
         var response = await httpClient.GetFromJsonAsync<IEnumerable<TemplateReadResponse>>("Template/read-all");
 
-        if (!response.TryGetNonEnumeratedCount(out var a))
+        if (!response!.TryGetNonEnumeratedCount(out var a))
         {
             statusMessage = "Ошибка";
             return;
@@ -109,8 +108,8 @@
         var response = await httpClient.PostAsJsonAsync("document/build-document",
             new DocumentBuildRequest()
                 {
-                    Name = file.name,
-                    Content = file.content,
+                    Name = file.name!,
+                    Content = file.content!,
                     Data = values
                 });
 
@@ -120,7 +119,7 @@
 
         await JS.InvokeVoidAsync("downloadFromByteArray", new
         {
-            byteBase64 = Convert.ToBase64String(rep.content),
+            byteBase64 = Convert.ToBase64String(rep!.content!),
             fileName = rep.name,
             mimeType = "application/octet-stream"
         });

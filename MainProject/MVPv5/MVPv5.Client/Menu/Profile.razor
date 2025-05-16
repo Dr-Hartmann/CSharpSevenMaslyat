@@ -1,26 +1,49 @@
-﻿@using MVPv5.Application.Contracts.User
-@using MVPv5.Application.Contracts.User.v1
+﻿@using MVPv5.Application.Contracts.User.v1
 
 @* TODO - переделать на валидируемые компоненты *@
-@* 
-<p><br><label class="label-center">Настройки профиля</label></p>
+@* TODO - как получить пользователя? *@
+
+<EditForm method="get" class="px-4" Model="currentUser" FormName="Profile" Enhance>
+    <div class="mb-3 mt-2">
+        @currentUser.nickname
+    </div>
+
+    <div class="mb-3">
+        @currentUser.login
+    </div>
+</EditForm>
+
+@* <p><br><label class="label-center">Настройки профиля</label></p>
 <p><label>Никнейм</label></p>
-<p><input class="input-format" @bind=login /><br></p>
-<p><label>Пароль</label></p>
-<p><input class="input-format" @bind=password /><br></p>
+<p><input class="input-format" @bind=currentUser.nickname /><br></p>
+<p><label>Логин</label></p>
+<p><input class="input-format" @bind=currentUser.login /><br></p>
 <br>
 <p style="text-align: center;"><button class="button-cancel">Отменить</button><button class="button-accept" @onclick="ChangeUser">Принять</button></p>
+ *@
+
 
 @code {
     string? login;
     string? password;
-    
-    private UserCreateRequest currentUser { get; set; }
-        = new() { Login = "Pensil", Nickname = "Vova228", Password = "1488" };
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "login")]
+    public String? hashLogin { get; set; }
+
+    private UserReadResponse currentUser { get; set; } = new(1, "niknik", "loooogin", "123", 30, DateOnly.FromDateTime(DateTime.Now));
+
+    // private UserCreateRequest createdUser { get; set; } = new();
 
     private async Task ChangeUser()
     {
         // TODO - слишком жёсткая привязка к адресу
-        var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.id}", currentUser);
+        // var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.Id}", currentUser);
     }
-}  *@
+
+    // protected override async void OnInitialized()
+    // {
+    //     var response = await httpClient.GetAsync("User/read/1");
+    //     currentUser = await response.Content.ReadFromJsonAsync<UserReadResponse>();
+    // }
+} 
