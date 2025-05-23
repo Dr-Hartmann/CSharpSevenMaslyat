@@ -1,38 +1,37 @@
-﻿using MVPv5.Core.Abstractions.v1;
+﻿using System.Text.Json;
+using MVPv5.Core.Abstractions.v1;
+using MVPv5.Core.Models;
 
 namespace MVPv5.Application.Services.v1;
 
 public class DocumentService(IDocumentRepository repository) : IDocumentService
 {
-    //public async Task<int> CreateAsync(string nickname, string login, string password, byte accessRule, CancellationToken token)
-    //{
-    //    return await repository.AddAsync(nickname, login, password, accessRule, DateOnly.FromDateTime(DateTime.Now), token);
-    //}
+    public async Task CreateAsync(string name, DateOnly dateCreation, JsonDocument metadataJson,
+        int templateId, int userId, CancellationToken token)
+    {
+        await repository.AddAsync(name, dateCreation, metadataJson,
+        templateId, userId, token);
+    }
 
-    //public async Task<UserModel> GetByIdAsync(int id, CancellationToken token)
-    //{
-    //    var response = await repository.GetByIdAsync(id, token);
+    public async Task<DocumentModel> GetByIdAsync(int id, CancellationToken token)
+    {
+        var response = await repository.GetByIdAsync(id, token);
 
-    //    if (response.Error != string.Empty)
-    //    {
-    //        throw new KeyNotFoundException($"Ошибка: {response.Error}");
-    //    }
+        if (response.Error != string.Empty)
+        {
+            throw new KeyNotFoundException($"Ошибка: {response.Error}");
+        }
 
-    //    return response.User;
-    //}
+        return response.Document;
+    }
 
-    //public async Task<IEnumerable<UserModel>> GetAllAsync(CancellationToken token)
-    //{
-    //    return (await repository.GetAllAsync(token)).Select(l => l.User);
-    //}
+    public async Task<IEnumerable<DocumentModel>> GetAllAsync(CancellationToken token)
+    {
+        return (await repository.GetAllAsync(token)).Select(l => l.Document);
+    }
 
-    //public async Task<bool> UpdatePasswordById(int id, string password, string confirmPassword, CancellationToken token)
-    //{
-    //    if (!string.Equals(password, confirmPassword))
-    //    {
-    //        throw new KeyNotFoundException($"Пароли не совпадают");
-    //    }
-
-    //    return await repository.UpdatePassword(id, password, token);
-    //}
+    public async Task UpdateMetaDataById(int id, JsonDocument metadataJson, CancellationToken token)
+    {
+        await repository.UpdateMetaDataAsync(id, metadataJson, token);
+    }
 }

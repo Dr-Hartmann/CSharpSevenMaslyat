@@ -23,7 +23,7 @@ public class DocumentModel
 
     public static (DocumentModel, string) Create(int id, string name, int templateId, int userId, DateOnly dateCreation, JsonDocument metadataJson)
     {
-        var error = string.Empty; //зачем в данном случае это???
+        var error = string.Empty;
         return (new DocumentModel(id, name, templateId, userId, dateCreation, metadataJson), error);
     }
 }

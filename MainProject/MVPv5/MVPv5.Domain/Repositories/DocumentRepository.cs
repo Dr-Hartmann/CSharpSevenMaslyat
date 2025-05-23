@@ -28,9 +28,45 @@ public class DocumentRepository(MVPv5DbContext dbContext)
         await dbContext.SaveChangesAsync(token);
     }
 
-    //какие еще должны быть????
+    //Дополнен репозиторий в соответствии с принципом CRUD (Create, Read, Update, Delete)
+    //-------------Update------------------
+    public async Task UpdateNameAsync(int id, string name, CancellationToken token)
+    {
+        await dbContext.Documents
+            .Where(document => document.Id == id)
+            .ExecuteUpdateAsync(document => document
+                .SetProperty(u => u.Name, name),
+                token);
+        await dbContext.SaveChangesAsync(token);
+    }
 
-    public async Task<(DocumentModel Template, string Error)> GetByIdAsync(int id, CancellationToken token)
+    public async Task UpdateMetaDataAsync(int id, JsonDocument? metadataJson, CancellationToken token)
+    {
+        await dbContext.Documents
+            .Where(document => document.Id == id)
+            .ExecuteUpdateAsync(document => document
+                .SetProperty(u => u.MetadataJson, metadataJson),
+                token);
+
+        await dbContext.SaveChangesAsync(token);
+    }
+
+    //-------------Delete------------------
+    public async Task DeleteById(int id, CancellationToken token)
+    {
+        var count = await dbContext.Documents
+            .Where(document => document.Id == id)
+            .ExecuteDeleteAsync(token);
+
+        await dbContext.SaveChangesAsync(token);
+
+        if (count != 1)
+        {
+            throw new Exception($"Удалено {count} документов вместо 1");
+        }
+    }
+
+    public async Task<(DocumentModel Document, string Error)> GetByIdAsync(int id, CancellationToken token)
     {
         return GetDocument(await dbContext.Documents
             .AsNoTracking()
@@ -43,5 +79,10 @@ public class DocumentRepository(MVPv5DbContext dbContext)
         return DocumentModel.Create(response.Id, response.Name, response.TemplateId, response.UserId, 
             response.DateCreation, response.MetadataJson);
     }
-    
+
+    private IEnumerable<(DocumentModel Document, string Error)> GetListOfDocuments(IEnumerable<DocumentEntity>? response)
+    {
+        if (response == null) throw new Exception("Пустой лист в ответе");
+        return response.Select(GetDocument);
+    }
 }
