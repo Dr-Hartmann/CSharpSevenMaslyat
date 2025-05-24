@@ -54,13 +54,12 @@ public class UserService(IUserRepository repository) : IUserService
     public async Task<IEnumerable<UserModel>> GetAllAsync(CancellationToken token)
     {
         var response = await repository.GetAllAsync(token);
-        var errors = response.Select(r => r.Error != string.Empty);
 
-        if (errors.Count() > 0)
+        var errors = response.Where(r => !string.IsNullOrEmpty(r.Error)).ToList();
+        if (errors.Any())
         {
-            System.Text.StringBuilder str = new();
-            response.Select(r => r.Error).Select(item => str.Append($" | {item}"));
-            throw new Exception($"Ошибка: {str.ToString()}");
+            var str = string.Join(" | ", errors.Select(e => e.Error));
+            throw new Exception($"Ошибка: {str}");
         }
 
         return response.Select(l => l.User);

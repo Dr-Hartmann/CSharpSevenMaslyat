@@ -33,7 +33,11 @@ public class Program
 
         builder.Services.AddScoped<TemplateController>();
         builder.Services.AddScoped<ITemplateService, TemplateService>();
-        builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();        
+        builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
+
+        builder.Services.AddScoped<DocumentController>();
+        builder.Services.AddScoped<IDocumentService, DocumentService>();
+        builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 
         var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MVPv5.Core.Abstractions.v1;
 using MVPv5.Core.Models;
 using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
@@ -7,7 +8,7 @@ using System.Text.Json;
 
 namespace MVPv5.Domain.Repositories;
 
-public class DocumentRepository(MVPv5DbContext dbContext)
+public class DocumentRepository(MVPv5DbContext dbContext) : IDocumentRepository
 {
     public async Task AddAsync(string name, DateOnly dateCreation, JsonDocument? metadataJson,
         int templateId, int userId, CancellationToken token)
