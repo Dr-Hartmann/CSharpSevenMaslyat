@@ -105,7 +105,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
 
     private (UserModel User, string Error) GetUser(UserEntity? response)
     {
-        if (response == null) throw new Exception("Пользователь не существует");
+        if (response == null) throw new KeyNotFoundException("Пользователь не существует");
         return UserModel.Create(response.Id, response.Nickname, response.Login, response.Password, 
             response.AccessRule, response.DateCreation);
     }

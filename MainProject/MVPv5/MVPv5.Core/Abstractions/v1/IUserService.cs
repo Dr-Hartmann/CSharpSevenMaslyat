@@ -13,4 +13,5 @@ public interface IUserService
     Task UpdateLoginAsync(int id, string login, string confirmLogin, CancellationToken token);
     Task UpdatePasswordByLogin(string login, string password, string confirmPassword, CancellationToken token);
     Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token);
+    Task DeleteByIdAsync(int id, CancellationToken token);
 }

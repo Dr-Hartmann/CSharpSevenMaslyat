@@ -8,4 +8,9 @@ public interface ITemplateService
         byte[] content, string contentType, IEnumerable<string> tags, CancellationToken token);
     Task<TemplateModel> GetByIdAsync(int id, CancellationToken token);
     Task<IEnumerable<TemplateModel>> GetAllAsync(CancellationToken token);
+    Task PatchAsync(int id, string? name, string? type, byte[]? content, string? contentType, 
+        IEnumerable<string>? tags, CancellationToken token);
+    Task UpdateAsync(int id, string name, string? type, DateOnly dateCreation, byte[] content, 
+        string contentType, IEnumerable<string> tags, CancellationToken token);
+    Task DeleteByIdAsync(int id, CancellationToken token);
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MVPv5.API.Controllers.v1;
+using MVPv5.API.Middleware;
 using MVPv5.Application.Services.v1;
 using MVPv5.Core.Abstractions.v1;
 using MVPv5.Domain.Data;
@@ -7,7 +8,7 @@ using MVPv5.Domain.Repositories;
 
 namespace MVPv5.API;
 
-// TODO - порядок не менять!
+// Порядок не менять!!!!!
 
 public class Program
 {
@@ -47,6 +48,8 @@ public class Program
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/openapi/v1.json", "v1");
+
+                options.IndexStream = () => File.OpenRead(Path.Combine(app.Environment.WebRootPath!, "swagger", "swagger-index.html"));
             });
             app.UseMigrationsEndPoint();
         }
@@ -56,14 +59,15 @@ public class Program
         //    app.UseHsts();
         //}
 
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        //app.UseRouting();
         app.UseCors();
+        app.UseMiddleware<ExMiddleware>();
+
+        //app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-
-        // свой Middleware<>()
 
         app.MapControllers();
         app.UseAntiforgery();

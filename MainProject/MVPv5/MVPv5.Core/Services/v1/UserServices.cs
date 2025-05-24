@@ -1,14 +1,18 @@
-﻿using MVPv5.Core.Abstractions.v1;
+﻿using Microsoft.AspNetCore.Identity;
+using MVPv5.Core.Abstractions.v1;
 using MVPv5.Core.Models;
 
 namespace MVPv5.Application.Services.v1;
 
 public class UserService(IUserRepository repository) : IUserService
 {
-    public async Task CreateAsync(string nickname, string login, string password,
+    public async Task CreateAsync(string nickname, string login, string password, 
         byte accessRule, CancellationToken token)
     {
-        await repository.AddAsync(nickname, login, password, accessRule, DateOnly.FromDateTime(DateTime.Now), token);
+        var hasher = new PasswordHasher<string>();
+        var hashedPassword = hasher.HashPassword(null!, password);
+
+        await repository.AddAsync(nickname, login, hashedPassword, accessRule, DateOnly.FromDateTime(DateTime.Now), token);
     }
 
     public async Task<UserModel> GetByIdAsync(int id, CancellationToken token)
@@ -55,7 +59,7 @@ public class UserService(IUserRepository repository) : IUserService
         if (errors.Count() > 0)
         {
             System.Text.StringBuilder str = new();
-            response.Select(r => r.Error).Select(item => str.Append($"| {item}"));
+            response.Select(r => r.Error).Select(item => str.Append($" | {item}"));
             throw new Exception($"Ошибка: {str.ToString()}");
         }
 
@@ -89,6 +93,14 @@ public class UserService(IUserRepository repository) : IUserService
             throw new Exception($"Пароли не совпадают");
         }
 
+        var hasher = new PasswordHasher<string>();
+        var hashedPassword = hasher.HashPassword(null!, password);
+
         await repository.UpdatePasswordByLoginAsync(login, password, token);
+    }
+
+    public async Task DeleteByIdAsync(int id, CancellationToken token)
+    {
+        await repository.DeleteById(id, token);
     }
 }
