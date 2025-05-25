@@ -44,19 +44,22 @@
     @using MVPv5.Application.Contracts.User.v1
 
     public string? login;
+    private string? password;
     private string Status { get; set; } = "";
     private UserCreateRequest createdUser { get; set; } = new();
 
 
-    public String? hashLogin { get; set; }
+
     private async Task OnRegister()
     {
         var response = await httpClient.PostAsJsonAsync("User/Create", createdUser);
 
         if (response.IsSuccessStatusCode)
         {
-            hashLogin = createdUser.Login;
-            NavigationManager.NavigateTo(hashLogin + "/editor");
+            login = createdUser.Login;
+            password = createdUser.Password;
+
+            NavigationManager.NavigateTo("/editor?login="+login);
         }
         else
         {

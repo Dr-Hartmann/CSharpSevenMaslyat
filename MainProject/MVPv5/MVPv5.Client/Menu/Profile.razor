@@ -2,17 +2,34 @@
 
 @* TODO - переделать на валидируемые компоненты *@
 @* TODO - как получить пользователя? *@
+@if (!(currentUser == null))
+{
+	<EditForm method="get" class="px-4" Model="currentUser" FormName="Profile" Enhance>
+		<div class="mb-1 mt-2">
+			Никнейм
+		</div>
+		@* <InputText id="login" @bind-Value="loginedUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" /> *@
 
-<EditForm method="get" class="px-4" Model="currentUser" FormName="Profile" Enhance>
-    <div class="mb-3 mt-2">
-        @currentUser.nickname
-    </div>
+		<InputText id="nickname" @bind-Value="newNickname" class="form-control input-format" aria-required="true" placeholder="@currentUser.nickname" />
+		<div class="mb-1 mt-2">
+			Пароль
+		</div>
+		<InputText id="password" @bind-Value="newPassword" class="form-control input-format" aria-required="true" placeholder="@currentUser.password" />
+		<div class="mb-1 mt-2">
+			Подтвердите пароль
+		</div>
+		<InputText id="password" @bind-Value="newPasswordConfirm" class="form-control input-format" aria-required="true" placeholder="@currentUser.password" />
+		<br>
+		<button type="button" class="btn btn-primary" @onclick="ChangeUserData">Подтвердить</button>
+		@* <button type="button" class="btn btn-danger" style="float:right">Отменить</button> *@ @*Стоит ли?*@
 
-    <div class="mb-3">
-        @currentUser.login
-    </div>
-</EditForm>
+	</EditForm>
 
+}
+else
+{
+	<p>Загрузка...</p>
+}
 @* <p><br><label class="label-center">Настройки профиля</label></p>
 <p><label>Никнейм</label></p>
 <p><input class="input-format" @bind=currentUser.nickname /><br></p>
@@ -24,26 +41,37 @@
 
 
 @code {
-    string? login;
-    string? password;
 
-    [Parameter]
-    [SupplyParameterFromQuery(Name = "login")]
-    public String? hashLogin { get; set; }
+	// string? password;
+	// [Parameter]
+	// [SupplyParameterFromQuery(Name = "login")]
+	public String? login { get; set; }
+	public string newNickname { get; set; }
+	private string newPassword { get; set; }
+	private string newPasswordConfirm { get; set; }
+	// private UserReadResponse currentUser { get; set; } = new(1, "niknik", "loooogin", "123", 30, DateOnly.FromDateTime(DateTime.Now));
 
-    private UserReadResponse currentUser { get; set; } = new(1, "niknik", "loooogin", "123", 30, DateOnly.FromDateTime(DateTime.Now));
+	private UserReadResponse? currentUser { get; set; }
 
-    // private UserCreateRequest createdUser { get; set; } = new();
+	private async Task ChangeUserData()
+	{
+		UserPatchPasswordRequest user = new UserPatchPasswordRequest { Login = login, Password = newPassword, PasswordConfirm = newPasswordConfirm };
+		var respose = await httpClient.PatchAsJsonAsync("User", user);
+		if (respose.IsSuccessStatusCode) Console.WriteLine($"Successful changing password to {user.Password}"); //чекаут
+		//Увага! Пароль принимается в захэшированном виде и отправляется не в виде хэша.
+		//TODO: Запилить в контроллере алгоритм гашиширования и разгашиширования
+	}
 
-    private async Task ChangeUser()
-    {
-        // TODO - слишком жёсткая привязка к адресу
-        // var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.Id}", currentUser);
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		Console.WriteLine("Allo epta");
+		var uri = new Uri(NavigationManager.Uri);
+		var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+		login = query.Get("login");
 
-    // protected override async void OnInitialized()
-    // {
-    //     var response = await httpClient.GetAsync("User/read/1");
-    //     currentUser = await response.Content.ReadFromJsonAsync<UserReadResponse>();
-    // }
+		var response = await httpClient.GetAsync($"User/read/{login}");
+		currentUser = await response.Content.ReadFromJsonAsync<UserReadResponse>();
+		Console.WriteLine(currentUser.nickname);
+
+	}
 } 

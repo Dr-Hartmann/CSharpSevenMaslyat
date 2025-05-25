@@ -1,4 +1,4 @@
-﻿@page "/{hashLogin?}/editor"
+﻿@page "/editor"
 <PageTitle>Editor</PageTitle>
 
 
@@ -7,14 +7,14 @@
 </UpperPanel>
 
 <div class="row d-flex" style="justify-self: center; width: 40%;">
-	@foreach (var input in Inputs)
-	{
-		<InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" placeholder="Введите текст" />
-		<div class="gap-3 d-flex justify-content-center">
-			<button @onclick="a =>  AddInput(Inputs.IndexOf(input))" class=@buttonStyle>+</button>
-			<button @onclick="a =>  Remove(Inputs.IndexOf(input))" class=@buttonStyle>-</button>
-		</div>
-	}
+    @foreach (var input in Inputs)
+    {
+        <InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" placeholder="Введите текст" />
+        <div class="gap-3 d-flex justify-content-center">
+            <button @onclick="a =>  AddInput(Inputs.IndexOf(input))" class=@buttonStyle>+</button>
+            <button @onclick="a =>  Remove(Inputs.IndexOf(input))" class=@buttonStyle>-</button>
+        </div>
+    }
 </div>
 
 <div class="row d-flex" style="justify-self: center; width: 40%;">
@@ -29,7 +29,7 @@
 @code {
     [Parameter]
     [SupplyParameterFromQuery(Name = "login")]
-    public String? hashLogin { get; set; }
+    public string login { get; set; }
     private string buttonStyle = "btn btn-outline-primary btn-sm px-4";
 
     @using MVPv5.Application.Contracts.Document.v1
@@ -72,7 +72,7 @@
         };
     protected override void OnInitialized()
     {
-
+        Console.WriteLine(login);
     }
 
     // TODO - это нужно?
