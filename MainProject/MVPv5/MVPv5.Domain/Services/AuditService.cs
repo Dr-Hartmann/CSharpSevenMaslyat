@@ -1,4 +1,4 @@
-namespace MVPv5.Core.Services;
+namespace MVPv5.Domain.Services;
 
 public class AuditService
 {

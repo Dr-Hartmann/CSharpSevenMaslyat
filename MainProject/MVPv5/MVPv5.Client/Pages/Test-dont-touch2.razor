@@ -9,10 +9,10 @@
     @foreach (var file in files)
     {
         <li>
-            @file.id
-            @file.name
+            @file.Id
+            @file.Name
             <button @onclick="() => DownloadFile(file)">Скачать</button>
-            <button @onclick="() => BuildAndDownloadFile(file)">Собрать и скачать</button>
+            @* <button @onclick="() => BuildAndDownloadFile(file)">Собрать и скачать</button> *@
         </li>
     }
 </ul>
@@ -81,47 +81,47 @@
     {
         await JS.InvokeVoidAsync("downloadFromByteArray", new
         {
-            byteBase64 = Convert.ToBase64String(file.content!),
-            fileName = file.name,
+            byteBase64 = Convert.ToBase64String(file.Content!),
+            fileName = file.Name,
             mimeType = "application/octet-stream"
         });
     }
 
-    private async Task BuildAndDownloadFile(TemplateReadResponse file)
-    {
-        Dictionary<string, string> values = new() {
-            {"{{institute}}", "Институт информационных технологий" },
-            {"{{faculty}}", "МПО ЭВМ" },
-            {"{{type}}", "КУРСОВАЯ РАБОТА" },
-            { "{{class}}", "С#-программирование" },
-            { "{{plot}}", "Blazor, Rest API, Entity Framework, PostrgreSQL, сериализация, работа с файлами"},
-            { "{{group}}", "1ПИб-02-1оп-22" },
-            {"{{code}}", "09.03.04" },
-            {"{{specialization}}", "Программная инженерия" },
-            {"{{fullname}}", "Микуцких Григорий Андреевич" },
-            {"{{teacher}}", "Шаханов Н.И." },
-            {"{{position}}", "доцент"},
-            { "{{year}}", "2025"},
-            { "{{annotation}}", $"Курсовая работа посвящена (SOME TEXT) разработке...\r\nВ ходе работы было ...\r\nВ работе присутствует введение в предметную область, …, сопровождение графическим материалом и диаграммами, код итоговой программы и результаты её тестирования."}
-        };
+    // private async Task BuildAndDownloadFile(TemplateReadResponse file)
+    // {
+    //     Dictionary<string, string> values = new() {
+    //         {"{{institute}}", "Институт информационных технологий" },
+    //         {"{{faculty}}", "МПО ЭВМ" },
+    //         {"{{type}}", "КУРСОВАЯ РАБОТА" },
+    //         { "{{class}}", "С#-программирование" },
+    //         { "{{plot}}", "Blazor, Rest API, Entity Framework, PostrgreSQL, сериализация, работа с файлами"},
+    //         { "{{group}}", "1ПИб-02-1оп-22" },
+    //         {"{{code}}", "09.03.04" },
+    //         {"{{specialization}}", "Программная инженерия" },
+    //         {"{{fullname}}", "Микуцких Григорий Андреевич" },
+    //         {"{{teacher}}", "Шаханов Н.И." },
+    //         {"{{position}}", "доцент"},
+    //         { "{{year}}", "2025"},
+    //         { "{{annotation}}", $"Курсовая работа посвящена (SOME TEXT) разработке...\r\nВ ходе работы было ...\r\nВ работе присутствует введение в предметную область, …, сопровождение графическим материалом и диаграммами, код итоговой программы и результаты её тестирования."}
+    //     };
 
-        var response = await httpClient.PostAsJsonAsync("document/build-document",
-            new DocumentBuildRequest()
-                {
-                    Name = file.name!,
-                    Content = file.content!,
-                    Data = values
-                });
+    //     var response = await httpClient.PostAsJsonAsync("document/build-document",
+    //         new DocumentBuildRequest()
+    //             {
+    //                 Name = file.Name!,
+    //                 Content = file.Content!,
+    //                 Data = values
+    //             });
 
-        if (!response.IsSuccessStatusCode) return;
+    //     if (!response.IsSuccessStatusCode) return;
 
-        var rep = await response.Content.ReadFromJsonAsync<DocumentBuildResponse>();
+    //     var rep = await response.Content.ReadFromJsonAsync<DocumentBuildResponse>();
 
-        await JS.InvokeVoidAsync("downloadFromByteArray", new
-        {
-            byteBase64 = Convert.ToBase64String(rep!.content!),
-            fileName = rep.name,
-            mimeType = "application/octet-stream"
-        });
-    }
+    //     await JS.InvokeVoidAsync("downloadFromByteArray", new
+    //     {
+    //         byteBase64 = Convert.ToBase64String(rep!.Content!),
+    //         fileName = rep.Name,
+    //         mimeType = "application/octet-stream"
+    //     });
+    // }
 }

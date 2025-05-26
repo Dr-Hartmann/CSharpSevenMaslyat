@@ -18,12 +18,11 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\MVPv5.Application\MVPv5.Application.csproj" />
-		<ProjectReference Include="..\MVPv5.Core\MVPv5.Core.csproj" />
 		<ProjectReference Include="..\MVPv5.Domain\MVPv5.Domain.csproj" />
 	</ItemGroup>
 

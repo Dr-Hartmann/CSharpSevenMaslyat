@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MVPv5.Core\MVPv5.Core.csproj" />
     <ProjectReference Include="..\MVPv5.Domain\MVPv5.Domain.csproj" />
   </ItemGroup>
 

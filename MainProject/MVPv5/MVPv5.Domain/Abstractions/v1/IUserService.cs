@@ -1,11 +1,11 @@
-﻿using MVPv5.Core.Models;
+﻿using MVPv5.Domain.Models;
 
-namespace MVPv5.Core.Abstractions.v1;
+namespace MVPv5.Domain.Abstractions.v1;
 
 public interface IUserService
 {
-    Task CreateAsync(string nickname, string login, string password,
-        byte accessRule, CancellationToken token);
+    Task CreateAsync(string nickname, string login, string password, byte accessRule, 
+        DateOnly dateCreation, CancellationToken token);
     Task<UserModel> GetByIdAsync(int id, CancellationToken token);
     Task<UserModel> GetByLoginAsync(string login, CancellationToken token);
     Task<IEnumerable<UserModel>> GetAllAsync(CancellationToken token);

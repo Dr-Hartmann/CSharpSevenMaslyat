@@ -1,15 +1,14 @@
 ﻿using System.Text.Json;
-using MVPv5.Core.Abstractions.v1;
-using MVPv5.Core.Models;
+using MVPv5.Domain.Abstractions.v1;
+using MVPv5.Domain.Models;
 
-namespace MVPv5.Application.Services.v1;
+namespace MVPv5.Domain.Services.v1;
 
 public class DocumentService(IDocumentRepository repository) : IDocumentService
 {
-    public async Task CreateAsync(string name, DateOnly dateCreation, JsonDocument metadataJson,
-        int templateId, int userId, CancellationToken token)
+    public async Task CreateAsync(DocumentModel model, CancellationToken token)
     {
-        await repository.AddAsync(name, dateCreation, metadataJson, templateId, userId, token);
+        await repository.AddAsync(model, token);
     }
 
     public async Task<DocumentModel> GetByIdAsync(int id, CancellationToken token)
@@ -26,7 +25,9 @@ public class DocumentService(IDocumentRepository repository) : IDocumentService
 
     public async Task<IEnumerable<DocumentModel>> GetAllAsync(CancellationToken token)
     {
-        return (await repository.GetAllAsync(token)).Select(l => l.Document);
+        var response = await repository.GetAllAsync(token);
+        // TODO - логика обработки ошибок при создании модели
+        return response.Select(l => l.Document);
     }
 
     public async Task UpdateMetaDataById(int id, JsonDocument metadataJson, CancellationToken token)
@@ -39,10 +40,9 @@ public class DocumentService(IDocumentRepository repository) : IDocumentService
         await repository.UpdateNameAsync(id, name, token);
     }
 
-    public async Task UpdateAsync(int id, string name, DateOnly dateCreation, JsonDocument metadataJson,
-        int templateId, int userId, CancellationToken token)
+    public async Task UpdateAsync(int id, DocumentModel model, CancellationToken token)
     {
-        await repository.UpdateAsync(id, name, dateCreation, metadataJson, templateId, userId, token);
+        await repository.UpdateAsync(id, model, token);
     }
 
     public async Task DeleteByIdAsync(int id, CancellationToken token)

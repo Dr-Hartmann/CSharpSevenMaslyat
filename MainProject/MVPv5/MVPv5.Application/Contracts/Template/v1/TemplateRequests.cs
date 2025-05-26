@@ -22,8 +22,7 @@ public record TemplateCreateRequest
 public record TemplatePatchRequest
 {
     [Required]
-    public int Id { get; init; }
-
+    public required int Id { get; init; }
     public string? Name { get; set; }
     public string? Type { get; set; }
     public byte[]? Content { get; set; }
@@ -58,6 +57,6 @@ public record TemplateDeleteRequest
 }
 
 public record TemplateDownloadRequest(
-    [Required] string name,
-    [Required] byte[] content,
-    [Required] string contentType);
+    [Required] string Name,
+    [Required] byte[] Content,
+    [Required] string ContentType);

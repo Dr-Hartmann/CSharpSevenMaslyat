@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MVPv5.Core.Abstractions.v1;
-using MVPv5.Core.Models;
+using MVPv5.Domain.Abstractions.v1;
+using MVPv5.Domain.Models;
 
-namespace MVPv5.Application.Services.v1;
+namespace MVPv5.Domain.Services.v1;
 
 public class UserService(IUserRepository repository) : IUserService
 {
-    public async Task CreateAsync(string nickname, string login, string password, 
-        byte accessRule, CancellationToken token)
+    public async Task CreateAsync(string nickname, string login, string password, byte accessRule, 
+        DateOnly dateCreation, CancellationToken token)
     {
-        var hasher = new PasswordHasher<string>();
-        var hashedPassword = hasher.HashPassword(null!, password);
-
-        await repository.AddAsync(nickname, login, hashedPassword, accessRule, DateOnly.FromDateTime(DateTime.Now), token);
+        var hashedPassword = new PasswordHasher<string>().HashPassword(login, password);
+        await repository.AddAsync(UserModel.Create(nickname, login, hashedPassword, accessRule, dateCreation), token);
     }
 
     public async Task<UserModel> GetByIdAsync(int id, CancellationToken token)
@@ -41,6 +39,8 @@ public class UserService(IUserRepository repository) : IUserService
 
     public async Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token)
     {
+        // TODO - хэширование и разхэширование пароля
+
         var response = await repository.GetByLoginAndPasswordAsync(login, password, token);
 
         if (response.Error != string.Empty)
@@ -58,8 +58,7 @@ public class UserService(IUserRepository repository) : IUserService
         var errors = response.Where(r => !string.IsNullOrEmpty(r.Error)).ToList();
         if (errors.Any())
         {
-            var str = string.Join(" | ", errors.Select(e => e.Error));
-            throw new Exception($"Ошибка: {str}");
+            throw new Exception($"Ошибка: {string.Join(" | ", errors.Select(e => e.Error))}");
         }
 
         return response.Select(l => l.User);
@@ -72,7 +71,7 @@ public class UserService(IUserRepository repository) : IUserService
             throw new Exception($"Никнеймы не совпадают");
         }
 
-        await repository.UpdateNicknameAsync(id, nickname, token);
+        await repository.UpdateNicknameByIdAsync(id, nickname, token);
     }
 
     public async Task UpdateLoginAsync(int id, string login, string confirmLogin, CancellationToken token)
@@ -82,7 +81,7 @@ public class UserService(IUserRepository repository) : IUserService
             throw new Exception($"Логины не совпадают");
         }
 
-        await repository.UpdateLoginAsync(id, login, token);
+        await repository.UpdateLoginByIdAsync(id, login, token);
     }
 
     public async Task UpdatePasswordByLogin(string login, string password, string confirmPassword, CancellationToken token)
@@ -92,9 +91,7 @@ public class UserService(IUserRepository repository) : IUserService
             throw new Exception($"Пароли не совпадают");
         }
 
-        var hasher = new PasswordHasher<string>();
-        var hashedPassword = hasher.HashPassword(null!, password);
-
+        var hashedPassword = new PasswordHasher<string>().HashPassword(login, password);
         await repository.UpdatePasswordByLoginAsync(login, password, token);
     }
 

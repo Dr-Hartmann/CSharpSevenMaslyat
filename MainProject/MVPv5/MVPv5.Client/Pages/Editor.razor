@@ -55,41 +55,20 @@
     }
 
 
-
-    //dioc
-
-
-    DocumentBuildRequest doc = new()
+    DocumentCreateRequest doc = new()
         {
-            Name = "a.doc",
-            Content = Encoding.UTF8.GetBytes("abcdef"),
+            Name = "TestTest__111",
             Data = new Dictionary<string, string>
             {
-                {"{{institute}}", "" },
+                {"{{institute}}", "ЧГУ" },
                 {"{{faculty}}", "" },
-                {"{{type}}", "" }
-            }
+                {"{{type}}", "геморрой" }
+            },
+            TemplateId = 1,
+            UserId = 1
         };
     protected override void OnInitialized()
     {
         Console.WriteLine(login);
     }
-
-    // TODO - это нужно?
-
-
-    // [Inject] IJSRuntime? JS { get; set; }
-
-    // async Task CheckOverflow(ChangeEventArgs e)
-    // {
-    // 	var lastPage = Pages.Last();
-    // 	bool isOverflowing = await JS!.InvokeAsync<bool>("checkPageOverflow", lastPage.ElementRef);
-
-    // 	if (isOverflowing)
-    // 	{
-    // 		Pages.Add(new PageModel());
-    // 		StateHasChanged(); // Ререндерим компонент
-    // 	}
-    // }
-
 }

@@ -1,34 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MVPv5.Core.Abstractions.v1;
-using MVPv5.Core.Models;
+using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
+using MVPv5.Domain.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVPv5.Domain.Repositories;
 
 public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
 {
-    public async Task AddAsync(string nickname, string login, string password,
-        byte accessRule, DateOnly dateCreation, CancellationToken token)
+    public async Task AddAsync(UserModel model, CancellationToken token)
     {
-        if (dbContext!.Users.Where(u => u.Login == login).Count() > 0)
+        if (await dbContext.Users.AnyAsync(u => u.Login == model.Login, token))
         {
-            throw new Exception("Такой пользователь уже существует");
+            throw new ValidationException("Такой пользователь уже существует");
         }
 
         await dbContext!.Users.AddAsync(new UserEntity
         {
-            Nickname = nickname,
-            Login = login,
-            Password = password,
-            AccessRule = accessRule,
-            DateCreation = dateCreation,
+            Login = model.Login,
+            Nickname = model.Nickname,
+            Password = model.Password,
+            AccessRule = model.AccessRule,
+            DateCreation = model.DateCreation,
         }, token);
 
         await dbContext.SaveChangesAsync(token);
     }
 
-    public async Task UpdateNicknameAsync(int id, string nickname, CancellationToken token)
+    public async Task UpdateNicknameByIdAsync(int id, string nickname, CancellationToken token)
     {
         await dbContext.Users
             .Where(user => user.Id == id)
@@ -39,7 +39,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
         await dbContext.SaveChangesAsync(token);
     }
 
-    public async Task UpdateLoginAsync(int id, string login, CancellationToken token)
+    public async Task UpdateLoginByIdAsync(int id, string login, CancellationToken token)
     {
         await dbContext.Users
             .Where(user => user.Id == id)
@@ -105,9 +105,7 @@ public class UserRepository(MVPv5DbContext dbContext) : IUserRepository
 
     private (UserModel User, string Error) GetUser(UserEntity? response)
     {
-        if (response == null) throw new KeyNotFoundException("Пользователь не существует");
-        return UserModel.Create(response.Id, response.Nickname, response.Login, response.Password, 
-            response.AccessRule, response.DateCreation);
+        return UserModel.Create(response);
     }
 
     private IEnumerable<(UserModel User, string Error)> GetListOfUsers(IEnumerable<UserEntity>? response)

@@ -10,15 +10,15 @@
 		</div>
 		@* <InputText id="login" @bind-Value="loginedUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" /> *@
 
-		<InputText id="nickname" @bind-Value="newNickname" class="form-control input-format" aria-required="true" placeholder="@currentUser.nickname" />
+		<InputText id="nickname" @bind-Value="newNickname" class="form-control input-format" aria-required="true" placeholder="@currentUser.Nickname" />
 		<div class="mb-1 mt-2">
 			Пароль
 		</div>
-		<InputText id="password" @bind-Value="newPassword" class="form-control input-format" aria-required="true" placeholder="@currentUser.password" />
+		<InputText id="password" @bind-Value="newPassword" class="form-control input-format" aria-required="true" placeholder="@currentUser.Password" />
 		<div class="mb-1 mt-2">
 			Подтвердите пароль
 		</div>
-		<InputText id="password" @bind-Value="newPasswordConfirm" class="form-control input-format" aria-required="true" placeholder="@currentUser.password" />
+		<InputText id="password" @bind-Value="newPasswordConfirm" class="form-control input-format" aria-required="true" placeholder="@currentUser.Password" />
 		<br>
 		<button type="button" class="btn btn-primary" @onclick="ChangeUserData">Подтвердить</button>
 		@* <button type="button" class="btn btn-danger" style="float:right">Отменить</button> *@ @*Стоит ли?*@
@@ -71,7 +71,7 @@ else
 
 		var response = await httpClient.GetAsync($"User/read/{login}");
 		currentUser = await response.Content.ReadFromJsonAsync<UserReadResponse>();
-		Console.WriteLine(currentUser.nickname);
+		Console.WriteLine(currentUser.Nickname);
 
 	}
 } 

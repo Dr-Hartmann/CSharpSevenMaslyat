@@ -2,51 +2,53 @@
 
 namespace MVPv5.Application.Contracts.Document.v1;
 
-public class DocumentBuildRequest
+public class DocumentCreateRequest
 {
-    [Required, MaxLength(30)]
+    [Required]
     public required string Name { get; set; }
 
     [Required]
-    public required byte[] Content { get; set; }
+    public required IDictionary<string, string> Data { get; set; }
 
     [Required]
-    public required IDictionary<string, string> Data { get; set; }
-}
+    public required int TemplateId { get; set; }
 
-public class DocumentCreateRequest
-{
-    public string Name { get; set; } = string.Empty;
-    public DateOnly DateCreation { get; set; }
-    public required string MetadataJson { get; set; }
-    public int TemplateId { get; set; }
-    public int UserId { get; set; }
+    [Required]
+    public required int UserId { get; set; }
 }
 
 public class DocumentUpdateRequest
 {
     [Required]
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public DateOnly DateCreation { get; set; }
-    public required string MetadataJson { get; set; }
-    public int TemplateId { get; set; }
-    public int UserId { get; set; }
+    public required int Id { get; set; }
+
+    public string? Name { get; set; }
+    public DateOnly? DateCreation { get; set; }
+    public IDictionary<string, string>? Data { get; set; }
+    public int? TemplateId { get; set; }
+    public int? UserId { get; set; }
 }
 
 public class DocumentPatchNameRequest
 {
-    public int Id { get; set; }
+    [Required]
+    public required int Id { get; set; }
+
+    [Required]
     public required string Name { get; set; }
 }
 
 public class DocumentPatchMetadataRequest
 {
-    public int Id { get; set; }
-    public required string MetadataJson { get; set; }
+    [Required]
+    public required int Id { get; set; }
+
+    [Required]
+    public required IDictionary<string, string>? Data { get; set; }
 }
 
 public class DocumentDeleteRequest
 {
-    public int Id { get; set; }
+    [Required]
+    public required int Id { get; set; }
 }

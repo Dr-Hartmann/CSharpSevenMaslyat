@@ -14,7 +14,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\MVPv5.Application\MVPv5.Application.csproj" />
-		<ProjectReference Include="..\MVPv5.Core\MVPv5.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

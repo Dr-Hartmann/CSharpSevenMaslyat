@@ -1,12 +1,11 @@
 ﻿using System.Text.Json;
-using MVPv5.Core.Models;
+using MVPv5.Domain.Models;
 
-namespace MVPv5.Core.Abstractions.v1;
+namespace MVPv5.Domain.Abstractions.v1;
 
 public interface IDocumentRepository
 {
-    Task AddAsync(string name, DateOnly dateCreation, JsonDocument? metadataJson,
-        int templateId, int userId, CancellationToken token);
+    Task AddAsync(DocumentModel model, CancellationToken token);
 
     Task<(DocumentModel Document, string Error)> GetByIdAsync(int id, CancellationToken token);
 
@@ -16,8 +15,7 @@ public interface IDocumentRepository
 
     Task UpdateMetaDataAsync(int id, JsonDocument metadataJson, CancellationToken token);
 
-    Task UpdateAsync(int id, string name, DateOnly dateCreation, JsonDocument? metadataJson,
-        int templateId, int userId, CancellationToken token);
+    Task UpdateAsync(int id, DocumentModel model, CancellationToken token);
 
     Task DeleteById(int id, CancellationToken token);
 }
