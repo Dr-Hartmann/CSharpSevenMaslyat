@@ -1,4 +1,5 @@
-﻿using MVPv5.Domain.Abstractions.v1;
+﻿using Microsoft.EntityFrameworkCore;
+using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Models;
 using MVPv5.Domain.Repositories;
 
@@ -31,14 +32,19 @@ public class TemplateService(ITemplateRepository repository) : ITemplateService
         }
         return response.Select(resp => resp.Template);
     }
-    public async Task PatchAsync(int id, TemplateModel model, CancellationToken token)
+
+    public async Task UpdateNameAsync (int id, string name, CancellationToken token)
+    {   
+        await repository.UpdateNameAsync(id, name, token);
+    }
+
+    public async Task UpdateIdAsync (int id, CancellationToken token)
     {
-        await repository.PatchAsync(id, model, token);
+        await repository.UpdateIdAsync(id, token);
     }
 
     public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)
     {
-        // TODO - наплодить Update`ов, см. Repository, и распределить выбросы исключений
         await repository.UpdateAsync(id, model, token);
     }
     public async Task DeleteByIdAsync(int id, CancellationToken token)

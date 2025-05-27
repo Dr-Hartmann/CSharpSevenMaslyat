@@ -26,7 +26,12 @@ public class DocumentService(IDocumentRepository repository) : IDocumentService
     public async Task<IEnumerable<DocumentModel>> GetAllAsync(CancellationToken token)
     {
         var response = await repository.GetAllAsync(token);
-        // TODO - логика обработки ошибок при создании модели
+        var errors = response.Where(resp => !string.IsNullOrWhiteSpace(resp.Error)).ToList();
+        if (errors.Any())
+        {
+            var errMessages = string.Join(" | ", errors.Select(e => e.Error));
+            throw new ApplicationException($"Обнаружены ошибки при получении документов: {errMessages}");
+        }
         return response.Select(l => l.Document);
     }
 

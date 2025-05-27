@@ -1,4 +1,6 @@
-﻿using MVPv5.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using MVPv5.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MVPv5.Domain.Models;
 
@@ -32,7 +34,7 @@ public class UserModel
     {
         if (entity is null)
         {
-            throw new Exception("Передана пустая сущность");
+            throw new KeyNotFoundException("Передана пустая сущность");
         }
 
         var error = string.Empty;
@@ -46,7 +48,10 @@ public class UserModel
     }
     public static UserModel Create(string nickname, string login, string password, byte accessRule, DateOnly? dateCreation)
     {
-        // TODO - обработать ошибки
+        if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+        {
+            throw new ValidationException("Ошибка валидации");
+        }
         return new UserModel(nickname, login, password, accessRule, dateCreation);
     }
 }

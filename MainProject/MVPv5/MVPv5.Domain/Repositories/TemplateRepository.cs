@@ -3,6 +3,9 @@ using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
 using MVPv5.Domain.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
+using System.Text.Json;
+using System.Xml.Linq;
 
 namespace MVPv5.Domain.Repositories;
 
@@ -41,25 +44,23 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
             .ToListAsync(token));
     }
 
-    // TODO - переписать Update и Patch, разделив ответственность ПОЛНОЙ замены и частичного обновления
-    // проще говоря - наплодите Update...Async
-    // переместите все проверки на корректность входных данных в Service, Repository только работает с БД
-    // PUT меняет объект целиком.
-    // PATCH изменяет отдельные поля ресурса.
-
-    // TODODO - у вас хорошо написано в DocumentRepository, повторить
-    public async Task PatchAsync(int id, TemplateModel model, CancellationToken token)
+    public async Task UpdateIdAsync(int id, CancellationToken token)
     {
-        var template = await dbContext.Templates.FirstOrDefaultAsync(t => t.Id == id, token);
-        if (template == null)
-        {
-            throw new KeyNotFoundException($"Шаблон не найден (ID = {id})");
-        }
-        template.Name = model.Name;
-        template.Type = model.Type;
-        template.Content = model.Content;
-        template.ContentType = model.ContentType;
-        template.Tags = [.. model.Tags];
+        await dbContext.Templates
+                .Where(template => template.Id == id)
+                .ExecuteUpdateAsync(template => template
+                    .SetProperty(t => t.Id, id),
+                    token);
+        await dbContext.SaveChangesAsync(token);
+    }
+
+    public async Task UpdateNameAsync(int id, string name, CancellationToken token)
+    {
+        await dbContext.Templates
+                .Where(template => template.Id == id)
+                .ExecuteUpdateAsync(template => template
+                    .SetProperty(t => t.Name, name),
+                    token);
         await dbContext.SaveChangesAsync(token);
     }
 
@@ -81,7 +82,6 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
         template.Tags = [.. model.Tags];
         await dbContext.SaveChangesAsync(token);
     }
-
     public async Task DeleteByIdAsync(int id, CancellationToken token)
     {
         var count = await dbContext.Templates

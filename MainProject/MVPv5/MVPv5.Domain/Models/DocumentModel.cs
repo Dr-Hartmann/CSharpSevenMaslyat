@@ -1,5 +1,6 @@
-﻿using MVPv5.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using MVPv5.Domain.Entities;
 
 namespace MVPv5.Domain.Models;
 
@@ -34,16 +35,37 @@ public class DocumentModel
     {
         if (entity is null)
         {
-            throw new Exception("Передана пустая сущность");
+            throw new ValidationException("Передана пустая сущность");
         }
 
+        if (string.IsNullOrEmpty(entity.Name))
+        {
+            throw new ValidationException("Имя документа не должно быть пустым");
+        }
+
+        if(entity.MetadataJson is null)
+        {
+            throw new ValidationException("Документ отсутствует");
+        }
+
+        if (entity.TemplateId <= 0)
+        {
+            throw new ValidationException("Некорректный TemplateId");
+        }
+
+        if (entity.UserId <= 0)
+        {
+            throw new ValidationException("Некорректный UserId");
+        }
         var error = string.Empty;
-        // TODO - добавить ошибки?
         return (new DocumentModel(entity), error);
     }
     public static DocumentModel Create(string? name, DateOnly? dateCreation, IDictionary<string, string>? dictionary, int? templateId, int? userId)
     {
-        // TODO - добавить обработку ошибок 
+        if (string.IsNullOrEmpty(name) || dictionary is null || templateId <= 0 || userId <= 0)
+        {
+            throw new ValidationException("Некорректные данные");
+        }
         return new DocumentModel(name, dateCreation, dictionary, templateId, userId);
     }
 }

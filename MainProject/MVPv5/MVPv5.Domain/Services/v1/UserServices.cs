@@ -39,8 +39,8 @@ public class UserService(IUserRepository repository) : IUserService
 
     public async Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token)
     {
-        // TODO - хэширование и разхэширование пароля
-
+        // Зачем нам расхэширование???
+        var hashedPassword = new PasswordHasher<string>().HashPassword(login, password);
         var response = await repository.GetByLoginAndPasswordAsync(login, password, token);
 
         if (response.Error != string.Empty)
