@@ -1,0 +1,147 @@
+﻿@page "/templates/edit"
+<PageTitle>Редактировать шаблон</PageTitle>
+
+<PanelElements OnSave="Save" />
+<p class="alert">@Status</p>
+
+
+@if (Inputs is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>Редактировать шаблон - @template?.Name</h3>
+
+    <InputText class="form-control mb-2" @bind-Value="TemplateName" placeholder="@template?.Name" />
+    <button class="btn btn-outline-secondary mb-2" @onclick="() => DownloadFile()">Скачать шаблон</button>
+    <InputFile class="form-control mb-2" OnChange="HandleFileSelected" title="Загрузить новый" />
+
+    <div class="row d-flex" style="justify-self: center; width: 40%;">
+        @foreach (var input in Inputs)
+        {
+            <InputText class="rounded-3 mt-2 mb-2" @bind-Value="input.Key" placeholder="@input.Key" />
+            <div class="gap-3 d-flex">
+                <button @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
+                <button @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
+            </div>
+        }
+    </div>
+}
+
+
+@using System.Text
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@code {
+    [SupplyParameterFromQuery(Name = "id")]
+    public int Id { get; set; }
+
+    private string? Status { get; set; }
+    private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
+
+    private TemplateReadResponse? template { get; set; }
+    private string? TemplateName { get; set; }
+    private MemoryStream? newFile { get; set; }
+    private string? ContentType { get; set; }
+
+    @inject IJSRuntime JS
+    private async Task DownloadFile()
+    {
+        if (template is null) return;
+        try
+        {
+            await JS.InvokeVoidAsync("downloadFromByteArray", new
+            {
+                byteBase64 = Convert.ToBase64String(template.Content ?? new byte[0]),
+                fileName = template.Name,
+                mimeType = "application/octet-stream"
+            });
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+
+    private async void HandleFileSelected(InputFileChangeEventArgs args)
+    {
+        try
+        {
+            var file = args.File;
+            if (file is null) return;
+            await file.OpenReadStream().CopyToAsync(newFile = new());
+            ContentType = file.ContentType;
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public required string Key { get; set; }
+    }
+
+    private void AddInput(int index)
+    {
+        Inputs?.Insert(index + 1, new() { Key = string.Empty });
+    }
+
+    private void Remove(int index)
+    {
+        if (Inputs?.Count() <= 1) return;
+        Inputs?.RemoveAt(index);
+    }
+
+    private async void Save()
+    {
+        if (Inputs is null) return;
+        try
+        {
+            TemplatePatchRequest request = new()
+                {
+                    Id = Id,
+                    Name = TemplateName,
+                    Content = newFile?.ToArray(),
+                    ContentType = ContentType,
+                    Tags = Inputs.Where(i => !string.IsNullOrEmpty(i.Key)).Select(i => i.Key)
+                };
+            var response = await httpClient.PatchAsJsonAsync("template/update", request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Status = "Сохранено";
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await httpClient.GetAsync($"Template/read/{Id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            template = await response.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (template?.Tags is null) return;
+            Inputs = new(template.Tags.Select(t => new InputModel() { Key = t }));
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+}

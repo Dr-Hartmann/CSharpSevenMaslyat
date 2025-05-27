@@ -3,9 +3,6 @@ using MVPv5.Domain.Data;
 using MVPv5.Domain.Entities;
 using MVPv5.Domain.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
-using System.Text.Json;
-using System.Xml.Linq;
 
 namespace MVPv5.Domain.Repositories;
 
@@ -44,22 +41,33 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
             .ToListAsync(token));
     }
 
-    public async Task UpdateIdAsync(int id, CancellationToken token)
-    {
-        await dbContext.Templates
-                .Where(template => template.Id == id)
-                .ExecuteUpdateAsync(template => template
-                    .SetProperty(t => t.Id, id),
-                    token);
-        await dbContext.SaveChangesAsync(token);
-    }
-
     public async Task UpdateNameAsync(int id, string name, CancellationToken token)
     {
         await dbContext.Templates
                 .Where(template => template.Id == id)
                 .ExecuteUpdateAsync(template => template
                     .SetProperty(t => t.Name, name),
+                    token);
+        await dbContext.SaveChangesAsync(token);
+    }
+
+    public async Task UpdateContentAndContentTypeAsync(int id, byte[] content, string contentType, CancellationToken token)
+    {
+        await dbContext.Templates
+                .Where(template => template.Id == id)
+                .ExecuteUpdateAsync(template => template
+                    .SetProperty(t => t.Content, content)
+                    .SetProperty(t=> t.ContentType, contentType),
+                    token);
+        await dbContext.SaveChangesAsync(token);
+    }
+
+    public async Task UpdateTagsAsync(int id, IEnumerable<string> tags, CancellationToken token)
+    {
+        await dbContext.Templates
+                .Where(template => template.Id == id)
+                .ExecuteUpdateAsync(template => template
+                    .SetProperty(t => t.Tags, tags),
                     token);
         await dbContext.SaveChangesAsync(token);
     }

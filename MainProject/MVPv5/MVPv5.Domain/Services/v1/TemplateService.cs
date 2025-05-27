@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MVPv5.Domain.Abstractions.v1;
+﻿using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Models;
 using MVPv5.Domain.Repositories;
 
@@ -33,14 +32,22 @@ public class TemplateService(ITemplateRepository repository) : ITemplateService
         return response.Select(resp => resp.Template);
     }
 
-    public async Task UpdateNameAsync (int id, string name, CancellationToken token)
-    {   
+    public async Task UpdateNameAsync(int id, string? name, CancellationToken token)
+    {
+        if (name is null) return;
         await repository.UpdateNameAsync(id, name, token);
     }
 
-    public async Task UpdateIdAsync (int id, CancellationToken token)
+    public async Task UpdateContentAndContentTypeAsync(int id, byte[]? content, string? contentType, CancellationToken token)
     {
-        await repository.UpdateIdAsync(id, token);
+        if (content is null || contentType is null) return;
+        await repository.UpdateContentAndContentTypeAsync(id, content, contentType, token);
+    }
+
+    public async Task UpdateTagsAsync(int id, IEnumerable<string>? tags, CancellationToken token)
+    {
+        if (tags is null) return;
+        await repository.UpdateTagsAsync(id, tags, token);
     }
 
     public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)

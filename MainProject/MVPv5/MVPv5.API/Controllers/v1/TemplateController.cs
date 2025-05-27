@@ -52,34 +52,35 @@ public class TemplateController(ITemplateService service) : ControllerBase
         return Ok(result.Select(ModelToResponse));
     }
 
-    // TODO - разделить один Patch на несколько мелких конкретрных
-    //[HttpPatch("update")]
-    //[ProducesResponseType(StatusCodes.Status201Created)]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-    //public async Task<IActionResult> Patch([FromBody] TemplatePatchRequest request, CancellationToken token = default)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return ValidationProblem(ModelState);
-    //    }
-    //    await service.PatchAsync(request.Id, TemplateModel.Create(request.Name, request.Type,
-    //        DateOnly.FromDateTime(DateTime.Now), request.Content, request.ContentType, request.Tags), token);
-    //    return Created();
-    //}
+    // TODO ...
 
-    [HttpPut("refresh")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromBody] TemplateUpdateRequest request, CancellationToken token = default)
+   [HttpPatch("update")]
+   [ProducesResponseType(StatusCodes.Status201Created)]
+   [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Patch([FromBody] TemplatePatchRequest request, CancellationToken token = default)
     {
         if (!ModelState.IsValid)
         {
             return ValidationProblem(ModelState);
         }
-        await service.UpdateAsync(request.Id, TemplateModel.Create(request.Name, request.Type,
-            DateOnly.FromDateTime(DateTime.Now), request.Content, request.ContentType, request.Tags), token);
+        await service.UpdateTagsAsync(request.Id, request.Tags, token);
+        await service.UpdateNameAsync(request.Id, request.Name, token);
+        await service.UpdateContentAndContentTypeAsync(request.Id, request.Content, request.ContentType, token);
         return Created();
     }
+
+    //[HttpPut("refresh")]
+    //[ProducesResponseType(StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+    //public async Task<IActionResult> Update([FromBody] TemplateUpdateRequest request, CancellationToken token = default)
+    //{
+    //    if (!ModelState.IsValid)
+    //    {
+    //        return ValidationProblem(ModelState);
+    //    }
+    //    await service.UpdateAsync(request.Id, TemplateModel.Create(request.Name, request.Type, request.Content, request.ContentType, request.Tags), token);
+    //    return Created();
+    //}
 
     [HttpDelete("delete")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

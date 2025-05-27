@@ -6,7 +6,6 @@ public record TemplateCreateRequest
 {
     [Required, MaxLength(100)]
     public required string Name { get; set; }
-
     public string? Type { get; set; }
 
     [Required]
@@ -30,25 +29,25 @@ public record TemplatePatchRequest
     public IEnumerable<string>? Tags { get; set; }
 }
 
-public record TemplateUpdateRequest
-{
-    [Required]
-    public int Id { get; init; }
+//public record TemplateUpdateRequest
+//{
+//    [Required]
+//    public int Id { get; init; }
 
-    [Required, MaxLength(100)]
-    public required string Name { get; set; }
+//    [Required, MaxLength(100)]
+//    public required string Name { get; set; }
 
-    public string? Type { get; set; }
+//    public string? Type { get; set; }
 
-    [Required]
-    public required byte[] Content { get; set; }
+//    [Required]
+//    public required byte[] Content { get; set; }
 
-    [Required]
-    public required string ContentType { get; set; }
+//    [Required]
+//    public required string ContentType { get; set; }
 
-    [Required]
-    public required IEnumerable<string> Tags { get; set; }
-}
+//    [Required]
+//    public required IEnumerable<string> Tags { get; set; }
+//}
 
 public record TemplateDeleteRequest
 {

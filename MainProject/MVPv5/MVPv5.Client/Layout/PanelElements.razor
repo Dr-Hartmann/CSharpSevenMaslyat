@@ -1,37 +1,40 @@
-﻿@using MVPv5.Client.Menu
-<button class="button-menu" @onclick="click"></button>
-<img class="separator-icon" src="Separator.png" alt="Separator">
-<button class="button-save" @onclick="OnSaveClicked"></button>
-<button class="button-undo"></button>
-<button class="button-redo"></button>
+﻿<div class="upper-panel p-0">
+    <button class="button-menu" @onclick="click"></button>
+    <img class="separator-icon" src="Separator.png" alt="Separator">
+    <button class="button-save" @onclick="OnSaveClicked"></button>
 
-@if (ShowDiv)
-{
-    <div class="PopUp-menu">
-        <button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button>
-        <button class="button-user-menu" @onclick="DivShow"><img src="Shablon.png" class="profil-img">Выбор шаблона</button>
-        @if (ShowDiv1)
-        {
-            <SelectPanelElements></SelectPanelElements>
-        }
-    </div>
-}
-@if (Flag() == true)
-{
+    @* потенциально не надо *@
+    @* <button class="button-undo"></button> *@
+    @* <button class="button-redo"></button> *@
 
-}
-@if (ShowMenu)
-{
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <p class="profile-upper">
-                <button class="button-close" @onclick="CloseModal">X</button>
-            </p>
-            <Profile></Profile>
+    @if (ShowDiv)
+    {
+        <div class="PopUp-menu">
+            <button class="button-user-menu" @onclick="ShowModal"><img src="Profil.png" class="profil-img">Профиль</button>
+            <button class="button-user-menu" @onclick="DivShow"><img src="Shablon.png" class="profil-img">Выбор шаблона</button>
+            @if (ShowDiv1)
+            {
+                <SelectPanelElements></SelectPanelElements>
+            }
         </div>
-    </div>
-}
-@* @if (f.ShowSelectMenu == true)
+    }
+    @* @if (Flag() == true)
+{
+
+} *@
+    @if (ShowMenu)
+    {
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <p class="profile-upper">
+                    <button class="button-close" @onclick="CloseModal">X</button>
+                </p>
+            @using MVPv5.Client.Menu
+                <Profile></Profile>
+            </div>
+        </div>
+    }
+    @* @if (f.ShowSelectMenu == true)
 {
     <div class="modal-overlay">
         <div class="modal-content">
@@ -43,12 +46,16 @@
     </div>
 } *@
 
+</div>
+
 @code {
+    // TODO - это можно заменить на Enum, если оно надо
     public bool ShowMenu { get; set; } = false;
     public bool ShowDiv1 { get; set; } = false;
     public bool ShowDiv { get; set; } = false;
-    SelectPanelElements f = new SelectPanelElements();
+    // SelectPanelElements f = new SelectPanelElements();
 
+    // TODO это бл вообще что?
     public void click()
     {
         ShowDiv = !ShowDiv;
@@ -79,16 +86,15 @@
         }
         else
         {
-            // TODO - убрать все CWr
-            Console.WriteLine("Делегат не передан");
+
         }
     }
     public void DivShow()
     {
         ShowDiv1 = !ShowDiv1;
     }
-    public bool Flag()
-    {
-        return f.GetFlag();
-    }
+    // public bool Flag()
+    // {
+    //     return f.GetFlag();
+    // }
 }

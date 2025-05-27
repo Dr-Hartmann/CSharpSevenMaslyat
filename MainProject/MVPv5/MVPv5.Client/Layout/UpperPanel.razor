@@ -1,8 +1,7 @@
-﻿@inject NavigationManager NavigationManager
-@implements IDisposable
+﻿@* @implements IDisposable *@
 @inherits LayoutComponentBase
 
-@if (IsPanelVisible)
+@* @if (IsPanelVisible)
 {
     <div class="upper-panel">
         <!-- Передаем параметр 
@@ -10,39 +9,42 @@
         дальше в PanelElements -->
         <PanelElements OnSave="OnSave" />
     </div>
-}
+} *@
 
 <main>
-    @Body
+    <article class="content m-0 p-0">
+        @Body
+    </article>
 </main>
 
+@* @inject NavigationManager NavigationManager *@
 @code {
-    [Parameter]
-    public EventCallback OnSave { get; set; }
+    // [Parameter]
+    // public EventCallback OnSave { get; set; }
 
     <!-- Получаем делегат здесь -->
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-    private string currentUrl = "";
-    private bool IsPanelVisible =>
-        currentUrl != "/" &&
-        currentUrl != "/login" &&
-        currentUrl != "/registration";
+    // [Parameter]
+    // public RenderFragment? ChildContent { get; set; }
+    // private string currentUrl = "";
+    // private bool IsPanelVisible =>
+    //     currentUrl != "/" &&
+    //     currentUrl != "/login" &&
+    //     currentUrl != "/registration";
 
-    protected override void OnInitialized()
-    {
-        currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery;
-        NavigationManager.LocationChanged += OnLocationChanged;
-    }
+    // protected override void OnInitialized()
+    // {
+    //     currentUrl = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).PathAndQuery;
+    //     NavigationManager.LocationChanged += OnLocationChanged;
+    // }
 
-    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
-        StateHasChanged(); // Обновляет разметку
-    }
+    // private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    // {
+    //     currentUrl = NavigationManager.ToAbsoluteUri(e.Location).PathAndQuery;
+    //     StateHasChanged();
+    // }
 
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-    }
+    // public void Dispose()
+    // {
+    //     NavigationManager.LocationChanged -= OnLocationChanged;
+    // }
 }
