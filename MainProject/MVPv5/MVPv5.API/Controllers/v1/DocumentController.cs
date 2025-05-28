@@ -10,8 +10,8 @@ namespace MVPv5.API.Controllers.v1;
 [ApiController]
 [Area("v1")]
 [Route("[controller]")]
-public class DocumentController(IDocumentService service, UserController userController,
-    TemplateController templateController) : ControllerBase
+public class DocumentController(IDocumentService service/*, UserController userController,
+    TemplateController templateController*/) : ControllerBase
 {
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -19,13 +19,14 @@ public class DocumentController(IDocumentService service, UserController userCon
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Add([FromBody] DocumentCreateRequest request, CancellationToken token)
     {
-        var user = (await userController.Get(request.UserId, token)).Value;
-        var template = (await templateController.Get(request.TemplateId, token)).Value;
-        if (user is null || template is null)
-        {
-            return NotFound();
-        }
-        await service.CreateAsync(DocumentModel.Create(request.Name, null, request.Data, template.Id, user.Id), token);
+        //var user = (await userController.Get(token)).Value;
+        //var template = (await templateController.Get(request.TemplateId, token)).Value;
+        //if (user is null || template is null)
+        //{
+        //    return NotFound();
+        //}
+        //await service.CreateAsync(DocumentModel.Create(request.Name, null, request.Data, template.Id, user.Id), token);
+        await service.CreateAsync(DocumentModel.Create(request.Name, null, request.Data, request.TemplateId, request.UserId), token);
         return Created();
     }
 
@@ -148,30 +149,30 @@ public class DocumentController(IDocumentService service, UserController userCon
         return stream.ToArray();
     }
 
-    [HttpGet("download")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DownloadByID([FromQuery] int id, CancellationToken token)
-    {
-        var response = await service.GetByIdAsync(id, token);
-        if (response is null)
-        {
-            return NotFound("Документ не найден");
-        }
+    //[HttpGet("download")]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<IActionResult> DownloadByID([FromQuery] int id, CancellationToken token)
+    //{
+    //    var response = await service.GetByIdAsync(id, token);
+    //    if (response is null)
+    //    {
+    //        return NotFound("Документ не найден");
+    //    }
 
-        var template = (await templateController.Get(response.TemplateId, token)).Value;
-        if (template is null)
-        {
-            return NotFound();
-        }
+    //    var template = (await templateController.Get(response.TemplateId, token)).Value;
+    //    if (template is null)
+    //    {
+    //        return NotFound();
+    //    }
 
-        if (template.Content is null)
-        {
-            return NotFound("Файл не найден");
-        }
+    //    if (template.Content is null)
+    //    {
+    //        return NotFound("Файл не найден");
+    //    }
 
-        return File(DocumentEditor(template.Content, response.Dictionary ?? new Dictionary<string, string>()), template.ContentType ?? "", response.Name, true);
-    }
+    //    return File(DocumentEditor(template.Content, response.Dictionary ?? new Dictionary<string, string>()), template.ContentType ?? "", response.Name, true);
+    //}
 
     private static DocumentReadResponse ModelToResponse(DocumentModel m) => new(
         m.Id,

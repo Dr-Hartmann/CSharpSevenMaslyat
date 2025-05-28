@@ -22,7 +22,7 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
             DateCreation = model.DateCreation!,
             Content = model.Content,
             ContentType = model.ContentType,
-            Tags = [.. model.Tags]
+            Tags = [.. model.Tags ?? Array.Empty<string>()]
         }, token);
         await dbContext.SaveChangesAsync(token);
     }
@@ -51,6 +51,16 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
         await dbContext.SaveChangesAsync(token);
     }
 
+    public async Task UpdateTypeAsync(int id, string type, CancellationToken token)
+    {
+        await dbContext.Templates
+        .Where(template => template.Id == id)
+        .ExecuteUpdateAsync(template => template
+            .SetProperty(t => t.Type, type),
+            token);
+        await dbContext.SaveChangesAsync(token);
+    }
+
     public async Task UpdateContentAndContentTypeAsync(int id, byte[] content, string contentType, CancellationToken token)
     {
         await dbContext.Templates
@@ -72,24 +82,25 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
         await dbContext.SaveChangesAsync(token);
     }
 
-    public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)
-    {
-        var template = await dbContext.Templates.FirstOrDefaultAsync(t => t.Id == id, token);
-        if (template == null)
-        {
-            throw new KeyNotFoundException($"Шаблон не найден (ID = {id})");
-        }
-        if (await dbContext.Templates.AnyAsync(t => t.Id != id && t.Name == model.Name, token))
-        {
-            throw new ValidationException("Шаблон с таким именем уже существует.");
-        }
-        template.Name = model.Name;
-        template.Type = model.Type;
-        template.Content = model.Content;
-        template.ContentType = model.ContentType;
-        template.Tags = [.. model.Tags];
-        await dbContext.SaveChangesAsync(token);
-    }
+    //public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)
+    //{
+    //    var template = await dbContext.Templates.FirstOrDefaultAsync(t => t.Id == id, token);
+    //    if (template == null)
+    //    {
+    //        throw new KeyNotFoundException($"Шаблон не найден (ID = {id})");
+    //    }
+    //    if (await dbContext.Templates.AnyAsync(t => t.Id != id && t.Name == model.Name, token))
+    //    {
+    //        throw new ValidationException("Шаблон с таким именем уже существует.");
+    //    }
+    //    template.Name = model.Name;
+    //    template.Type = model.Type;
+    //    template.Content = model.Content;
+    //    template.ContentType = model.ContentType;
+    //    template.Tags = [.. model.Tags];
+    //    await dbContext.SaveChangesAsync(token);
+    //}
+
     public async Task DeleteByIdAsync(int id, CancellationToken token)
     {
         var count = await dbContext.Templates
@@ -109,7 +120,7 @@ public class TemplateRepository(MVPv5DbContext dbContext) : ITemplateRepository
 
     private IEnumerable<(TemplateModel Template, string Error)> GetListOfTemplates(IEnumerable<TemplateEntity>? response)
     {
-        if (response == null) throw new Exception("Пустой лист в ответе");
+        if (response is null || !response.Any()) throw new Exception("Пустой лист в ответе");
         return response.Select(GetTemplate);
     }
 }

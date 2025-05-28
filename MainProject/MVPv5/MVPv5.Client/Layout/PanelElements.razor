@@ -1,7 +1,7 @@
 ﻿<div class="upper-panel p-0">
     <button class="button-menu" @onclick="click"></button>
     <img class="separator-icon" src="Separator.png" alt="Separator">
-    <button class="button-save" @onclick="OnSaveClicked"></button>
+    @* <button class="button-save" @onclick="OnSaveClicked"></button> *@
 
     @* потенциально не надо *@
     @* <button class="button-undo"></button> *@
@@ -75,20 +75,21 @@
         ShowMenu = false;
     }
 
-    [Parameter]
-    public EventCallback OnSave { get; set; }
+    // [Parameter]
+    // public EventCallback OnSave { get; set; }
 
-    private async Task OnSaveClicked()
-    {
-        if (OnSave.HasDelegate)
-        {
-            await OnSave.InvokeAsync();
-        }
-        else
-        {
+    // private async Task OnSaveClicked()
+    // {
+    //     if (OnSave.HasDelegate)
+    //     {
+    //         await OnSave.InvokeAsync();
+    //     }
+    //     else
+    //     {
 
-        }
-    }
+    //     }
+    // }
+
     public void DivShow()
     {
         ShowDiv1 = !ShowDiv1;

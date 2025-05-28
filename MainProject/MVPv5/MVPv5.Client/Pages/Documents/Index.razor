@@ -1,5 +1,5 @@
-﻿@page "/templates"
-<PageTitle>Шаблоны</PageTitle>
+﻿@page "/documents"
+<PageTitle>Документы</PageTitle>
 
 @inject NavigationManager NavigationManager
 <button class="btn btn-primary" @onclick="ToCreate">Создать</button>
@@ -14,11 +14,12 @@ else
     <QuickGrid Class="table" Items="Searching" Pagination="pagination">
         <PropertyColumn Property="m => m.Id" Title="Id" Sortable="true" />
         <PropertyColumn Property="m => m.Name" Title="Название" Sortable="true" />
-        <PropertyColumn Property="m => m.Type" Title="Тип работы" Sortable="true" />
+        <PropertyColumn Property="m => m.UserId" Title="Пользователь" Sortable="true" />
+        <PropertyColumn Property="m => m.TemplateId" Title="Шаблон" Sortable="true" />
 
         <TemplateColumn Context="p">
             <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                <a href="@($"templates/edit?id={p.Id}")">Детали</a>
+                <a href="@($"documents/edit?id={p.Id}")">Детали</a>
             </div>
         </TemplateColumn>
 
@@ -27,36 +28,36 @@ else
 }
 
 
-@using MVPv5.Application.Contracts.Template.v1
+@using MVPv5.Application.Contracts.Document.v1
 @inject HttpClient httpClient
 @code {
     private string? Status { get; set; } = "Загрузка...";
-    private IQueryable<TemplateReadResponse>? Searching { get; set; }
+    private IQueryable<DocumentReadResponse>? Searching { get; set; }
 
     static int size = 10;
     PaginationState pagination = new PaginationState { ItemsPerPage = size };
 
     protected override void OnParametersSet()
     {
-        pagination = new PaginationState { ItemsPerPage = Searching?.Count() < 10 ? Searching.Count() : size };
+        // pagination = new PaginationState { ItemsPerPage = Searching?.Count() < 10 ? Searching.Count() : size };
     }
 
     protected override async Task OnInitializedAsync()
     {
         var response = await httpClient.SendAsync(
-            new HttpRequestMessage(HttpMethod.Get, "Template/read-all")
+            new HttpRequestMessage(HttpMethod.Get, "document/read-all")
             .SetBrowserRequestCredentials(BrowserRequestCredentials.Include));
 
         if (response.IsSuccessStatusCode)
         {
-            Searching = (await response.Content.ReadFromJsonAsync<IEnumerable<TemplateReadResponse>>())!.AsQueryable();
+            Searching = (await response.Content.ReadFromJsonAsync<IEnumerable<DocumentReadResponse>>())!.AsQueryable();
         }
         else
         {
-            Status = "Не получилось загрузить файлы\n"/*  + await response.Content.ReadAsStringAsync() */;
+            Status = "Не получилось загрузить файлы";
             return;
         }
     }
 
-    private void ToCreate() => NavigationManager.NavigateTo("/templates/create");
+    private void ToCreate() => NavigationManager.NavigateTo("/documents/create");
 }

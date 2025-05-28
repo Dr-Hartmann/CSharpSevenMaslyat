@@ -1,0 +1,120 @@
+﻿@page "/documents/create"
+<PageTitle>Создать документ</PageTitle>
+
+<PanelElements />
+<p class="alert">@Status --------------</p>
+
+
+@* // TODO - сделать выпадающие списки *@
+<h3>Создать документ</h3>
+<EditForm Model="Request" OnValidSubmit="Save" FormName="DocumentCreate">
+    <DataAnnotationsValidator />
+    <button class="btn btn-primary mb-2" type="submit">Создать</button>
+
+    <div class="mb-2">
+        <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название документа" />
+        <ValidationMessage For="() => Request.Name" class="text-danger" />
+    </div>
+
+    @* // TODO - выпадающий список *@
+    <div class="mb-2">
+        <InputNumber class="form-control" @bind-Value="Request.TemplateId" placeholder="Шаблон" />
+        <ValidationMessage For="() => Request.TemplateId" class="text-danger" />
+    </div>
+
+
+    @* TODO - подтягивать из куки *@
+    <div class="mb-2">
+        <InputNumber class="form-control" @bind-Value="Request.UserId" placeholder="Пользователь" />
+        <ValidationMessage For="() => Request.UserId" class="text-danger" />
+    </div>
+
+    <div class="form-control mb-2">
+        <div class="row d-flex" style="justify-self: center; width: 40%;">
+            @if (Inputs is null)
+            {
+                <p>Нет тегов для заполнения</p>
+            }
+            else
+                foreach (var input in Inputs)
+                {
+                    @* <label class="form-label mt-1 mb-0 fs-6">@input.Key</label> *@
+                    <InputTextArea class="rounded-3 mb-2" @bind-Value="input.Value" placeholder="@input.Key" />
+                }
+        </div>
+    </div>
+</EditForm>
+
+
+@using System.Text
+@using MVPv5.Application.Contracts.Document.v1
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@code {
+    private string? Status { get; set; } = "...";
+    private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
+
+    private DocumentCreateRequest Request { get; set; } = new();
+    private TemplateReadResponse? Template;
+
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public required string Key { get; set; }
+        public string? Value { get; set; }
+    }
+
+    private async Task Save()
+    {
+        Status = string.Empty;
+        if (Template is null) return;
+        try
+        {
+            Request.Data = Inputs?
+                .Where(i => !string.IsNullOrEmpty(i.Value))
+                .ToDictionary(keySelector: k => k.Key, elementSelector: v => v.Value!.Trim());
+
+            var response = await httpClient.PostAsJsonAsync("document/create", Request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            NavigationManager.NavigateTo("/documents");
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Status = string.Empty;
+        try
+        {
+            // var response = await httpClient.GetAsync($"Template/read/{Id}");
+            var response = await httpClient.GetAsync($"Template/read/8");
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Template = await response.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (Template is null)
+            {
+                Status = "Пустой ответ сервера";
+                return;
+            }
+
+            if (Template.Tags is null) return;
+            Inputs = new(Template.Tags.Select(t => new InputModel() { Key = t }));
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+}

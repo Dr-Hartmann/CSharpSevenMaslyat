@@ -12,13 +12,11 @@ public class Program
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
         // можно ли отвязать клиента от жёсткой привязки к URI?
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["WebApiAddress"]!) });
+        builder.Services.AddScoped(sp => new HttpClient()
+        {
+            BaseAddress = new Uri(builder.Configuration["WebApiAddress"]!)
+        });
 
         await builder.Build().RunAsync();
     }
 }
-
-//builder.Services.AddCascadingAuthenticationState();
-//builder.Services.AddAuthorizationCore();
-//builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
-//builder.Services.AddBlazoredLocalStorage();

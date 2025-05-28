@@ -5,16 +5,15 @@ namespace MVPv5.Application.Contracts.Document.v1;
 public class DocumentCreateRequest
 {
     [Required]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
+
+    public IDictionary<string, string>? Data { get; set; }
 
     [Required]
-    public required IDictionary<string, string> Data { get; set; }
+    public int TemplateId { get; set; }
 
     [Required]
-    public required int TemplateId { get; set; }
-
-    [Required]
-    public required int UserId { get; set; }
+    public int UserId { get; set; }
 }
 
 public class DocumentUpdateRequest

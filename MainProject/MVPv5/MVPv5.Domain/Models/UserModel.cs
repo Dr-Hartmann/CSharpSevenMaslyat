@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MVPv5.Domain.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MVPv5.Domain.Models;
 
@@ -34,7 +33,7 @@ public class UserModel
     {
         if (entity is null)
         {
-            throw new KeyNotFoundException("Передана пустая сущность");
+            throw new KeyNotFoundException("Пользователь не найден");
         }
 
         var error = string.Empty;

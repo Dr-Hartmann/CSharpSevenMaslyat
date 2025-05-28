@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using MVPv5.API.Controllers.v1;
 using MVPv5.API.Middleware;
 using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Data;
@@ -20,31 +20,46 @@ public class Program
         builder.Services.AddOpenApi();
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        // TODO - точно работает проверка?
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = "cool_user";
+                options.SlidingExpiration = true;
+                options.Cookie.IsEssential = true;
+                options.LoginPath = "/login";
+                options.LogoutPath = "/logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+            });
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowClient", policy =>
+            {
+                //policy.WithOrigins().AllowAnyOrigin()
+                policy.WithOrigins("https://localhost:7077")
+                      .AllowCredentials()
+                      .AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
+        });
+
         builder.Services.AddDbContextFactory<MVPv5DbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(MVPv5DbContext))
             ?? throw new InvalidOperationException($"'{nameof(MVPv5DbContext)}' not found.")));
 
-        //builder.Services.AddScoped<UserController>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-        //builder.Services.AddScoped<TemplateController>();
         builder.Services.AddScoped<ITemplateService, TemplateService>();
         builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
 
-        //builder.Services.AddScoped<DocumentController>();
         builder.Services.AddScoped<IDocumentService, DocumentService>();
         builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 
         var app = builder.Build();
 
-        // TODO - как настроить корсы для билда?
-        app.UseCors(policy =>
-                policy.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowAnyOrigin());
 
         if (app.Environment.IsDevelopment())
         {
@@ -59,8 +74,9 @@ public class Program
             app.UseHsts();
         }
 
+        app.UseCors("AllowClient");
         app.UseHttpsRedirection();
-        app.UseStaticFiles();        
+        app.UseStaticFiles();
         app.UseMiddleware<ExMiddleware>();
         app.UseRouting();
         app.UseAuthentication();

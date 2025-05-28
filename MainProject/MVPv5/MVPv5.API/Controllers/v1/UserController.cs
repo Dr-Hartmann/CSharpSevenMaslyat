@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVPv5.Application.Contracts.User.v1;
-using Microsoft.IdentityModel.Tokens;
 using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVPv5.API.Controllers.v1;
 
@@ -24,12 +26,14 @@ public class UserController(IUserService service) : ControllerBase
         return Created();
     }
 
-    [HttpGet("read/{id:int}")]
+    //[HttpGet("read/{id:int}")]
+    [HttpGet("read")]
+    [Authorize]
     [ProducesResponseType(typeof(UserReadResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserReadResponse>> Get(int id, CancellationToken token = default)
+    public async Task<ActionResult<UserReadResponse>> Get(CancellationToken token = default)
     {
-        var response = await service.GetByIdAsync(id, token);
+        var response = await service.GetByIdAsync(Convert.ToInt32(ClaimTypes.NameIdentifier), token);
         if (response is null)
         {
             return NotFound();
@@ -37,18 +41,19 @@ public class UserController(IUserService service) : ControllerBase
         return ModelToResponse(response);
     }
 
-    [HttpGet("read/{login}")]
-    [ProducesResponseType(typeof(UserReadResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserReadResponse>> Get(string login, CancellationToken token = default)
-    {
-        var response = await service.GetByLoginAsync(login, token);
-        if (response is null)
-        {
-            return NotFound();
-        }
-        return ModelToResponse(response);
-    }
+    //[HttpGet("read/{login}")]
+    //[Authorize]
+    //[ProducesResponseType(typeof(UserReadResponse), StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public async Task<ActionResult<UserReadResponse>> Get(string login, CancellationToken token = default)
+    //{
+    //    var response = await service.GetByLoginAsync(login, token);
+    //    if (response is null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    return ModelToResponse(response);
+    //}
 
     [HttpPost("check")]
     [ProducesResponseType(typeof(UserReadResponse), StatusCodes.Status200OK)]
@@ -60,23 +65,40 @@ public class UserController(IUserService service) : ControllerBase
         {
             return Unauthorized();
         }
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, response.Id.ToString()),
+            new Claim(ClaimTypes.Email, response.Login),
+            new Claim(ClaimTypes.Name, response.Nickname),
+            new Claim(ClaimTypes.Role, response.AccessRule.ToString())
+        };
+
+        await HttpContext.SignInAsync("Cookies",
+            new(new ClaimsIdentity(claims, "Cookies")),
+            new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+            });
+
         return ModelToResponse(response);
     }
 
-    [HttpGet("read-all")]
-    [ProducesResponseType(typeof(IEnumerable<UserReadResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult<IEnumerable<UserReadResponse>>> Get(CancellationToken token = default)
-    {
-        var result = await service.GetAllAsync(token);
-        if (result.IsNullOrEmpty())
-        {
-            return NotFound();
-        }
-        return Ok(result.Select(ModelToResponse));
-    }
+    //[HttpGet("read-all")]
+    //[ProducesResponseType(typeof(IEnumerable<UserReadResponse>), StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status204NoContent)]
+    //public async Task<ActionResult<IEnumerable<UserReadResponse>>> Get(CancellationToken token = default)
+    //{
+    //    var result = await service.GetAllAsync(token);
+    //    if (result.IsNullOrEmpty())
+    //    {
+    //        return NotFound();
+    //    }
+    //    return Ok(result.Select(ModelToResponse));
+    //}
 
     [HttpPatch]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdatePassword([FromBody] UserPatchPasswordRequest user, CancellationToken token = default)

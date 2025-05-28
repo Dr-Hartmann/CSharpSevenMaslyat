@@ -39,9 +39,13 @@ public class UserService(IUserRepository repository) : IUserService
 
     public async Task<UserModel> GetByLoginAndPasswordAsync(string login, string password, CancellationToken token)
     {
-        // Зачем нам расхэширование???
-        var hashedPassword = new PasswordHasher<string>().HashPassword(login, password);
-        var response = await repository.GetByLoginAndPasswordAsync(login, password, token);
+        var response = await repository.GetByLoginAsync(login, token);
+        var result = new PasswordHasher<string>().VerifyHashedPassword(login, response.User.Password, password);
+
+        if (result == PasswordVerificationResult.Failed)
+        {
+            throw new KeyNotFoundException($"Пароли не совпадают");
+        }
 
         if (response.Error != string.Empty)
         {

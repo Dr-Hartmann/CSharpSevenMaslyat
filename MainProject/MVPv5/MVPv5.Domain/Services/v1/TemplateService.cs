@@ -38,6 +38,12 @@ public class TemplateService(ITemplateRepository repository) : ITemplateService
         await repository.UpdateNameAsync(id, name, token);
     }
 
+    public async Task UpdateTypeAsync(int id, string? type, CancellationToken token)
+    {
+        if (type is null) return;
+        await repository.UpdateTypeAsync(id, type, token);
+    }
+
     public async Task UpdateContentAndContentTypeAsync(int id, byte[]? content, string? contentType, CancellationToken token)
     {
         if (content is null || contentType is null) return;
@@ -50,10 +56,10 @@ public class TemplateService(ITemplateRepository repository) : ITemplateService
         await repository.UpdateTagsAsync(id, tags, token);
     }
 
-    public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)
-    {
-        await repository.UpdateAsync(id, model, token);
-    }
+    //public async Task UpdateAsync(int id, TemplateModel model, CancellationToken token)
+    //{
+    //    await repository.UpdateAsync(id, model, token);
+    //}
     public async Task DeleteByIdAsync(int id, CancellationToken token)
     {
         await repository.DeleteByIdAsync(id, token);

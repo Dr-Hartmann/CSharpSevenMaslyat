@@ -21,8 +21,8 @@ public class TemplateController(ITemplateService service) : ControllerBase
         {
             return ValidationProblem(ModelState);
         }
-        await service.AddAsync(TemplateModel.Create(request.Name, request.Type, DateOnly.FromDateTime(DateTime.Now),
-            request.Content, request.ContentType, request.Tags), token);
+        await service.AddAsync(TemplateModel.Create(request.Name!, request.Type, DateOnly.FromDateTime(DateTime.Now),
+            request.Content!, request.ContentType!, request.Tags), token);
         return Created();
     }
 
@@ -65,6 +65,7 @@ public class TemplateController(ITemplateService service) : ControllerBase
         }
         await service.UpdateTagsAsync(request.Id, request.Tags, token);
         await service.UpdateNameAsync(request.Id, request.Name, token);
+        await service.UpdateTypeAsync(request.Id, request.Type, token);
         await service.UpdateContentAndContentTypeAsync(request.Id, request.Content, request.ContentType, token);
         return Created();
     }

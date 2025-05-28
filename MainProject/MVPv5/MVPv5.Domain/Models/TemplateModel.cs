@@ -15,7 +15,7 @@ public class TemplateModel
         Tags = entity.Tags;
     }
     private TemplateModel(string name, string? type, DateOnly? dateCreation, byte[] content, 
-        string contentType, IEnumerable<string> tags)
+        string contentType, IEnumerable<string>? tags)
     {
         Name = name;
         Type = type;
@@ -31,7 +31,7 @@ public class TemplateModel
     public DateOnly DateCreation { get; }
     public byte[] Content { get; }
     public string ContentType { get; }
-    public IEnumerable<string> Tags { get; set; }
+    public IEnumerable<string>? Tags { get; set; }
 
     public static (TemplateModel Template, string Error) Create(TemplateEntity? entity)
     {
@@ -40,11 +40,13 @@ public class TemplateModel
             throw new Exception("Передана пустая сущность");
         }
         var error = string.Empty;
+        // TODO
         return (new TemplateModel(entity), error);
     }
     public static TemplateModel Create(string name, string? type, DateOnly? dateCreation,
-        byte[] content, string contentType, IEnumerable<string> tags)
+        byte[] content, string contentType, IEnumerable<string>? tags)
     {
+        // TODO
         return new TemplateModel(name, type, dateCreation, content, contentType, tags);
     }
 }

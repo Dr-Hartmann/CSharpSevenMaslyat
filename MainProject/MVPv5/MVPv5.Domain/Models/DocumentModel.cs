@@ -37,35 +37,17 @@ public class DocumentModel
         {
             throw new ValidationException("Передана пустая сущность");
         }
-
-        if (string.IsNullOrEmpty(entity.Name))
-        {
-            throw new ValidationException("Имя документа не должно быть пустым");
-        }
-
-        if(entity.MetadataJson is null)
-        {
-            throw new ValidationException("Документ отсутствует");
-        }
-
-        if (entity.TemplateId <= 0)
-        {
-            throw new ValidationException("Некорректный TemplateId");
-        }
-
-        if (entity.UserId <= 0)
-        {
-            throw new ValidationException("Некорректный UserId");
-        }
         var error = string.Empty;
+        // TODO
         return (new DocumentModel(entity), error);
     }
     public static DocumentModel Create(string? name, DateOnly? dateCreation, IDictionary<string, string>? dictionary, int? templateId, int? userId)
     {
-        if (string.IsNullOrEmpty(name) || dictionary is null || templateId <= 0 || userId <= 0)
+        if (string.IsNullOrEmpty(name))
         {
             throw new ValidationException("Некорректные данные");
         }
+        // TODO
         return new DocumentModel(name, dateCreation, dictionary, templateId, userId);
     }
 }

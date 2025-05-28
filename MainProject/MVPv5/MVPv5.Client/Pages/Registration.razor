@@ -1,7 +1,6 @@
 ﻿@page "/registration"
 <PageTitle>Register</PageTitle>
 
-@Status
 
 <div class="login-menu">
     <div class="login-back">
@@ -40,17 +39,12 @@
 </div>
 
 
+@using MVPv5.Application.Contracts.User.v1
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @code {
-    @using MVPv5.Application.Contracts.User.v1
-
-    public string? login;
-    private string? password;
     private string Status { get; set; } = "";
     private UserCreateRequest createdUser { get; set; } = new();
-
-
 
     private async Task OnRegister()
     {
@@ -71,6 +65,5 @@
     }
 
     private void ToLog() => NavigationManager.NavigateTo("/login");
-
     private void ToReg() => NavigationManager.NavigateTo("/registration");
 }

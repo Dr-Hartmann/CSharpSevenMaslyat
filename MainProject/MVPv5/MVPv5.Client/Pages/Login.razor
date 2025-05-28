@@ -2,20 +2,13 @@
 @page "/login"
 <PageTitle>Login</PageTitle>
 
-@* @using Microsoft.AspNetCore.Authorization
-@attribute [Authorize] *@
-
-
-@*  TODO - создавать Хэш на основе всех данных пользователя?
-    Вводимый пароль - недостающий компонент при разхэшировании *@
-
 
 <div class="login-menu">
     <div class="login-back">
         <div class="login-main">
             <button class="button-login active" @onclick="ToLog">Вход</button>
             <button class="button-register" @onclick="ToReg">Регистрация</button>
-            <EditForm method="post" class="px-4" Model="loginedUser" OnValidSubmit="OnLogin" FormName="Login" Enhance>
+            <EditForm class="px-4" Model="loginedUser" OnValidSubmit="OnLogin">
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert" />
 
@@ -38,14 +31,13 @@
 </div>
 
 
+@using MVPv5.Application.Contracts.User.v1
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
 @code {
-    @using MVPv5.Application.Contracts.User.v1
-    public String? hashLogin { get; set; }
-    private string Status { get; set; } = "";
+    private string? Status { get; set; }
+
     private UserLoginRequest loginedUser { get; set; } = new();
-    @using System.Security.Cryptography 
     private async Task OnLogin()
     {
         var token = new CancellationTokenSource(3000);
@@ -56,8 +48,6 @@
 
         if (response.IsSuccessStatusCode)
         {
-            // hashLogin = loginedUser.Login;
-            // NavigationManager.NavigateTo(hashLogin + "/editor");
             NavigationManager.NavigateTo("/main");
         }
         else
@@ -69,10 +59,9 @@
     private void EnterLikeGuest()
     {
         // TODO - создание клиента-гостя с низким уровнем привелегий
-        NavigationManager.NavigateTo("/editor");
+        NavigationManager.NavigateTo("/main");
     }
 
     private void ToLog() => NavigationManager.NavigateTo("/login");
-
     private void ToReg() => NavigationManager.NavigateTo("/registration");
 }

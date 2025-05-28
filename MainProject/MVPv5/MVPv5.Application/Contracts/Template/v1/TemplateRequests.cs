@@ -2,29 +2,35 @@
 
 namespace MVPv5.Application.Contracts.Template.v1;
 
-public record TemplateCreateRequest
+public class TemplateCreateRequest
 {
     [Required, MaxLength(100)]
-    public required string Name { get; set; }
+    public string? Name { get; set; }
+
     public string? Type { get; set; }
 
     [Required]
-    public required byte[] Content { get; set; }
+    public byte[]? Content { get; set; }
 
     [Required]
-    public required string ContentType { get; set; }
+    public string? ContentType { get; set; }
 
-    [Required]
-    public required IEnumerable<string> Tags { get; set; }
+    public IEnumerable<string>? Tags { get; set; }
 }
 
-public record TemplatePatchRequest
+public class TemplatePatchRequest
 {
-    [Required]
-    public required int Id { get; init; }
+    public int Id { get; set; }
+
+    [Required, MaxLength(100)]
     public string? Name { get; set; }
+
     public string? Type { get; set; }
+
+    [Required]
     public byte[]? Content { get; set; }
+
+    [Required]
     public string? ContentType { get; set; }
     public IEnumerable<string>? Tags { get; set; }
 }

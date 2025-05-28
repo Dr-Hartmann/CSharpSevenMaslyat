@@ -1,4 +1,4 @@
-﻿@page "/templates/edit"
+﻿@page "/documents/edit"
 <PageTitle>Редактировать шаблон</PageTitle>
 
 <PanelElements />
@@ -12,7 +12,7 @@
 else
 {
     <h3>Редактировать шаблон - @template?.Name</h3>
-    <EditForm Model="Request" OnValidSubmit="Save" FormName="TemplateEdit">
+    <EditForm Model="Request" OnValidSubmit="Save" FormName="DocumentEdit">
         <DataAnnotationsValidator />
         <button class="btn btn-primary mb-2" type="submit">Сохранить</button>
 
@@ -48,8 +48,8 @@ else
                     {
                         <InputText class="rounded-3 mt-2 mb-2" @bind-Value="input.Key" placeholder="@(!string.IsNullOrEmpty(input.Key) ? input.Key : "новый тег")" />
                         <div class="gap-3 d-flex justify-content-center">
-                            <button type="button" @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
-                            <button type="button" @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
+                            <button @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
+                            <button @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
                         </div>
                     }
                 </div>
@@ -120,7 +120,7 @@ else
 
     private void AddInput(int index)
     {
-        Inputs?.Insert(index + 1, new());
+        Inputs?.Insert(index + 1, new() { Key = string.Empty });
     }
 
     private void Remove(int index)
@@ -135,9 +135,7 @@ else
         if (Request is null) return;
         try
         {
-            Request.Tags = Inputs?
-                .Where(i => !string.IsNullOrEmpty(i.Key))
-                .Select(i => i.Key!.Trim());
+            Request.Tags = Inputs?.Where(i => !string.IsNullOrEmpty(i.Key)).Select(i => i.Key!);
             var response = await httpClient.PatchAsJsonAsync("template/update", Request);
             if (!response.IsSuccessStatusCode)
             {
