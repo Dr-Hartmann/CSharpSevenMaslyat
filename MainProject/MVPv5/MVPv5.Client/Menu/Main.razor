@@ -1,0 +1,19 @@
+﻿@inject NavigationManager NavigationManager
+
+@page "/main"
+<PageTitle>Главная</PageTitle>
+<h3>Главная</h3>
+
+Выберите действие
+
+<div class="form-control">
+    @* <button class="btn btn-outline-secondary mb-2" @onclick="ToEditor">В редактор</button> *@
+    <button type="button" class="btn btn-outline-secondary mb-2" @onclick="ToTemplates">Шаблоны...</button>
+    <button type="button" class="btn btn-outline-secondary mb-2" @onclick="ToDocuments">Документы...</button>
+</div>
+
+@code{
+    private void ToEditor() => NavigationManager.NavigateTo("/editor");
+    private void ToTemplates() => NavigationManager.NavigateTo("/templates");
+    private void ToDocuments() => NavigationManager.NavigateTo("/documents");
+}

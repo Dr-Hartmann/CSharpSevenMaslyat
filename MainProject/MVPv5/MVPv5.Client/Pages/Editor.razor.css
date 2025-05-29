@@ -1,0 +1,13 @@
+﻿.docpage {
+    width: 800px;
+    height: 1120px;
+    margin: 20px auto;
+    padding: 40px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    font-size: 16px;
+    border: solid;
+    border-color: gray;
+    border-radius: 6px;
+}

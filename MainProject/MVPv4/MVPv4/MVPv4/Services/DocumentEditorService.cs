@@ -5,7 +5,7 @@ using MVPv4.Models;
 
 namespace MVPv4.Services;
 
-public class DocumentEditorService(IServiceScopeFactory scopeFactory, MVPv4Context dbContext) : IDocumentEditorService
+public class DocumentEditorService(MVPv4Context dbContext) : IDocumentEditorService
 {
     public async Task<DTOdocumentV1> GetAsync(int? id, CancellationToken token)
     {
@@ -37,11 +37,8 @@ public class DocumentEditorService(IServiceScopeFactory scopeFactory, MVPv4Conte
 
     public async Task AddAsync(DTOdocumentV1 product)
     {
-        using var scope = scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetService<MVPv4Context>();
         await dbContext!.DocumentV1.AddAsync(new DocumentV1
         {
-            Name = product.Name,
             File = product.File,
             Title = product.Title,
             Topic = product.Topic,

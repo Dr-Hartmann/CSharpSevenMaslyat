@@ -10,7 +10,6 @@ public class MVPv4Context : DbContext
     {
         Database.EnsureCreated();
     }
-
     public DbSet<DocumentV1> DocumentV1 { get; set; }
 }
 

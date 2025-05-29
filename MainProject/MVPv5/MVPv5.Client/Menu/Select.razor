@@ -1,0 +1,25 @@
+﻿@* <p><br><label class="label-center">Настройки профиля</label></p>
+<p><label>Никнейм</label></p>
+<p><input class="input-format" @bind=login /><br></p>
+<p><label>Пароль</label></p>
+<p><input class="input-format" @bind=password /><br></p>
+<br>
+<p style="text-align: center;"><button class="button-cancel">Отменить</button><button class="button-accept" @onclick="ChangeUser">Принять</button></p>
+
+@code {
+    //Заглушка
+
+    public UserGetResponse currentUser { get; set; } = new UserGetResponse { Id = 1, AccessRule = 1, DateCreation = new DateOnly(2023, 12, 1), Documents = null, Login = "Pensil", Nickname = "Vova228", Password = "1488" };
+    private string login { get; set; }
+    private string password { get; set; }
+    protected override void OnInitialized()
+    {
+        login = currentUser.Login;
+        password = currentUser.Password;
+    }
+    private async Task ChangeUser()
+    {
+        //Imitation
+        var response = await httpClient.PatchAsJsonAsync($"User/UpdatePassword/?id={currentUser.Id}", currentUser);
+    }
+} *@

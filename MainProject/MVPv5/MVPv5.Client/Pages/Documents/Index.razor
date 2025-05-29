@@ -1,0 +1,158 @@
+﻿@page "/documents"
+<PageTitle>Документы</PageTitle>
+
+<p class="alert">@Status</p>
+
+
+@if (PreCreate)
+{
+    if (Templates is null || !Templates.Any())
+    {
+        <p>Отсутствуют шаблоны для выбора</p>
+    }
+    else
+    {
+        <div class="mb-2">
+            <label class="form-label">Шаблон</label>
+            <select class="form-control" @onchange="TemplateChanged">
+                @foreach (var option in Templates.Select(i => i.Name))
+                {
+                    <option value="@option">@option</option>
+                }
+            </select>
+        </div>
+        if (TemplateId != 0)
+        {
+            <button type="button" class="btn btn-primary" @onclick="CreateDoc">Создать документ</button>
+        }
+    }
+}
+else
+{
+    <button type="button" class="btn btn-primary" @onclick="ToCreate">Создать</button>
+}
+
+@if (Searching is null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else if (!Searching.Any())
+{
+    <p><em>Документов нет</em></p>
+}
+else
+{
+    @using Microsoft.AspNetCore.Components.QuickGrid
+    <QuickGrid Class="table" Items="Searching" Pagination="pagination">
+        <PropertyColumn Property="m => m.Id" Title="Id" Sortable="true" />
+        <PropertyColumn Property="m => m.Name" Title="Название" Sortable="true" />
+        <PropertyColumn Property="m => m.UserId" Title="Пользователь" Sortable="true" />
+        <PropertyColumn Property="m => m.TemplateId" Title="Шаблон" Sortable="true" />
+
+        <TemplateColumn Context="p">
+            <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <a href="@($"documents/edit?id={p.Id}")">Детали</a>
+            </div>
+            <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <button type="button" class="btn btn-link" @onclick="() => BuildAndDownloadFile(p)">Собрать и скачать</button>
+            </div>
+        </TemplateColumn>
+
+        <Paginator State="pagination" />
+    </QuickGrid>
+}
+
+
+@using MVPv5.Application.Contracts.Document.v1
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@code {
+    private string? Status { get; set; }
+    private IQueryable<DocumentReadResponse>? Searching { get; set; }
+
+    static int size = 10;
+    PaginationState pagination = new PaginationState { ItemsPerPage = size };
+
+    protected override void OnParametersSet()
+    {
+        var count = 1;
+        if (Searching is not null && Searching.Any()) count = Searching.Count();
+        pagination = new PaginationState { ItemsPerPage = count < 10 ? count : size };
+    }
+
+    @inject IJSRuntime JS
+    private async Task BuildAndDownloadFile(DocumentReadResponse document)
+    {
+        try
+        {
+            var stream = await httpClient.GetStreamAsync($"document/build-and-download/{document.Id}");
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var bytes = memoryStream.ToArray();
+
+            await JS.InvokeVoidAsync("downloadFromByteArray", new
+            {
+                byteBase64 = Convert.ToBase64String(bytes),
+                fileName = document.Name,
+                mimeType = "application/octet-stream"
+            });
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await httpClient.SendAsync(
+            new HttpRequestMessage(HttpMethod.Get, "document/read-all")
+            .SetBrowserRequestCredentials(BrowserRequestCredentials.Include));
+
+        if (response.IsSuccessStatusCode)
+        {
+            Searching = (await response.Content.ReadFromJsonAsync<IEnumerable<DocumentReadResponse>>())!.AsQueryable();
+        }
+    }
+
+    private async void ToCreate()
+    {
+        Status = string.Empty;
+        var response = await httpClient.SendAsync(
+            new HttpRequestMessage(HttpMethod.Get, "Template/read-all")
+            .SetBrowserRequestCredentials(BrowserRequestCredentials.Include));
+
+        if (response.IsSuccessStatusCode)
+        {
+            Templates = await response.Content.ReadFromJsonAsync<IEnumerable<TemplateReadResponse>>();
+            if (Templates is not null) TemplateId = Templates.First().Id;
+            PreCreate = true;
+        }
+        else
+        {
+            Status = "Нет шаблонов в ответе";
+        }
+        StateHasChanged();
+    }
+    private void CreateDoc() => NavigationManager.NavigateTo($"/documents/create?id={TemplateId}");
+
+    private bool PreCreate { get; set; } = false;
+    private IEnumerable<TemplateReadResponse>? Templates { get; set; }
+    // private TemplateReadResponse? SelectedTemplate { get; set; }
+    private int TemplateId { get; set; }
+
+    private void TemplateChanged(ChangeEventArgs e)
+    {
+        Status = string.Empty;
+        if (Templates is null || e.Value is null)
+        {
+            Status = "Нет выбора";
+        }
+        else
+        {
+            TemplateId = Templates.FirstOrDefault(i => i.Name == e.Value.ToString())!.Id;
+        }
+        StateHasChanged();
+    }
+}

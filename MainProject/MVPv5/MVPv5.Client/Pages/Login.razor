@@ -1,0 +1,67 @@
+﻿@page "/"
+@page "/login"
+<PageTitle>Login</PageTitle>
+
+
+<div class="login-menu">
+    <div class="login-back">
+        <div class="login-main">
+            <button class="button-login active" @onclick="ToLog">Вход</button>
+            <button class="button-register" @onclick="ToReg">Регистрация</button>
+            <EditForm class="px-4" Model="loginedUser" OnValidSubmit="OnLogin">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="mb-3 mt-2">
+                    <InputText id="login" @bind-Value="loginedUser.Login" class="form-control input-format" aria-required="true" placeholder="Логин" />
+                    <ValidationMessage For="() => loginedUser.Login" class="text-danger" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText id="password" @bind-Value="loginedUser.Password" class="form-control input-format" placeholder="Пароль" />
+                    <ValidationMessage For="() => loginedUser.Password" class="text-danger" />
+                </div>
+
+                <button type="submit" class="btn btn-primary button-enter">Войти</button>
+                <button class="button-guest active" @onclick="EnterLikeGuest">Войти как гость</button>
+                <div class="justify-content-center mt-3">@Status</div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+
+@using MVPv5.Application.Contracts.User.v1
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@code {
+    private string? Status { get; set; }
+
+    private UserLoginRequest loginedUser { get; set; } = new();
+    private async Task OnLogin()
+    {
+        var token = new CancellationTokenSource(3000);
+        var response = await httpClient.PostAsJsonAsync("User/check", loginedUser, token.Token);
+
+        // TODO - переделать
+        // в идеале сделать через Куки, но мы Маслята, не забываем ;)
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/main");
+        }
+        else
+        {
+            Status = await response.Content.ReadAsStringAsync();
+        }
+    }
+
+    private void EnterLikeGuest()
+    {
+        // TODO - создание клиента-гостя с низким уровнем привелегий
+        NavigationManager.NavigateTo("/main");
+    }
+
+    private void ToLog() => NavigationManager.NavigateTo("/login");
+    private void ToReg() => NavigationManager.NavigateTo("/registration");
+}

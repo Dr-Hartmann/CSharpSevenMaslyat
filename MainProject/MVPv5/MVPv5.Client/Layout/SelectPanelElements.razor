@@ -1,0 +1,81 @@
+﻿@using MVPv5.Client.Menu
+
+<div class="PopUp-menu">
+    <button class="button-template" @onclick="() => Choose(Template.Lab)">Лабораторная</button>
+    <button class="button-template" @onclick="() => Choose(Template.Course)">Курсовая</button>
+    <button class="button-template" @onclick="() => Choose(Template.Thesis)">Диплом</button>
+</div>
+@if (ShowSelectMenu)
+{
+@*     TODO - забыл дать вам код
+        
+        главное - передать не обьект, а строку, а потом кастить ToSring()
+        
+        <div class="mb-2">
+            <label class="form-label">Должность</label>
+            <select class="form-control" @onchange="PostChanged" value="@SelectedPost">
+                @foreach (var option in Posts!.Select(i => i.Title))
+                {
+                    <option value="@option">@option</option>
+                }
+            </select>
+        </div>
+        
+        private PostResponse? SelectedPost { get; set; }
+        private IEnumerable<PostResponse>? Posts { get; set; }
+
+        private void PostChanged(ChangeEventArgs e)
+        {
+            Request.IdPost = Posts!.FirstOrDefault(i => i.Title == e.Value!.ToString())!.Id;
+        }
+*@
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p class="profile-upper">
+                <button class="button-close" @onclick="CloseModal">X</button>
+                @switch (template)
+                {
+                    case Template.Lab:
+                    <p><br><label class="label-center">Шаблон: лабораторная</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        break;
+                    case Template.Course:
+                    <p><br><label class="label-center">Шаблон: курсовая</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        break;
+                    case Template.Thesis:
+                    <p><br><label class="label-center">Шаблон: дипломная работа</label></p>
+                    <TemplatePreparing></TemplatePreparing>
+                        break;
+                }
+            </p>
+
+            @*     <Select></Select> *@
+        </div>
+    </div>
+}
+@code {
+    public enum Template
+    {
+        Lab,
+        Course,
+        Thesis
+    }
+    Template template;
+    public bool ShowSelectMenu { get; set; } = false;
+    public bool flag = false;
+    public void Choose(Template Temp)
+    {
+        ShowSelectMenu = !ShowSelectMenu;
+        flag = !flag;
+        template = Temp;
+    }
+    public void CloseModal()
+    {
+        ShowSelectMenu = false;
+    }
+    public bool GetFlag()
+    {
+        return flag;
+    }
+}

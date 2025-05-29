@@ -1,0 +1,190 @@
+﻿@page "/templates/edit"
+<PageTitle>Редактировать шаблон</PageTitle>
+
+<PanelElements />
+
+@* TODO - показ статуса на несколько секунд *@
+<p class="alert">@Status</p>
+@if (Request is null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <h3>Редактировать шаблон - @template?.Name</h3>
+    <EditForm Model="Request" OnValidSubmit="Save" FormName="TemplateEdit">
+        <DataAnnotationsValidator />
+        <button class="btn btn-primary mb-2" type="submit">Сохранить</button>
+
+        <div class="mb-2">
+            <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название шаблона" />
+            <ValidationMessage For="() => Request.Name" class="text-danger" />
+        </div>
+
+        <div class="mb-2">
+            <InputFile class="form-control mb-2" OnChange="HandleFileSelected" title="Загрузить файл" />
+            <ValidationMessage For="() => Request.Content" class="text-danger" />
+        </div>
+
+        <div class="mb-2">
+            <button class="btn btn-secondary" @onclick="DownloadFile">Скачать</button>
+        </div>
+
+        <div class="mb-2">
+            <InputText class="form-control" @bind-Value="Request.Type" placeholder="Тип работы" />
+            <ValidationMessage For="() => Request.Type" class="text-danger" />
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Теги для замещения</label>
+            @if (Inputs is null || !Inputs.Any())
+            {
+                <button @onclick="() => Inputs = new(){new()}" class=@ButtonStyle>+</button>
+            }
+            else
+            {
+                <div class="row d-flex" style="justify-self: center; width: 40%;">
+                    @foreach (var input in Inputs)
+                    {
+                        <InputText class="rounded-3 mt-2 mb-2" @bind-Value="input.Key" placeholder="@(!string.IsNullOrEmpty(input.Key) ? input.Key : "новый тег")" />
+                        <div class="gap-3 d-flex justify-content-center">
+                            <button type="button" @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
+                            <button type="button" @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </EditForm>
+}
+
+
+@using System.Text
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@code {
+    [SupplyParameterFromQuery(Name = "id")]
+    public int Id { get; set; }
+
+    private string? Status { get; set; }
+    private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
+
+    private TemplateReadResponse? template { get; set; }
+    private TemplatePatchRequest? Request { get; set; }
+
+    @inject IJSRuntime JS
+    private async Task DownloadFile()
+    {
+        Status = string.Empty;
+        if (template is null) return;
+        try
+        {
+            await JS.InvokeVoidAsync("downloadFromByteArray", new
+            {
+                byteBase64 = Convert.ToBase64String(template.Content ?? new byte[0]),
+                fileName = template.Name,
+                mimeType = "application/octet-stream"
+            });
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+
+    private async void HandleFileSelected(InputFileChangeEventArgs args)
+    {
+        Status = string.Empty;
+        if (Request is null) return;
+        try
+        {
+            var file = args.File;
+            if (file is null) return;
+            MemoryStream? newFile;
+            await file.OpenReadStream(maxAllowedSize: 44 * 1024 * 1024).CopyToAsync(newFile = new());
+            Request.Content = newFile?.ToArray();
+            Request.ContentType = file.ContentType;
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public string? Key { get; set; }
+    }
+
+    private void AddInput(int index)
+    {
+        Inputs?.Insert(index + 1, new());
+    }
+
+    private void Remove(int index)
+    {
+        if (Inputs?.Count() <= 1) return;
+        Inputs?.RemoveAt(index);
+    }
+
+    private async void Save()
+    {
+        Status = string.Empty;
+        if (Request is null) return;
+        try
+        {
+            Request.Tags = Inputs?
+                .Where(i => !string.IsNullOrEmpty(i.Key))
+                .Select(i => i.Key!.Trim());
+            var response = await httpClient.PatchAsJsonAsync("template/update", Request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Status = "Сохранено";
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Status = string.Empty;
+        try
+        {
+            var response = await httpClient.GetAsync($"Template/read/{Id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            template = await response.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (template is null)
+            {
+                Status = "Пустой ответ сервера";
+                return;
+            }
+            Request = new()
+                {
+                    Id = this.Id,
+                    Name = template.Name,
+                    Type = template.Type,
+                    Content = template.Content,
+                    ContentType = template.ContentType,
+                    Tags = template.Tags
+                };
+            if (Request.Tags is null) return;
+            Inputs = new(Request.Tags.Select(t => new InputModel() { Key = t }));
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+}

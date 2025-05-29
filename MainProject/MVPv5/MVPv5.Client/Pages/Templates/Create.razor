@@ -1,0 +1,131 @@
+﻿@page "/templates/create"
+<PageTitle>Создать шаблон</PageTitle>
+
+<PanelElements />
+<p class="alert">@Status</p>
+
+
+<h3>Создать шаблон</h3>
+<EditForm Model="Request" OnValidSubmit="Save" FormName="TemplateCreate">
+    <DataAnnotationsValidator />
+    <button class="btn btn-primary mb-2" type="submit">Создать</button>
+
+    <div class="mb-2">
+        <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название шаблона" />
+        <ValidationMessage For="() => Request.Name" class="text-danger" />
+    </div>
+
+    <div class="mb-2">
+        <InputFile class="form-control mb-2" OnChange="HandleFileSelected" title="Загрузить файл" />
+        <ValidationMessage For="() => Request.Content" class="text-danger" />
+    </div>
+
+    <div class="mb-2">
+        <InputText class="form-control" @bind-Value="Request.Type" placeholder="Тип работы" />
+        <ValidationMessage For="() => Request.Type" class="text-danger" />
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label">Теги для замещения</label>
+        @if (Inputs is null || !Inputs.Any())
+        {
+            <button @onclick="() => Inputs = new(){new()}" class=@ButtonStyle>+</button>
+        }
+        else
+        {
+            <div class="row d-flex" style="justify-self: center; width: 40%;">
+                @foreach (var input in Inputs)
+                {
+                    <InputText class="rounded-3 mt-2 mb-2" @bind-Value="input.Key" placeholder="@(!string.IsNullOrEmpty(input.Key) ? input.Key : "новый тег")" />
+                    <div class="gap-3 d-flex justify-content-center">
+                        <button type="button" @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
+                        <button type="button" @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</EditForm>
+
+
+@using System.Text
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+@code {
+    private string? Status { get; set; }
+    private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
+
+    private TemplateCreateRequest Request { get; set; } = new();
+
+    private async void HandleFileSelected(InputFileChangeEventArgs args)
+    {
+        Status = string.Empty;
+        try
+        {
+            var file = args.File;
+            if (file is null) return;
+            MemoryStream? newFile;
+            await file.OpenReadStream(maxAllowedSize: 44 * 1024 * 1024).CopyToAsync(newFile = new());
+            Request.Content = newFile?.ToArray();
+            Request.ContentType = file.ContentType;
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public string? Key { get; set; }
+    }
+
+    private void AddInput(int index)
+    {
+        Inputs?.Insert(index + 1, new());
+    }
+
+    private void Remove(int index)
+    {
+        if (Inputs?.Count() <= 1) return;
+        Inputs?.RemoveAt(index);
+    }
+
+    private async Task Save()
+    {
+        Status = string.Empty;
+        try
+        {
+            Request.Tags = Inputs?
+                .Where(i => !string.IsNullOrEmpty(i.Key))
+                .Select(i => i.Key!.Trim());
+            var response = await httpClient.PostAsJsonAsync("template/create", Request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            NavigationManager.NavigateTo("/templates");
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        this.StateHasChanged();
+    }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     try
+    //     {
+
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Status = ex.Message;
+    //     }
+    // }
+}

@@ -1,0 +1,169 @@
+﻿@page "/documents/edit"
+<PageTitle>Редактировать документ</PageTitle>
+
+<PanelElements />
+
+@* TODO - показ статуса на несколько секунд *@
+<p class="alert">@Status</p>
+@if (Request is null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <h3>Редактировать шаблон - @Document?.Name</h3>
+    <EditForm Model="Request" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <button class="btn btn-primary mb-2" type="submit">Сохранить</button>
+
+        <div class="mb-2">
+            <label class="form-label" for="name">Название</label>
+            <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название документа" />
+            <ValidationMessage For="() => Request.Name" class="text-danger" />
+        </div>
+
+        <div class="mb-2">
+            <button type="button" class="btn btn-secondary" @onclick="BuildAndDownloadFile">Скачать</button>
+        </div>
+
+        <div class="form-control mb-2">
+            <div class="row d-flex" style="justify-self: center; width: 40%;">
+                @if (Inputs is null || !Inputs.Any())
+                {
+                    <p>Нет тегов для заполнения</p>
+                }
+                else
+                {
+                    foreach (var input in Inputs)
+                    {
+                        <label class="form-label mt-1 mb-0 fs-6 fst-italic" for="@input.Key">@input.Key</label>
+                        <InputTextArea id="@input.Key" class="rounded-3 mb-2" @bind-Value="input.Value" placeholder="@input.Key" />
+                    }
+                }
+            </div>
+        </div>
+    </EditForm>
+}
+
+
+@using System.Text
+@using MVPv5.Application.Contracts.Document.v1
+@using MVPv5.Application.Contracts.Template.v1
+@inject HttpClient httpClient
+@code {
+    [SupplyParameterFromQuery(Name = "id")]
+    public int Id { get; set; }
+
+    private string? Status { get; set; }
+    private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
+
+    private DocumentReadResponse? Document { get; set; }
+    private TemplateReadResponse? template { get; set; }
+    private DocumentPatchRequest? Request { get; set; }
+
+    @inject IJSRuntime JS
+    private async Task BuildAndDownloadFile()
+    {
+        Status = string.Empty;
+        if (Request is null) return;
+        try
+        {
+            var stream = await httpClient.GetStreamAsync($"document/build-and-download/{Request.Id}");
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var bytes = memoryStream.ToArray();
+
+            await JS.InvokeVoidAsync("downloadFromByteArray", new
+            {
+                byteBase64 = Convert.ToBase64String(bytes),
+                fileName = Request.Name,
+                mimeType = "application/octet-stream"
+            });
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public required string Key { get; set; }
+        public required string Value { get; set; }
+    }
+
+    private async Task Save()
+    {
+        Status = string.Empty;
+        if (Request is null) return;
+        try
+        {
+            Request.Data = Inputs?
+                .ToDictionary(keySelector: k => k.Key, elementSelector: v => v.Value.Trim());
+
+            var response = await httpClient.PatchAsJsonAsync("document/update", Request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Status = "Сохранено";
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Status = string.Empty;
+        try
+        {
+            var response = await httpClient.GetAsync($"document/read/{Id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Document = await response.Content.ReadFromJsonAsync<DocumentReadResponse>();
+            if (Document is null)
+            {
+                Status = "Пустой документ";
+                return;
+            }
+
+            var responseTmpl = await httpClient.GetAsync($"Template/read/{Document.TemplateId}");
+            if (!responseTmpl.IsSuccessStatusCode)
+            {
+                Status = await responseTmpl.Content.ReadAsStringAsync();
+                return;
+            }
+            template = await responseTmpl.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (template is null)
+            {
+                Status = "Пустой шаблон";
+                return;
+            }
+
+            Request = new()
+                {
+                    Id = this.Id,
+                    Name = Document.Name,
+                    Data = Document.Data
+                };
+            if (template.Tags is null || !template.Tags.Any()) return;
+            Inputs = new(template.Tags.Select(t => new InputModel()
+                {
+                    Key = t,
+                    Value = (Request.Data is not null) ? Request.Data.TryGetValue(t, out var value) ? value : string.Empty : string.Empty
+                }));
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+}

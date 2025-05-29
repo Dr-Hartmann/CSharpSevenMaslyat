@@ -1,0 +1,107 @@
+﻿@page "/editor"
+<PageTitle>Editor</PageTitle>
+
+@* <UpperPanel>
+    <PanelElements />  <!-- Передаем делегат сюда -->
+</UpperPanel> *@
+<div class="upper-panel">
+    <PanelElements OnSave="Save" />
+</div>
+
+<p class="alert">@Status</p>
+@if (Inputs is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row d-flex" style="justify-self: center; width: 40%;">
+        @foreach (var input in Inputs)
+        {
+            <InputTextArea class="rounded-3 mt-2 mb-2" style="min-height:100px;" @bind-Value="input.Value" placeholder="@input.Key" />
+            <div class="gap-3 d-flex justify-content-center">
+                <button @onclick="a =>  AddInput(Inputs.IndexOf(input))" class=@buttonStyle>+</button>
+                <button @onclick="a =>  Remove(Inputs.IndexOf(input))" class=@buttonStyle>-</button>
+            </div>
+        }
+    </div>
+}
+
+
+@using MVPv5.Application.Contracts.Document.v1
+@using System.Text
+@using MVPv5.Application.Contracts.Template.v1
+@code {
+    private string? Status { get; set; }
+
+    // [Parameter]
+    // [SupplyParameterFromQuery(Name = "login")]
+    // public string login { get; set; }
+    private string buttonStyle = "btn btn-outline-primary btn-sm px-4";
+
+    private TemplateReadResponse? document { get; set; }
+    private List<InputModel>? Inputs { get; set; }
+    private class InputModel
+    {
+        public required string Key { get; set; }
+        public required string Value { get; set; }
+    }
+
+    @inject HttpClient httpClient
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await httpClient.GetAsync($"Template/read/5"); // TODO - получить параметр из запроса
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            document = await response.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (document?.Tags is null) return;
+            Inputs = new(document.Tags.Select(t => new InputModel() { Key = t, Value = t }));
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+    }
+
+    private async void Save()
+    {
+        if (Inputs is null) return;
+        try
+        {
+            // TemplateUpdateRequest request = new();
+            TemplatePatchRequest request = new()
+                {
+                    Id = 5,
+                    Tags = Inputs.Where(i => !string.IsNullOrEmpty(i.Value)).Select(i => i.Value)
+                };
+            var response = await httpClient.PatchAsJsonAsync("template/update-tags", request);
+            if (!response.IsSuccessStatusCode)
+            {
+                Status = await response.Content.ReadAsStringAsync();
+                return;
+            }
+            Status = "Сохранено";
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    private void AddInput(int index)
+    {
+        Inputs?.Insert(index + 1, new() { Key = Guid.NewGuid().ToString(), Value = "" });
+    }
+
+    private void Remove(int index)
+    {
+        if (Inputs?.Count() <= 1) return;
+        Inputs?.RemoveAt(index);
+    }
+}

@@ -1,0 +1,24 @@
+﻿@inject NavigationManager NavigationManager
+@inherits LayoutComponentBase
+
+
+<input style="width: 100%" placeholder="ФИО" class="input-format" @bind="fullName" />
+<br>
+<br>
+<input placeholder="Год" class="input-format" @bind="dateOfBirth" />
+<br>
+<br>
+<input placeholder="Группа" class="input-format" @bind="group" />
+<br>
+<br>
+<p style="text-align: center;"><button class="button-cancel">Отменить</button><button class="button-accept" @onclick="CreateTemplate">Принять</button></p>
+
+@code {
+	string ?fullName, group, dateOfBirth;
+	private void CreateTemplate()
+	{
+		
+	}
+
+	
+}
