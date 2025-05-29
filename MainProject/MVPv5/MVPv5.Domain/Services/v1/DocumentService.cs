@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using MVPv5.Domain.Abstractions.v1;
+﻿using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Models;
 
 namespace MVPv5.Domain.Services.v1;
@@ -35,13 +34,21 @@ public class DocumentService(IDocumentRepository repository) : IDocumentService
         return response.Select(l => l.Document);
     }
 
-    public async Task UpdateMetaDataById(int id, JsonDocument metadataJson, CancellationToken token)
+    public async Task UpdateMetaDataById(int id, IDictionary<string, string>? metadataJson, CancellationToken token)
     {
+        if (metadataJson is null)
+        {
+            throw new Exception("Данные тегов пусты");
+        }
         await repository.UpdateMetaDataAsync(id, metadataJson, token);
     }
 
-    public async Task UpdateNameAsync(int id, string name, CancellationToken token)
+    public async Task UpdateNameAsync(int id, string? name, CancellationToken token)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new Exception("Имя пусто");
+        }
         await repository.UpdateNameAsync(id, name, token);
     }
 

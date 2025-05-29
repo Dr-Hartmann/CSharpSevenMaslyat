@@ -36,7 +36,7 @@ public class TemplateController(ITemplateService service) : ControllerBase
         {
             return NotFound();
         }
-        return Ok(response);
+        return Ok(ModelToResponse(response));
     }
 
     [HttpGet("read-all")]
@@ -54,9 +54,9 @@ public class TemplateController(ITemplateService service) : ControllerBase
 
     // TODO ...
 
-   [HttpPatch("update")]
-   [ProducesResponseType(StatusCodes.Status201Created)]
-   [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPatch("update")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Patch([FromBody] TemplatePatchRequest request, CancellationToken token = default)
     {
         if (!ModelState.IsValid)
@@ -99,17 +99,17 @@ public class TemplateController(ITemplateService service) : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("download")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult Download([FromBody] TemplateDownloadRequest file)
-    {
-        if (file.Content == null)
-        {
-            return NotFound("Файл не найден");
-        }
-        return File(file.Content, file.ContentType, file.Name, true);
-    }
+    //[HttpPost("download")]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //public IActionResult Download([FromBody] TemplateDownloadRequest file)
+    //{
+    //    if (file.Content == null)
+    //    {
+    //        return NotFound("Файл не найден");
+    //    }
+    //    return File(file.Content, file.ContentType, file.Name, true);
+    //}
 
     [HttpGet("download")]
     [ProducesResponseType(StatusCodes.Status200OK)]

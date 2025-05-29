@@ -16,16 +16,25 @@ public class DocumentCreateRequest
     public int UserId { get; set; }
 }
 
-public class DocumentUpdateRequest
+//public class DocumentUpdateRequest
+//{
+//    [Required]
+//    public required int Id { get; set; }
+//    public string? Name { get; set; }
+//    public IDictionary<string, string>? Data { get; set; }
+//    public int? TemplateId { get; set; }
+//    public int? UserId { get; set; }
+//}
+
+public class DocumentPatchRequest
 {
     [Required]
     public required int Id { get; set; }
 
+    [Required]
     public string? Name { get; set; }
-    public DateOnly? DateCreation { get; set; }
+
     public IDictionary<string, string>? Data { get; set; }
-    public int? TemplateId { get; set; }
-    public int? UserId { get; set; }
 }
 
 public class DocumentPatchNameRequest
@@ -37,14 +46,14 @@ public class DocumentPatchNameRequest
     public required string Name { get; set; }
 }
 
-public class DocumentPatchMetadataRequest
-{
-    [Required]
-    public required int Id { get; set; }
+//public class DocumentPatchMetadataRequest
+//{
+//    [Required]
+//    public required int Id { get; set; }
 
-    [Required]
-    public required IDictionary<string, string>? Data { get; set; }
-}
+//    [Required]
+//    public required IDictionary<string, string>? Data { get; set; }
+//}
 
 public class DocumentDeleteRequest
 {

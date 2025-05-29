@@ -10,8 +10,7 @@ namespace MVPv5.API.Controllers.v1;
 [ApiController]
 [Area("v1")]
 [Route("[controller]")]
-public class DocumentController(IDocumentService service/*, UserController userController,
-    TemplateController templateController*/) : ControllerBase
+public class DocumentController(IDocumentService service, ITemplateService templateService/*, UserController userController*/) : ControllerBase
 {
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -53,45 +52,48 @@ public class DocumentController(IDocumentService service/*, UserController userC
         )));
     }
 
-    [HttpPut("update")]
+    //[HttpPut("update")]
+    //[ProducesResponseType(StatusCodes.Status201Created)]
+    //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+    //public async Task<IActionResult> Update([FromBody] DocumentUpdateRequest request, CancellationToken token)
+    //{
+    //    if (!ModelState.IsValid)
+    //    {
+    //        return ValidationProblem(ModelState);
+    //    }
+    //    await service.UpdateAsync(request.Id, DocumentModel.Create(
+    //            request.Name,
+    //            null,
+    //            request.Data,
+    //            request.TemplateId,
+    //            request.UserId),
+    //        token);
+    //    return Created();
+    //}
+
+    [HttpPatch("update")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update([FromBody] DocumentUpdateRequest request, CancellationToken token)
+    public async Task<IActionResult> Update([FromBody] DocumentPatchRequest request, CancellationToken token)
     {
         if (!ModelState.IsValid)
         {
             return ValidationProblem(ModelState);
         }
-        await service.UpdateAsync(request.Id,  DocumentModel.Create(
-                request.Name,
-                null,
-                request.Data,
-                request.TemplateId,
-                request.UserId),
-            token);
-        return Created();
-    }
 
-    [HttpPatch("updateName")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PatchName([FromBody] DocumentPatchNameRequest request, CancellationToken token)
-    {
-        if (!ModelState.IsValid)
+        if (!string.IsNullOrEmpty(request.Name))
         {
-            return ValidationProblem(ModelState);
+            await service.UpdateNameAsync(request.Id, request.Name, token);
         }
-        await service.UpdateNameAsync(request.Id, request.Name, token);
-        return Created();
+        if (request.Data is not null)
+        {
+            await service.UpdateMetaDataById(request.Id, request.Data, token);
+        }
+
+        return Ok();
     }
 
-    [HttpDelete("delete")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> Delete([FromBody] DocumentDeleteRequest request, CancellationToken token)
-    {
-        await service.DeleteByIdAsync(request.Id, token);
-        return NoContent();
-    }
+    //TODO...
 
     [HttpDelete("delete/{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -101,12 +103,14 @@ public class DocumentController(IDocumentService service/*, UserController userC
         return NoContent();
     }
 
-    private byte[] DocumentEditor(byte[] Content, IDictionary<string, string> Data)
+    private Stream DocumentEditor(byte[] content, IDictionary<string, string> Data)
     {
         // TODO - поменять немного логику
-        using var stream = new MemoryStream(Content);
+        using var outputStream = new MemoryStream();
+        outputStream.Write(content, 0, content.Length);
+        outputStream.Position = 0;
 
-        using var doc = WordprocessingDocument.Open(stream, true);
+        using var doc = WordprocessingDocument.Open(outputStream, true);
         var body = doc.MainDocumentPart?.Document.Body;
 
         foreach (var text in body?.Descendants<Text>() ?? Enumerable.Empty<Text>())
@@ -142,37 +146,41 @@ public class DocumentController(IDocumentService service/*, UserController userC
                     text.Text = text.Text.Replace(replacement.Key, replacement.Value);
                 }
             }
+
+            doc.Save();
         }
 
-        doc.Save();
-
-        return stream.ToArray();
+        var result = new MemoryStream(outputStream.ToArray());
+        result.Position = 0;
+        return result;
     }
 
-    //[HttpGet("download")]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
-    //public async Task<IActionResult> DownloadByID([FromQuery] int id, CancellationToken token)
-    //{
-    //    var response = await service.GetByIdAsync(id, token);
-    //    if (response is null)
-    //    {
-    //        return NotFound("Документ не найден");
-    //    }
+    [HttpGet("build-and-download/{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DownloadByID(int id, CancellationToken token)
+    {
+        var response = await service.GetByIdAsync(id, token);
+        if (response is null)
+        {
+            return NotFound("Документ не найден");
+        }
 
-    //    var template = (await templateController.Get(response.TemplateId, token)).Value;
-    //    if (template is null)
-    //    {
-    //        return NotFound();
-    //    }
+        var template = await templateService.GetByIdAsync(response.TemplateId, token);
+        if (template is null)
+        {
+            return NotFound("Шаблон не найден");
+        }
 
-    //    if (template.Content is null)
-    //    {
-    //        return NotFound("Файл не найден");
-    //    }
+        if (template.Content is null)
+        {
+            return NotFound("Файл шаблона не найден");
+        }
 
-    //    return File(DocumentEditor(template.Content, response.Dictionary ?? new Dictionary<string, string>()), template.ContentType ?? "", response.Name, true);
-    //}
+        var stream = DocumentEditor(template.Content, response.Dictionary ?? new Dictionary<string, string>());
+
+        return File(stream, template.ContentType ?? "", response.Name, true);
+    }
 
     private static DocumentReadResponse ModelToResponse(DocumentModel m) => new(
         m.Id,

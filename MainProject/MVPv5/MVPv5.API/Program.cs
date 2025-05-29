@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using MVPv5.API.Controllers.v1;
 using MVPv5.API.Middleware;
 using MVPv5.Domain.Abstractions.v1;
 using MVPv5.Domain.Data;
@@ -52,6 +53,7 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+        builder.Services.AddScoped<TemplateController>();
         builder.Services.AddScoped<ITemplateService, TemplateService>();
         builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
 

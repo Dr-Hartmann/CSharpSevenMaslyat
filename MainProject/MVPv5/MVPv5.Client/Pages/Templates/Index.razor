@@ -38,7 +38,9 @@ else
 
     protected override void OnParametersSet()
     {
-        pagination = new PaginationState { ItemsPerPage = Searching?.Count() < 10 ? Searching.Count() : size };
+        var count = 1;
+        if (Searching is not null && Searching.Any()) count = Searching.Count();
+        pagination = new PaginationState { ItemsPerPage = count < 10 ? count : size };
     }
 
     protected override async Task OnInitializedAsync()

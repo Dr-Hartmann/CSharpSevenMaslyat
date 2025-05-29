@@ -1,5 +1,5 @@
 ﻿@page "/documents/edit"
-<PageTitle>Редактировать шаблон</PageTitle>
+<PageTitle>Редактировать документ</PageTitle>
 
 <PanelElements />
 
@@ -7,59 +7,47 @@
 <p class="alert">@Status</p>
 @if (Request is null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Загрузка...</em></p>
 }
 else
 {
-    <h3>Редактировать шаблон - @template?.Name</h3>
-    <EditForm Model="Request" OnValidSubmit="Save" FormName="DocumentEdit">
+    <h3>Редактировать шаблон - @Document?.Name</h3>
+    <EditForm Model="Request" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <button class="btn btn-primary mb-2" type="submit">Сохранить</button>
 
         <div class="mb-2">
-            <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название шаблона" />
+            <label class="form-label" for="name">Название</label>
+            <InputText class="form-control mb-2" @bind-Value="Request.Name" placeholder="Введите название документа" />
             <ValidationMessage For="() => Request.Name" class="text-danger" />
         </div>
 
         <div class="mb-2">
-            <InputFile class="form-control mb-2" OnChange="HandleFileSelected" title="Загрузить файл" />
-            <ValidationMessage For="() => Request.Content" class="text-danger" />
+            <button type="button" class="btn btn-secondary" @onclick="BuildAndDownloadFile">Скачать</button>
         </div>
 
-        <div class="mb-2">
-            <button class="btn btn-secondary" @onclick="DownloadFile">Скачать</button>
-        </div>
-
-        <div class="mb-2">
-            <InputText class="form-control" @bind-Value="Request.Type" placeholder="Тип работы" />
-            <ValidationMessage For="() => Request.Type" class="text-danger" />
-        </div>
-
-        <div class="mb-2">
-            <label class="form-label">Теги для замещения</label>
-            @if (Inputs is null || !Inputs.Any())
-            {
-                <button @onclick="() => Inputs = new(){new()}" class=@ButtonStyle>+</button>
-            }
-            else
-            {
-                <div class="row d-flex" style="justify-self: center; width: 40%;">
-                    @foreach (var input in Inputs)
+        <div class="form-control mb-2">
+            <div class="row d-flex" style="justify-self: center; width: 40%;">
+                @if (Inputs is null || !Inputs.Any())
+                {
+                    <p>Нет тегов для заполнения</p>
+                }
+                else
+                {
+                    foreach (var input in Inputs)
                     {
-                        <InputText class="rounded-3 mt-2 mb-2" @bind-Value="input.Key" placeholder="@(!string.IsNullOrEmpty(input.Key) ? input.Key : "новый тег")" />
-                        <div class="gap-3 d-flex justify-content-center">
-                            <button @onclick="a => AddInput(Inputs.IndexOf(input))" class=@ButtonStyle>+</button>
-                            <button @onclick="a => Remove(Inputs.IndexOf(input))" class=@ButtonStyle>-</button>
-                        </div>
+                        <label class="form-label mt-1 mb-0 fs-6 fst-italic" for="@input.Key">@input.Key</label>
+                        <InputTextArea id="@input.Key" class="rounded-3 mb-2" @bind-Value="input.Value" placeholder="@input.Key" />
                     }
-                </div>
-            }
+                }
+            </div>
         </div>
     </EditForm>
 }
 
 
 @using System.Text
+@using MVPv5.Application.Contracts.Document.v1
 @using MVPv5.Application.Contracts.Template.v1
 @inject HttpClient httpClient
 @code {
@@ -69,20 +57,26 @@ else
     private string? Status { get; set; }
     private string ButtonStyle => "btn btn-outline-primary btn-sm px-4";
 
+    private DocumentReadResponse? Document { get; set; }
     private TemplateReadResponse? template { get; set; }
-    private TemplatePatchRequest? Request { get; set; }
+    private DocumentPatchRequest? Request { get; set; }
 
     @inject IJSRuntime JS
-    private async Task DownloadFile()
+    private async Task BuildAndDownloadFile()
     {
         Status = string.Empty;
-        if (template is null) return;
+        if (Request is null) return;
         try
         {
+            var stream = await httpClient.GetStreamAsync($"document/build-and-download/{Request.Id}");
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var bytes = memoryStream.ToArray();
+
             await JS.InvokeVoidAsync("downloadFromByteArray", new
             {
-                byteBase64 = Convert.ToBase64String(template.Content ?? new byte[0]),
-                fileName = template.Name,
+                byteBase64 = Convert.ToBase64String(bytes),
+                fileName = Request.Name,
                 mimeType = "application/octet-stream"
             });
         }
@@ -92,51 +86,23 @@ else
         }
     }
 
-    private async void HandleFileSelected(InputFileChangeEventArgs args)
-    {
-        Status = string.Empty;
-        if (Request is null) return;
-        try
-        {
-            var file = args.File;
-            if (file is null) return;
-            MemoryStream? newFile;
-            await file.OpenReadStream(maxAllowedSize: 44 * 1024 * 1024).CopyToAsync(newFile = new());
-            Request.Content = newFile?.ToArray();
-            Request.ContentType = file.ContentType;
-        }
-        catch (Exception ex)
-        {
-            Status = ex.Message;
-        }
-        StateHasChanged();
-    }
-
     private List<InputModel>? Inputs { get; set; }
     private class InputModel
     {
-        public string? Key { get; set; }
+        public required string Key { get; set; }
+        public required string Value { get; set; }
     }
 
-    private void AddInput(int index)
-    {
-        Inputs?.Insert(index + 1, new() { Key = string.Empty });
-    }
-
-    private void Remove(int index)
-    {
-        if (Inputs?.Count() <= 1) return;
-        Inputs?.RemoveAt(index);
-    }
-
-    private async void Save()
+    private async Task Save()
     {
         Status = string.Empty;
         if (Request is null) return;
         try
         {
-            Request.Tags = Inputs?.Where(i => !string.IsNullOrEmpty(i.Key)).Select(i => i.Key!);
-            var response = await httpClient.PatchAsJsonAsync("template/update", Request);
+            Request.Data = Inputs?
+                .ToDictionary(keySelector: k => k.Key, elementSelector: v => v.Value.Trim());
+
+            var response = await httpClient.PatchAsJsonAsync("document/update", Request);
             if (!response.IsSuccessStatusCode)
             {
                 Status = await response.Content.ReadAsStringAsync();
@@ -156,29 +122,44 @@ else
         Status = string.Empty;
         try
         {
-            var response = await httpClient.GetAsync($"Template/read/{Id}");
+            var response = await httpClient.GetAsync($"document/read/{Id}");
             if (!response.IsSuccessStatusCode)
             {
                 Status = await response.Content.ReadAsStringAsync();
                 return;
             }
-            template = await response.Content.ReadFromJsonAsync<TemplateReadResponse>();
-            if (template is null)
+            Document = await response.Content.ReadFromJsonAsync<DocumentReadResponse>();
+            if (Document is null)
             {
-                Status = "Пустой ответ сервера";
+                Status = "Пустой документ";
                 return;
             }
+
+            var responseTmpl = await httpClient.GetAsync($"Template/read/{Document.TemplateId}");
+            if (!responseTmpl.IsSuccessStatusCode)
+            {
+                Status = await responseTmpl.Content.ReadAsStringAsync();
+                return;
+            }
+            template = await responseTmpl.Content.ReadFromJsonAsync<TemplateReadResponse>();
+            if (template is null)
+            {
+                Status = "Пустой шаблон";
+                return;
+            }
+
             Request = new()
                 {
                     Id = this.Id,
-                    Name = template.Name,
-                    Type = template.Type,
-                    Content = template.Content,
-                    ContentType = template.ContentType,
-                    Tags = template.Tags
+                    Name = Document.Name,
+                    Data = Document.Data
                 };
-            if (Request.Tags is null) return;
-            Inputs = new(Request.Tags.Select(t => new InputModel() { Key = t }));
+            if (template.Tags is null || !template.Tags.Any()) return;
+            Inputs = new(template.Tags.Select(t => new InputModel()
+                {
+                    Key = t,
+                    Value = (Request.Data is not null) ? Request.Data.TryGetValue(t, out var value) ? value : string.Empty : string.Empty
+                }));
         }
         catch (Exception ex)
         {

@@ -53,12 +53,13 @@ public class DocumentRepository(MVPv5DbContext dbContext) : IDocumentRepository
         await dbContext.SaveChangesAsync(token);
     }
 
-    public async Task UpdateMetaDataAsync(int id, JsonDocument? metadataJson, CancellationToken token)
+    public async Task UpdateMetaDataAsync(int id, IDictionary<string, string> metadataJson, CancellationToken token)
     {
+        var a = JsonDocument.Parse(JsonSerializer.Serialize(metadataJson));
         await dbContext.Documents
             .Where(document => document.Id == id)
             .ExecuteUpdateAsync(document => document
-                .SetProperty(u => u.MetadataJson, metadataJson),
+                .SetProperty(u => u.MetadataJson, a),
                 token);
         await dbContext.SaveChangesAsync(token);
     }
